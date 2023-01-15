@@ -20,10 +20,10 @@ sagaMiddleware.run(rootSaga);
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
 	const getLayout = Component.getLayout ?? ((page: any) => page);
-	return getLayout(
+	return (
 		<Provider store={store}>
 			<GlobalStyle />
-			<Component {...pageProps} />
-		</Provider>,
+			{getLayout(<Component {...pageProps} />)}
+		</Provider>
 	);
 }
