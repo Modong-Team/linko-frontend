@@ -1,11 +1,14 @@
 import { all } from 'redux-saga/effects';
 import { combineReducers } from 'redux';
 import forms from './forms';
+import newApplicationId from './newApplicationId';
+import { formsSaga } from './forms';
+import { newApplicationIdSaga } from './newApplicationId';
 
-const rootReducer = combineReducers({ forms });
+const rootReducer = combineReducers({ forms, newApplicationId });
 
 export function* rootSaga() {
-	yield all([]);
+	yield all([formsSaga(), newApplicationIdSaga()]);
 }
 
 export default rootReducer;
