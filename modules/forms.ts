@@ -3,7 +3,14 @@ import { ActionType, createAction, createReducer } from 'typesafe-actions';
 import { Form } from '../models/form';
 import { Question } from '../models/question';
 import { QuestionTypes } from '../constants/questionTypes';
+import { put, select, takeLatest } from 'redux-saga/effects';
+import { RootState } from './index';
 
+/**
+ * Action
+ */
+
+const REQUEST_CREATE_FORM = 'forms/REQUEST_CREATE_FORM';
 const CREATE_FORM = 'forms/CREATE_FORM';
 const REMOVE_FORM = 'forms/REMOVE_FORM';
 const UPDATE_FORM_TITLE = 'forms/UPDATE_FORM_TITLE';
@@ -13,11 +20,12 @@ const UPDATE_QUESTION_TITLE = 'forms/UPDATE_QUESTION_TITLE';
 const CREATE_QUESTION_OPTION = 'forms/CREATE_QUESTION_OPTION';
 const UPDATE_QUESTION_OPTION = 'forms/UPDATE_QUESTION_OPTION';
 const REMOVE_QUESTION_OPTION = 'forms/REMOVE_QUESTION_OPTION';
+const UPDATE_FORM_APPLICATION_ID = 'forms/UPDATE_FORM_APPLICATION_ID';
 
-export const createForm = createAction(
+const createForm = createAction(
 	CREATE_FORM,
 	// prettier-ignore
-	(applicationId: number, title: string) => ({ applicationId, title }),
+	(applicationId: number | null, title: string) => ({ applicationId, title }),
 )();
 export const removeForm = createAction(
 	REMOVE_FORM, //
@@ -54,6 +62,32 @@ export const removeQuestionOption = createAction(
 	// prettier-ignore
 	(formIdx:number, questionIdx:number, optionIdx:number) =>({ formIdx, questionIdx, optionIdx }),
 )();
+/** 직접 업데이트하지 말고 requestSetNewApplicationId를 통해 업데이트할 것 */
+export const updateFormApplicationId = createAction(
+	UPDATE_FORM_APPLICATION_ID,
+	(applicationId: number) => ({ applicationId }),
+)();
+export const requestCreateForm = createAction(
+	REQUEST_CREATE_FORM, //
+	(title: string) => ({ title }),
+)();
+
+/**
+ * Saga
+ */
+
+function* requestCreateFormSaga({ payload }: ActionType<typeof requestCreateForm>): Generator<any> {
+	const applicationId: any = yield select(({ newApplicationId }: RootState) => newApplicationId);
+	yield put(createForm(applicationId, payload.title));
+}
+
+export function* formsSaga() {
+	yield takeLatest(REQUEST_CREATE_FORM, requestCreateFormSaga);
+}
+
+/**
+ * Reducer
+ */
 
 type FormsStateType = FormType[];
 
@@ -67,6 +101,7 @@ type FormsActionsType = ActionType<
 	| typeof createQuestionOption
 	| typeof updateQuestionOption
 	| typeof removeQuestionOption
+	| typeof updateFormApplicationId
 >;
 
 const initialState: FormsStateType = [];
@@ -111,6 +146,10 @@ const forms = createReducer<FormsStateType, FormsActionsType>(initialState, {
 		produce(state, (draft) => {
 			/* prettier-ignore */
 			draft[payload.formIdx].questionRequests[payload.questionIdx].questionOptionRequest.splice(payload.optionIdx, 1);
+		}),
+	[UPDATE_FORM_APPLICATION_ID]: (state, { payload }) =>
+		produce(state, (draft) => {
+			draft.forEach((form: FormType) => (form.applicationId = payload.applicationId));
 		}),
 });
 
