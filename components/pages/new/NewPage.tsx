@@ -1,12 +1,12 @@
 import { useDispatch } from 'react-redux';
-import { removeQuestionOption } from '../../../modules/forms';
+import { requestSetNewApplicationId } from '../../../modules/newApplicationId';
+import { removeQuestionOption, requestCreateForm } from '../../../modules/forms';
 import {
 	updateQuestionTitle,
 	createQuestionOption,
 	updateQuestionOption,
 } from '../../../modules/forms';
 import {
-	createForm,
 	removeForm,
 	updateFormTitle,
 	createQuestion,
@@ -15,7 +15,8 @@ import {
 
 export default function NewPage() {
 	const dispatch = useDispatch();
-	const onCreateForm = () => dispatch(createForm(1, '제목'));
+	const onSetNewApplicationId = () => dispatch(requestSetNewApplicationId(777));
+	const onRequestCreateForm = () => dispatch(requestCreateForm('제목냠냠'));
 	const onRemoveForm = () => dispatch(removeForm(0));
 	const onUpdateFormTitle = () => dispatch(updateFormTitle(0, '첫번째폼'));
 	const onCreateQuestion = () => dispatch(createQuestion(0, 3));
@@ -27,7 +28,9 @@ export default function NewPage() {
 
 	return (
 		<>
-			<button onClick={onCreateForm}>onCreateForm</button>
+			<button onClick={onSetNewApplicationId}>onSetNewApplicationId</button>
+			<br />
+			<button onClick={onRequestCreateForm}>onRequestCreateForm</button>
 			<br />
 			<button onClick={onRemoveForm}>onRemoveForm</button>
 			<br />
@@ -44,7 +47,6 @@ export default function NewPage() {
 			<button onClick={onUpdateQuestionOption}>onUpdateQuestionOption</button>
 			<br />
 			<button onClick={onRemoveQuestionOption}>onRemoveQuestionOption</button>
-			<br />
 		</>
 	);
 }
