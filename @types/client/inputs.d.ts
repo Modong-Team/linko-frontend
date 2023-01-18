@@ -1,0 +1,3 @@
+type ApplicationTitleInputProps = {
+	isError: boolean;
+};
