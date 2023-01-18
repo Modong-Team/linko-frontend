@@ -6,3 +6,7 @@ type CommonInputProps = {
 type ApplicationTitleInputProps = CommonInputProps & {
 	isError: boolean;
 };
+
+type EssentialCheckInputProps = {
+	label: string;
+};

@@ -12,7 +12,12 @@ import {
 	createQuestion,
 	removeQuestion,
 } from '../../../modules/forms';
-import { ApplicationTitleInput, FormTitleInput, QuestionTitleInput } from '../../inputs';
+import {
+	ApplicationTitleInput,
+	EssentialCheckInput,
+	FormTitleInput,
+	QuestionTitleInput,
+} from '../../inputs';
 import useInput from '../../../hooks/useInput';
 
 export default function NewPage() {
@@ -35,6 +40,7 @@ export default function NewPage() {
 			<ApplicationTitleInput isError={false} value={title} onChange={onChangeTitle} />
 			<FormTitleInput value={title} onChange={onChangeTitle} />
 			<QuestionTitleInput value={title} onChange={onChangeTitle} />
+			<EssentialCheckInput label='얍얍' />
 			<button onClick={onSetNewApplicationId}>onSetNewApplicationId</button>
 			<br />
 			<button onClick={onRequestCreateForm}>onRequestCreateForm</button>
