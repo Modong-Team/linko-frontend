@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { Colors } from '../../styles/colors';
 import { Fonts } from '../../styles/fonts';
 
-export default function FormTitleInput() {
+export default function FormTitleInput({ value, onChange }: CommonInputProps) {
 	return (
 		<S.Container>
-			<input value={'질문 페이지(1)'} />
+			<input value={value} onChange={onChange} />
 		</S.Container>
 	);
 }

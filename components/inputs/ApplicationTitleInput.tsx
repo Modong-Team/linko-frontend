@@ -3,7 +3,11 @@ import { Colors } from '../../styles/colors';
 import { Fonts } from '../../styles/fonts';
 import { useState } from 'react';
 
-export default function ApplicationTitleInput({ isError }: ApplicationTitleInputProps) {
+export default function ApplicationTitleInput({
+	isError,
+	value,
+	onChange,
+}: ApplicationTitleInputProps) {
 	const [isFocus, setIsFocus] = useState(false);
 
 	const onFocus = () => setIsFocus(true);
@@ -11,7 +15,13 @@ export default function ApplicationTitleInput({ isError }: ApplicationTitleInput
 
 	return (
 		<S.Container isFocus={isFocus} isError={isError}>
-			<input placeholder='공고 제목을 입력해주세요' onFocus={onFocus} onBlur={onBlur} />
+			<input
+				placeholder='공고 제목을 입력해주세요'
+				onFocus={onFocus}
+				onBlur={onBlur}
+				value={value}
+				onChange={onChange}
+			/>
 			{isError && <S.Error>내용을 입력해주세요.</S.Error>}
 		</S.Container>
 	);

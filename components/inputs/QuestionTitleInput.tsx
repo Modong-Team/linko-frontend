@@ -5,7 +5,7 @@ import { Fonts } from '../../styles/fonts';
 import { svgCircleX } from '../../styles/svgs';
 import IconButton from '../buttons/IconButton';
 
-export default function QuestionTitleInput() {
+export default function QuestionTitleInput({ value, onChange }: CommonInputProps) {
 	const [isFocus, setIsFocus] = useState(false);
 
 	const onFocus = () => setIsFocus(true);
@@ -14,7 +14,13 @@ export default function QuestionTitleInput() {
 	return (
 		<S.Container>
 			<S.Wrapper isFocus={isFocus} isError={false}>
-				<input placeholder='질문을 입력하세요.' onFocus={onFocus} onBlur={onBlur} />
+				<input
+					placeholder='질문을 입력하세요.'
+					onFocus={onFocus}
+					onBlur={onBlur}
+					value={value}
+					onChange={onChange}
+				/>
 			</S.Wrapper>
 			<IconButton svgIcon={svgCircleX} onClick={console.log} />
 		</S.Container>
