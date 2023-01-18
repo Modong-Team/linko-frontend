@@ -12,6 +12,7 @@ import {
 	createQuestion,
 	removeQuestion,
 } from '../../../modules/forms';
+import { ApplicationTitleInput, FormTitleInput, QuestionTitleInput } from '../../inputs';
 
 export default function NewPage() {
 	const dispatch = useDispatch();
@@ -28,6 +29,9 @@ export default function NewPage() {
 
 	return (
 		<>
+			<ApplicationTitleInput isError={false} />
+			<FormTitleInput />
+			<QuestionTitleInput />
 			<button onClick={onSetNewApplicationId}>onSetNewApplicationId</button>
 			<br />
 			<button onClick={onRequestCreateForm}>onRequestCreateForm</button>
