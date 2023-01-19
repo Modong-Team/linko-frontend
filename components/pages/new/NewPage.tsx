@@ -12,13 +12,20 @@ import {
 	createQuestion,
 	removeQuestion,
 } from '../../../modules/forms';
+import {
+	ApplicationTitleInput,
+	EssentialCheckInput,
+	FormTitleInput,
+	QuestionTitleInput,
+} from '../../inputs';
+import useInput from '../../../hooks/useInput';
 
 export default function NewPage() {
 	const dispatch = useDispatch();
 	const onSetNewApplicationId = () => dispatch(requestSetNewApplicationId(777));
 	const onRequestCreateForm = () => dispatch(requestCreateForm('제목냠냠'));
 	const onRemoveForm = () => dispatch(removeForm(0));
-	const onUpdateFormTitle = () => dispatch(updateFormTitle(0, '첫번째폼'));
+	const onUpdateFormTitle = (title: string) => dispatch(updateFormTitle(0, title));
 	const onCreateQuestion = () => dispatch(createQuestion(0, 3));
 	const onRemoveQuestion = () => dispatch(removeQuestion(0, 0));
 	const onUpdateQuestionTitle = () => dispatch(updateQuestionTitle(0, 0, '질문얍!'));
@@ -26,15 +33,21 @@ export default function NewPage() {
 	const onUpdateQuestionOption = () => dispatch(updateQuestionOption(0, 0, 0, '옵션얍얍!'));
 	const onRemoveQuestionOption = () => dispatch(removeQuestionOption(0, 0, 0));
 
+	const { value: title, onChange: onChangeTitle } = useInput('??');
+
 	return (
 		<>
+			<ApplicationTitleInput isError={false} value={title} onChange={onChangeTitle} />
+			<FormTitleInput value={title} onChange={onChangeTitle} />
+			<QuestionTitleInput value={title} onChange={onChangeTitle} />
+			<EssentialCheckInput label='얍얍' />
 			<button onClick={onSetNewApplicationId}>onSetNewApplicationId</button>
 			<br />
 			<button onClick={onRequestCreateForm}>onRequestCreateForm</button>
 			<br />
 			<button onClick={onRemoveForm}>onRemoveForm</button>
 			<br />
-			<button onClick={onUpdateFormTitle}>onUpdateFormTitle</button>
+			{/* <button onClick={onUpdateFormTitle}>onUpdateFormTitle</button> */}
 			<br />
 			<button onClick={onCreateQuestion}>onCreateQuestion</button>
 			<br />
