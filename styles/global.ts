@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { Colors } from './colors';
 import { ResetCSS } from './reset';
 
 export const GlobalStyle = createGlobalStyle`
@@ -18,5 +19,6 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 1.6rem;
     font-weight: 400;
     box-sizing: border-box;
+    color: ${Colors.gray900};
   }
 `;
