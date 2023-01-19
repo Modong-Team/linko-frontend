@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import QuestionTitleInput from './QuestionTitleInput';
 import { svgRadioQuestion, svgCheckQuestion } from '../../styles/svgs';
 import { QuestionTypes } from '../../constants/questionTypes';
-import useFreshMiddleState from '../../hooks/useFreshMiddleState';
 import useForms from '../../hooks/useForms';
 
 export default function OptionTitleInput({
@@ -12,17 +11,17 @@ export default function OptionTitleInput({
 	questionType,
 }: OptionTitleInputProps) {
 	const { forms, onUpdateQuestionOption, onRemoveQuestionOption } = useForms();
-	const { value: title, onChange: onChangeTitle } = useFreshMiddleState(
-		forms[formIdx].questionRequests[questionIdx].questionOptionRequest[optionIdx],
-		(title: string) => onUpdateQuestionOption(formIdx, questionIdx, optionIdx, title),
-	);
+
+	const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+		onUpdateQuestionOption(formIdx, questionIdx, optionIdx, e.target.value);
+	};
 
 	return (
 		<S.Container>
 			{questionType === QuestionTypes.multiSelectQuestion && svgCheckQuestion}
 			{questionType === QuestionTypes.singleSelectQuestion && svgRadioQuestion}
 			<QuestionTitleInput
-				value={title}
+				value={forms[formIdx].questionRequests[questionIdx].questionOptionRequest[optionIdx]}
 				onChange={onChangeTitle}
 				onClickRemove={() => onRemoveQuestionOption(formIdx, questionIdx, optionIdx)}
 			/>

@@ -5,7 +5,6 @@ import { QuestionTitleInput } from '../inputs';
 import OptionTitleInput from '../inputs/OptionTitleInput';
 import { QuestionTypes, QuestionLabels } from '../../constants/questionTypes';
 import useForms from '../../hooks/useForms';
-import useFreshMiddleState from '../../hooks/useFreshMiddleState';
 import NewOptionButton from '../buttons/NewOptionButton';
 
 export default function QuestionBox({
@@ -15,10 +14,10 @@ export default function QuestionBox({
 	questionType,
 }: QuestionBoxProps) {
 	const { forms, onUpdateQuestionTitle, onCreateQuestionOption, onRemoveQuestion } = useForms();
-	const { value: title, onChange: onChangeTitle } = useFreshMiddleState(
-		forms[formIdx].questionRequests[questionIdx].content,
-		(title: string) => onUpdateQuestionTitle(formIdx, questionIdx, title),
-	);
+
+	const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+		onUpdateQuestionTitle(formIdx, questionIdx, e.target.value);
+	};
 
 	return (
 		<S.Container>
@@ -26,7 +25,7 @@ export default function QuestionBox({
 				<h3>{QuestionLabels[questionType]}</h3>
 				<div>
 					<QuestionTitleInput
-						value={title}
+						value={forms[formIdx].questionRequests[questionIdx].content}
 						onChange={onChangeTitle}
 						onClickRemove={() => onRemoveQuestion(formIdx, questionIdx)}
 					/>
