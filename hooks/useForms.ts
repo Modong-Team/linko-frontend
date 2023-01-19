@@ -9,6 +9,7 @@ import {
 	createQuestionOption,
 	updateQuestionOption,
 	removeQuestionOption,
+	saveFormDataId,
 } from '../modules/forms';
 import { RootState } from '../modules/index';
 import { requestSetNewApplicationId } from '../modules/newApplicationId';
@@ -49,6 +50,9 @@ export default function useForms() {
 	const onRemoveQuestionOption = (formIdx: number, questionIdx: number, optionIdx: number) =>
 		dispatch(removeQuestionOption(formIdx, questionIdx, optionIdx));
 
+	const onSaveFormDataId = (formIdx: number, dataId: number) =>
+		dispatch(saveFormDataId(formIdx, dataId));
+
 	return {
 		forms,
 		onSetNewApplicationId,
@@ -61,5 +65,6 @@ export default function useForms() {
 		onCreateQuestionOption,
 		onUpdateQuestionOption,
 		onRemoveQuestionOption,
+		onSaveFormDataId,
 	};
 }
