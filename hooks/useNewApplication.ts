@@ -1,8 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../modules/index';
 import {
+	addNewApplicationEssential,
+	removeNewApplicationEssential,
+} from '../modules/newApplication';
+import {
 	setNewApplicationClubId,
-	setNewApplicationEssentials,
 	setNewApplicationTitle,
 	setNewApplicationUrlId,
 } from '../modules/newApplication';
@@ -12,15 +15,22 @@ export default function useNewApplication() {
 	const dispatch = useDispatch();
 
 	const onSetNewApplicationClubId = (clubId: number) => dispatch(setNewApplicationClubId(clubId));
-	const onSetNewApplicationEssentials = (essentials: number[]) =>
-		dispatch(setNewApplicationEssentials(essentials));
+
+	const onAddNewApplicationEssentials = (essentialIdx: number) =>
+		dispatch(addNewApplicationEssential(essentialIdx));
+
+	const onRemoveNewApplicationEssentials = (essentialIdx: number) =>
+		dispatch(removeNewApplicationEssential(essentialIdx));
+
 	const onSetNewApplicationTitle = (title: string) => dispatch(setNewApplicationTitle(title));
+
 	const onSetNewApplicationUrlId = (urlId: string) => dispatch(setNewApplicationUrlId(urlId));
 
 	return {
 		newApplication,
 		onSetNewApplicationClubId,
-		onSetNewApplicationEssentials,
+		onAddNewApplicationEssentials,
+		onRemoveNewApplicationEssentials,
 		onSetNewApplicationTitle,
 		onSetNewApplicationUrlId,
 	};

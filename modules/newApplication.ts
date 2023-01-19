@@ -1,11 +1,13 @@
 import { ActionType, createAction, createReducer } from 'typesafe-actions';
+import produce from 'immer';
 
 /**
  * Action
  */
 
 const SET_NEW_APPLICATION_CLUB_ID = 'newApplication/SET_NEW_APPLICATION_CLUB_ID';
-const SET_NEW_APPLICATION_ESSENTIALS = 'newApplication/SET_NEW_APPLICATION_ESSENTIALS';
+const ADD_NEW_APPLICATION_ESSENTIAL = 'newApplication/ADD_NEW_APPLICATION_ESSENTIAL';
+const REMOVE_NEW_APPLICATION_ESSENTIAL = 'newApplication/REMOVE_NEW_APPLICATION_ESSENTIAL';
 const SET_NEW_APPLICATION_TITLE = 'newApplication/SET_NEW_APPLICATION_TITLE';
 const SET_NEW_APPLICATION_URL_ID = 'newApplication/SET_NEW_APPLICATION_URL_ID';
 
@@ -13,9 +15,13 @@ export const setNewApplicationClubId = createAction(
 	SET_NEW_APPLICATION_CLUB_ID, //
 	(clubId: number) => ({ clubId }),
 )();
-export const setNewApplicationEssentials = createAction(
-	SET_NEW_APPLICATION_ESSENTIALS, //
-	(essentials: number[]) => ({ essentials }),
+export const addNewApplicationEssential = createAction(
+	ADD_NEW_APPLICATION_ESSENTIAL, //
+	(essentialIdx: number) => ({ essentialIdx }),
+)();
+export const removeNewApplicationEssential = createAction(
+	REMOVE_NEW_APPLICATION_ESSENTIAL, //
+	(essentialIdx: number) => ({ essentialIdx }),
 )();
 export const setNewApplicationTitle = createAction(
 	SET_NEW_APPLICATION_TITLE, //
@@ -39,7 +45,8 @@ type NewApplicationStateType = {
 
 type NewApplicationActionsType = ActionType<
 	| typeof setNewApplicationClubId
-	| typeof setNewApplicationEssentials
+	| typeof addNewApplicationEssential
+	| typeof removeNewApplicationEssential
 	| typeof setNewApplicationTitle
 	| typeof setNewApplicationUrlId
 >;
@@ -55,10 +62,16 @@ const newApplication = createReducer<NewApplicationStateType, NewApplicationActi
 	initialState,
 	{
 		[SET_NEW_APPLICATION_CLUB_ID]: (state, { payload }) => ({ ...state, clubId: payload.clubId }),
-		[SET_NEW_APPLICATION_ESSENTIALS]: (state, { payload }) => ({
-			...state,
-			essentialQuestionIds: payload.essentials,
-		}),
+		[ADD_NEW_APPLICATION_ESSENTIAL]: (state, { payload }) =>
+			produce(state, (draft) => {
+				draft.essentialQuestionIds.push(payload.essentialIdx);
+			}),
+		[REMOVE_NEW_APPLICATION_ESSENTIAL]: (state, { payload }) =>
+			produce(state, (draft) => {
+				/* prettier-ignore */
+				const removeIdx = draft.essentialQuestionIds.findIndex((idx) => idx === payload.essentialIdx);
+				draft.essentialQuestionIds.splice(removeIdx, 1);
+			}),
 		[SET_NEW_APPLICATION_TITLE]: (state, { payload }) => ({ ...state, title: payload.title }),
 		[SET_NEW_APPLICATION_URL_ID]: (state, { payload }) => ({ ...state, urlId: payload.urlId }),
 	},
