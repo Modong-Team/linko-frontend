@@ -1,17 +1,20 @@
-type NewIndicatorProps = {
+type PageProps = {
 	page: number;
 };
 
-type NewPageButtonsProps = {
-	page: number;
+type NewIndicatorProps = PageProps & {};
+
+type NewPageButtonsProps = PageProps & {
 	onPrevPage: () => void;
 	onNextPage: () => void;
 };
 
-type NewMainProps = {
-	page: number;
-};
+type NewMainProps = PageProps & {};
 
 type NewFormsProps = {
 	formIdx: number;
+};
+
+type NewNavigatorProps = PageProps & {
+	onChangePage: (page: number) => void;
 };

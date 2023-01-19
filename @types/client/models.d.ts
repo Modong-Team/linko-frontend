@@ -1,7 +1,7 @@
 type QuestionType = {
 	content: string;
 	questionOptionRequest: string[];
-	questionType: number;
+	questionType: 1 | 2 | 3;
 };
 
 type FormType = {

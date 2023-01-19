@@ -127,6 +127,8 @@ const forms = createReducer<FormsStateType, FormsActionsType>(initialState, {
 		}),
 	[REMOVE_QUESTION]: (state, { payload }) =>
 		produce(state, (draft) => {
+			/* At least 1 Question */
+			if (draft[payload.formIdx].questionRequests.length === 1) return draft;
 			draft[payload.formIdx].questionRequests.splice(payload.questionIdx, 1);
 		}),
 	[UPDATE_QUESTION_TITLE]: (state, { payload }) =>
@@ -143,8 +145,10 @@ const forms = createReducer<FormsStateType, FormsActionsType>(initialState, {
 			draft[payload.formIdx].questionRequests[payload.questionIdx].questionOptionRequest[payload.optionIdx] = payload.title;
 		}),
 	[REMOVE_QUESTION_OPTION]: (state, { payload }) =>
+		/* prettier-ignore */
 		produce(state, (draft) => {
-			/* prettier-ignore */
+			/* At least 1 Option */
+			if (draft[payload.formIdx].questionRequests[payload.questionIdx].questionOptionRequest.length === 1) return draft;
 			draft[payload.formIdx].questionRequests[payload.questionIdx].questionOptionRequest.splice(payload.optionIdx, 1);
 		}),
 	[UPDATE_FORM_APPLICATION_ID]: (state, { payload }) =>
