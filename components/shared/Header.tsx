@@ -13,8 +13,6 @@ export default function Header() {
 namespace S {
 	export const Container = styled(SC.HeaderContainer)`
 		width: 100%;
-		position: fixed;
-		top: 0;
 		z-index: 10;
 	`;
 }

@@ -1,7 +1,7 @@
 import { Colors } from './colors';
 
 export const Styles = {
-	stickyIndicatorAndNavigator: 'position:sticky, top:10rem, height:fit-content,',
+	stickyIndicatorAndNavigator: 'position:sticky; top:10rem; height:fit-content;',
 	headerHeight: '8rem',
 	sidebarWidth: '22rem',
 	dropDownAlignLeft: '>div{width:9.2rem,}',

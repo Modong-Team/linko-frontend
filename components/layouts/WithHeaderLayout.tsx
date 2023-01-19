@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { DefaultLayout } from '.';
-import { Styles } from '../../styles/styles';
 
 export default function WithHeaderLayout({ children }: ChildrenType) {
 	return (
@@ -11,7 +10,5 @@ export default function WithHeaderLayout({ children }: ChildrenType) {
 }
 
 namespace S {
-	export const Layout = styled.div`
-		padding-top: ${Styles.headerHeight};
-	`;
+	export const Layout = styled.div``;
 }
