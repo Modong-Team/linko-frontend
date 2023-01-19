@@ -3,7 +3,7 @@ type CommonInputProps = {
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-type ApplicationTitleInputProps = CommonInputProps & {
+type ApplicationTitleInputProps = {
 	isError: boolean;
 };
 

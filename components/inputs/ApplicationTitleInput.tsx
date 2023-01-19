@@ -2,12 +2,15 @@ import styled from 'styled-components';
 import { Colors } from '../../styles/colors';
 import { Fonts } from '../../styles/fonts';
 import { useState } from 'react';
+import useFreshMiddleState from '../../hooks/useFreshMiddleState';
+import useNewApplication from '../../hooks/useNewApplication';
 
-export default function ApplicationTitleInput({
-	isError,
-	value,
-	onChange,
-}: ApplicationTitleInputProps) {
+export default function ApplicationTitleInput({ isError }: ApplicationTitleInputProps) {
+	const { newApplication, onSetNewApplicationTitle } = useNewApplication();
+	const { value: title, onChange: onChangeTitle } = useFreshMiddleState(
+		newApplication.title,
+		onSetNewApplicationTitle,
+	);
 	const [isFocus, setIsFocus] = useState(false);
 
 	const onFocus = () => setIsFocus(true);
@@ -19,8 +22,8 @@ export default function ApplicationTitleInput({
 				placeholder='공고 제목을 입력해주세요'
 				onFocus={onFocus}
 				onBlur={onBlur}
-				value={value}
-				onChange={onChange}
+				value={title}
+				onChange={onChangeTitle}
 			/>
 			{isError && <S.Error>내용을 입력해주세요.</S.Error>}
 		</S.Container>
