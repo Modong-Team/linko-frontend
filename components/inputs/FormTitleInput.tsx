@@ -5,7 +5,7 @@ import { Fonts } from '../../styles/fonts';
 export default function FormTitleInput({ value, onChange }: CommonInputProps) {
 	return (
 		<S.Container>
-			<input value={value} onChange={onChange} />
+			<input value={value} onChange={onChange} placeholder='질문 페이지' />
 		</S.Container>
 	);
 }

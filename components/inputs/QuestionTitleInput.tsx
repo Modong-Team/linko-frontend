@@ -9,6 +9,7 @@ export default function QuestionTitleInput({
 	value,
 	onChange,
 	onClickRemove,
+	placeHolder,
 }: QuestionTitleInputProps) {
 	const [isFocus, setIsFocus] = useState(false);
 
@@ -19,7 +20,7 @@ export default function QuestionTitleInput({
 		<S.Container>
 			<S.Wrapper isFocus={isFocus} isError={false}>
 				<input
-					placeholder='질문을 입력하세요.'
+					placeholder={placeHolder}
 					onFocus={onFocus}
 					onBlur={onBlur}
 					value={value}

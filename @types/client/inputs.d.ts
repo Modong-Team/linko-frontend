@@ -22,4 +22,5 @@ type OptionTitleInputProps = {
 
 type QuestionTitleInputProps = CommonInputProps & {
 	onClickRemove: () => void;
+	placeHolder: string;
 };

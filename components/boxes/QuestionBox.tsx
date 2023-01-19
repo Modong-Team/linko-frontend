@@ -28,6 +28,7 @@ export default function QuestionBox({
 						value={forms[formIdx].questionRequests[questionIdx].content}
 						onChange={onChangeTitle}
 						onClickRemove={() => onRemoveQuestion(formIdx, questionIdx)}
+						placeHolder={'질문을 입력하세요.'}
 					/>
 				</div>
 			</S.Wrapper>

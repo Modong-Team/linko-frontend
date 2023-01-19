@@ -24,6 +24,7 @@ export default function OptionTitleInput({
 				value={forms[formIdx].questionRequests[questionIdx].questionOptionRequest[optionIdx]}
 				onChange={onChangeTitle}
 				onClickRemove={() => onRemoveQuestionOption(formIdx, questionIdx, optionIdx)}
+				placeHolder={'선택 ' + (optionIdx + 1)}
 			/>
 		</S.Container>
 	);
