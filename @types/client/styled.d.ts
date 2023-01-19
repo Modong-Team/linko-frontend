@@ -9,3 +9,7 @@ type IsErrorType = {
 type IsCurrentType = {
 	isCurrent: boolean;
 };
+
+type IsHiddenType = {
+	isHidden: boolean;
+};
