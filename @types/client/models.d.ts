@@ -5,6 +5,7 @@ type QuestionType = {
 };
 
 type FormType = {
+	dataId?: number | null;
 	applicationId: number | null;
 	questionRequests: QuestionType[];
 	title: string;
