@@ -1,14 +1,19 @@
 import styled from 'styled-components';
 import { SC } from '../../styles/styled';
 import { svgModong } from '../../styles/svgs';
+import { useDispatch } from 'react-redux';
+import { requestNew } from '../../modules/api/new';
 
 export default function Header({ isNew, isMain }: HeaderProps) {
+	const dispatch = useDispatch();
+	const onClick = () => dispatch(requestNew());
+
 	return (
 		<S.Container>
 			<SC.HeaderLogo>{svgModong}</SC.HeaderLogo>
 			{isNew && (
 				<div>
-					<button>저장하기</button>
+					<button onClick={onClick}>저장하기</button>
 					<button>작성완료</button>
 				</div>
 			)}
