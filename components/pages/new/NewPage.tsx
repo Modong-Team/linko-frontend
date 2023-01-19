@@ -19,6 +19,12 @@ import {
 	QuestionTitleInput,
 } from '../../inputs';
 import useInput from '../../../hooks/useInput';
+import styled from 'styled-components';
+import NewIndicator from './NewIndicator';
+import NewMain from './NewMain';
+import NewNavigator from './NewNavigator';
+import NewPageButtons from './NewPageButtons';
+import { useState } from 'react';
 
 export default function NewPage() {
 	const dispatch = useDispatch();
@@ -35,9 +41,15 @@ export default function NewPage() {
 
 	const { value: title, onChange: onChangeTitle } = useInput('??');
 
+	const [page, setPage] = useState(-1);
+
+	const onChangePage = (page: number) => setPage(page);
+	const onPrevPage = () => setPage(page - 1);
+	const onNextPage = () => setPage(page + 1);
+
 	return (
-		<>
-			<ApplicationTitleInput isError={false} value={title} onChange={onChangeTitle} />
+		<S.Container>
+			{/* <ApplicationTitleInput isError={false} value={title} onChange={onChangeTitle} />
 			<FormTitleInput value={title} onChange={onChangeTitle} />
 			<QuestionTitleInput value={title} onChange={onChangeTitle} />
 			<EssentialCheckInput label='얍얍' />
@@ -47,7 +59,7 @@ export default function NewPage() {
 			<br />
 			<button onClick={onRemoveForm}>onRemoveForm</button>
 			<br />
-			{/* <button onClick={onUpdateFormTitle}>onUpdateFormTitle</button> */}
+			<button onClick={onUpdateFormTitle}>onUpdateFormTitle</button>
 			<br />
 			<button onClick={onCreateQuestion}>onCreateQuestion</button>
 			<br />
@@ -59,7 +71,29 @@ export default function NewPage() {
 			<br />
 			<button onClick={onUpdateQuestionOption}>onUpdateQuestionOption</button>
 			<br />
-			<button onClick={onRemoveQuestionOption}>onRemoveQuestionOption</button>
-		</>
+			<button onClick={onRemoveQuestionOption}>onRemoveQuestionOption</button> */}
+			<ApplicationTitleInput value={''} onChange={console.log} isError={false} />
+			<NewIndicator page={page} />
+			<NewMain page={page} />
+			<NewNavigator />
+			<NewPageButtons page={page} onPrevPage={onPrevPage} onNextPage={onNextPage} />
+		</S.Container>
 	);
+}
+
+namespace S {
+	export const Container = styled.div`
+		display: grid;
+		grid-template-columns: 19.4rem 71.2rem 19.4rem;
+		row-gap: 1.6rem;
+		width: fit-content;
+		margin: 0 auto;
+		justify-content: center;
+		padding-top: 4rem;
+
+		> div:first-of-type,
+		> div:last-of-type {
+			grid-column: 2/3;
+		}
+	`;
 }

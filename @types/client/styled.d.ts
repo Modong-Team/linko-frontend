@@ -5,3 +5,15 @@ type IsFocusType = {
 type IsErrorType = {
 	isError: boolean;
 };
+
+type IsCurrentType = {
+	isCurrent: boolean;
+};
+
+type IsHiddenType = {
+	isHidden: boolean;
+};
+
+type IsFixedType = {
+	isFixed: boolean;
+};
