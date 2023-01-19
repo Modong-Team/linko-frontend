@@ -17,3 +17,7 @@ type IsHiddenType = {
 type IsFixedType = {
 	isFixed: boolean;
 };
+
+type CustomCSSType = {
+	customCSS: string;
+};

@@ -13,3 +13,9 @@ type NewPageButtonProps = CommonButtonProps & {
 	isRight?: boolean;
 	isHidden: boolean;
 };
+
+type NewQuestionButtonProps = {
+	onCreateTextQuestion: () => void;
+	onCreateSingleSelectQuestion: () => void;
+	onCreateMultiSelectQuestion: () => void;
+};

@@ -5,7 +5,12 @@ import { Fonts } from '../../styles/fonts';
 import { svgCircleX } from '../../styles/svgs';
 import IconButton from '../buttons/IconButton';
 
-export default function QuestionTitleInput({ value, onChange }: CommonInputProps) {
+export default function QuestionTitleInput({
+	value,
+	onChange,
+	onClickRemove,
+	placeHolder,
+}: QuestionTitleInputProps) {
 	const [isFocus, setIsFocus] = useState(false);
 
 	const onFocus = () => setIsFocus(true);
@@ -15,14 +20,14 @@ export default function QuestionTitleInput({ value, onChange }: CommonInputProps
 		<S.Container>
 			<S.Wrapper isFocus={isFocus} isError={false}>
 				<input
-					placeholder='질문을 입력하세요.'
+					placeholder={placeHolder}
 					onFocus={onFocus}
 					onBlur={onBlur}
 					value={value}
 					onChange={onChange}
 				/>
 			</S.Wrapper>
-			<IconButton svgIcon={svgCircleX} onClick={console.log} />
+			<IconButton svgIcon={svgCircleX} onClick={onClickRemove} />
 		</S.Container>
 	);
 }
@@ -33,6 +38,7 @@ namespace S {
 		align-items: center;
 		gap: 1.15rem;
 		padding-right: 0.75rem;
+		flex-grow: 1;
 	`;
 
 	export const Wrapper = styled.div<IsFocusType & IsErrorType>`
