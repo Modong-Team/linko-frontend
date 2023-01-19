@@ -5,11 +5,13 @@ import newApplicationId from './newApplicationId';
 import { formsSaga } from './forms';
 import { newApplicationIdSaga } from './newApplicationId';
 import newApplication from './newApplication';
+import { newSaga } from './api/new';
+import postedFormDataId from './api/postedFormDataId';
 
-const rootReducer = combineReducers({ forms, newApplicationId, newApplication });
+const rootReducer = combineReducers({ forms, newApplicationId, newApplication, postedFormDataId });
 
 export function* rootSaga() {
-	yield all([formsSaga(), newApplicationIdSaga()]);
+	yield all([formsSaga(), newApplicationIdSaga(), newSaga()]);
 }
 
 export default rootReducer;
