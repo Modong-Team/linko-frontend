@@ -1,7 +1,10 @@
 import { Question } from './question';
 import { QuestionTypes } from '../constants/questionTypes';
+import { immerable } from 'immer';
 
 export class Form implements FormType {
+	[immerable] = true;
+
 	applicationId: number | null;
 	questionRequests: QuestionType[];
 	title: string;
