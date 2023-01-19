@@ -36,7 +36,7 @@ export const setNewApplicationUrlId = createAction(
  * Reducer
  */
 
-type NewApplicationStateType = {
+export type NewApplicationStateType = {
 	clubId: number | null;
 	essentialQuestionIds: number[];
 	title: string;

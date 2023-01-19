@@ -13,7 +13,7 @@ const sagaMiddleware = createSagaMiddleware();
 const enhancer =
 	process.env.NODE_ENV === 'production'
 		? composeWithDevTools(applyMiddleware(sagaMiddleware))
-		: composeWithDevTools(applyMiddleware(logger, sagaMiddleware));
+		: composeWithDevTools(applyMiddleware(sagaMiddleware));
 
 export const store = createStore(rootReducer, enhancer);
 sagaMiddleware.run(rootSaga);

@@ -21,6 +21,7 @@ const CREATE_QUESTION_OPTION = 'forms/CREATE_QUESTION_OPTION';
 const UPDATE_QUESTION_OPTION = 'forms/UPDATE_QUESTION_OPTION';
 const REMOVE_QUESTION_OPTION = 'forms/REMOVE_QUESTION_OPTION';
 const UPDATE_FORM_APPLICATION_ID = 'forms/UPDATE_FORM_APPLICATION_ID';
+const SAVE_FORM_DATA_ID = 'forms/SAVE_FORM_DATA_ID';
 
 const createForm = createAction(
 	CREATE_FORM,
@@ -71,6 +72,10 @@ export const requestCreateForm = createAction(
 	REQUEST_CREATE_FORM, //
 	(title: string) => ({ title }),
 )();
+export const saveFormDataId = createAction(
+	SAVE_FORM_DATA_ID, //
+	(formIdx: number, dataId: number) => ({ formIdx, dataId }),
+)();
 
 /**
  * Saga
@@ -89,7 +94,7 @@ export function* formsSaga() {
  * Reducer
  */
 
-type FormsStateType = FormType[];
+export type FormsStateType = FormType[];
 
 type FormsActionsType = ActionType<
 	| typeof createForm
@@ -102,6 +107,7 @@ type FormsActionsType = ActionType<
 	| typeof updateQuestionOption
 	| typeof removeQuestionOption
 	| typeof updateFormApplicationId
+	| typeof saveFormDataId
 >;
 
 const initialState: FormsStateType = [];
@@ -154,6 +160,10 @@ const forms = createReducer<FormsStateType, FormsActionsType>(initialState, {
 	[UPDATE_FORM_APPLICATION_ID]: (state, { payload }) =>
 		produce(state, (draft) => {
 			draft.forEach((form: FormType) => (form.applicationId = payload.applicationId));
+		}),
+	[SAVE_FORM_DATA_ID]: (state, { payload }) =>
+		produce(state, (draft) => {
+			draft[payload.formIdx].dataId = payload.dataId;
 		}),
 });
 
