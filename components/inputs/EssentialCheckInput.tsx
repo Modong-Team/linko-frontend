@@ -5,9 +5,22 @@ import { svgEntireCheckbox } from '../../styles/svgs';
 import { v4 as uuid } from 'uuid';
 import { useEffect, useState } from 'react';
 import { css } from 'styled-components';
+import useNewApplication from '../../hooks/useNewApplication';
 
-export default function EssentialCheckInput({ label, isFixed }: EssentialCheckInputProps) {
+export default function EssentialCheckInput({
+	label,
+	isFixed,
+	essentialIdx,
+}: EssentialCheckInputProps) {
 	const [id, setId] = useState('');
+	const { newApplication, onAddNewApplicationEssentials, onRemoveNewApplicationEssentials } =
+		useNewApplication();
+
+	const onChangeIsChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const isChecked = e.target.checked;
+		if (isChecked) onAddNewApplicationEssentials(essentialIdx);
+		if (!isChecked) onRemoveNewApplicationEssentials(essentialIdx);
+	};
 
 	useEffect(() => {
 		setId(uuid());
@@ -15,7 +28,12 @@ export default function EssentialCheckInput({ label, isFixed }: EssentialCheckIn
 
 	return (
 		<S.Container isFixed={isFixed}>
-			<input type='checkbox' id={id} checked={isFixed ? isFixed : undefined} />
+			<input
+				type='checkbox'
+				id={id}
+				checked={isFixed ? isFixed : newApplication.essentialQuestionIds.includes(essentialIdx)}
+				onChange={onChangeIsChecked}
+			/>
 			<label htmlFor={id}>
 				{svgEntireCheckbox}
 				<p>{label}</p>

@@ -10,6 +10,7 @@ type ApplicationTitleInputProps = {
 type EssentialCheckInputProps = {
 	label: string;
 	isFixed: boolean;
+	essentialIdx: number;
 };
 
 type OptionTitleInputProps = {
