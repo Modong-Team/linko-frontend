@@ -49,6 +49,7 @@ namespace S {
 		box-shadow: 6px 7px 16px rgba(106, 106, 106, 0.17);
 		cursor: pointer;
 		z-index: 5;
+		width: fit-content;
 
 		div {
 			${Fonts.button13medium}

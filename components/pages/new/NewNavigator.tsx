@@ -1,12 +1,57 @@
 import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Styles } from '../../../styles/styles';
+import useForms from '../../../hooks/useForms';
+import { useState } from 'react';
+import { svgMore } from '../../../styles/svgs';
+import DropDown from '../../dropdowns/DropDown';
 
-export default function NewNavigator() {
+export default function NewNavigator({ page, onChangePage }: NewNavigatorProps) {
+	const { forms, onRemoveForm } = useForms();
+	const [showMoreFor, setShowMoreFor] = useState<number | null>(null);
+
+	const onClickMore = (e: React.MouseEvent, idx: number) => {
+		e.stopPropagation();
+		setShowMoreFor(idx);
+	};
+	const onBlur = () => setShowMoreFor(-1);
+
+	const onClickRemove = (e: React.MouseEvent, idx: number) => {
+		e.stopPropagation();
+		setShowMoreFor(null);
+		onRouteToAppropriatePage(idx);
+		onRemoveForm(idx);
+	};
+
+	const onRouteToAppropriatePage = (removeTarget: number) => {
+		if (removeTarget === page) onChangePage(page - 1);
+		if (removeTarget <= page) onChangePage(page - 1);
+	};
+
 	return (
 		<S.Container>
-			<S.NavigatorElement isCurrent={true}>지원자 정보</S.NavigatorElement>
-			<S.NavigatorElement isCurrent={false}>지원자 정보</S.NavigatorElement>
+			<S.NavigatorElement isCurrent={page === -1} onClick={() => onChangePage(-1)}>
+				지원자 정보
+			</S.NavigatorElement>
+			{forms.map((form, i) => (
+				<S.NavigatorElement
+					isCurrent={page === i}
+					onClick={() => onChangePage(i)}
+					onBlur={onBlur}
+					key={i}>
+					<span>{form.title}</span>
+					<span onClick={(e) => onClickMore(e, i)}>{svgMore}</span>
+					{showMoreFor === i && (
+						<DropDown
+							option1={'삭제하기'}
+							option2={'복제하기'}
+							onClick1={(e) => onClickRemove(e, i)}
+							onClick2={() => alert('미구현된 피쳐입니다.')}
+							customCSS={`${Styles.dropDownAlignRightBottom} bottom:-6rem; right:-2rem; div:first-of-type{${Styles.dropDownOptionRed}}`}
+						/>
+					)}
+				</S.NavigatorElement>
+			))}
 		</S.Container>
 	);
 }
@@ -23,11 +68,11 @@ namespace S {
 	`;
 
 	export const NavigatorElement = styled.button<IsCurrentType>`
-		box-sizing: border-box;
-		position: relative;
 		background-color: ${(props) => (props.isCurrent ? Colors.white : Colors.gray200)};
 		border: 0.1rem solid ${(props) => (props.isCurrent ? Colors.gray200 : Colors.gray300)};
 		color: ${(props) => (props.isCurrent ? Colors.gray900 : Colors.gray500)};
+		box-sizing: border-box;
+		position: relative;
 		padding: 0rem 1.6rem;
 		padding-right: 1rem;
 		border-radius: 0.8rem;

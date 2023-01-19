@@ -75,7 +75,7 @@ export default function NewPage() {
 			<ApplicationTitleInput value={''} onChange={console.log} isError={false} />
 			<NewIndicator page={page} />
 			<NewMain page={page} />
-			<NewNavigator />
+			<NewNavigator page={page} onChangePage={onChangePage} />
 			<NewPageButtons page={page} onPrevPage={onPrevPage} onNextPage={onNextPage} />
 		</S.Container>
 	);
