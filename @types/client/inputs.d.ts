@@ -10,3 +10,14 @@ type ApplicationTitleInputProps = CommonInputProps & {
 type EssentialCheckInputProps = {
 	label: string;
 };
+
+type OptionTitleInputProps = {
+	formIdx: number;
+	questionIdx: number;
+	optionIdx: number;
+	questionType: 2 | 3;
+};
+
+type QuestionTitleInputProps = CommonInputProps & {
+	onClickRemove: () => void;
+};
