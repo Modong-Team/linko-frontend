@@ -9,6 +9,7 @@ type ApplicationTitleInputProps = CommonInputProps & {
 
 type EssentialCheckInputProps = {
 	label: string;
+	isFixed: boolean;
 };
 
 type OptionTitleInputProps = {

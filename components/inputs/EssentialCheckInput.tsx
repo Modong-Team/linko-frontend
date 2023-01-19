@@ -4,8 +4,9 @@ import { Fonts } from '../../styles/fonts';
 import { svgEntireCheckbox } from '../../styles/svgs';
 import { v4 as uuid } from 'uuid';
 import { useEffect, useState } from 'react';
+import { css } from 'styled-components';
 
-export default function EssentialCheckInput({ label }: EssentialCheckInputProps) {
+export default function EssentialCheckInput({ label, isFixed }: EssentialCheckInputProps) {
 	const [id, setId] = useState('');
 
 	useEffect(() => {
@@ -13,8 +14,8 @@ export default function EssentialCheckInput({ label }: EssentialCheckInputProps)
 	}, []);
 
 	return (
-		<S.Container>
-			<input type='checkbox' id={id} />
+		<S.Container isFixed={isFixed}>
+			<input type='checkbox' id={id} checked={isFixed ? isFixed : undefined} />
 			<label htmlFor={id}>
 				{svgEntireCheckbox}
 				<p>{label}</p>
@@ -24,7 +25,7 @@ export default function EssentialCheckInput({ label }: EssentialCheckInputProps)
 }
 
 namespace S {
-	export const Container = styled.div`
+	export const Container = styled.div<IsFixedType>`
 		> input {
 			display: none;
 		}
@@ -78,6 +79,24 @@ namespace S {
 			}
 
 			> path:nth-of-type(3) {
+				fill: ${Colors.white};
+			}
+		}
+
+		${(props) => props.isFixed && FixedStyle}
+	`;
+
+	export const FixedStyle = css`
+		pointer-events: none;
+
+		/* Checked */
+		> input:checked + label > svg {
+			> path:nth-of-type(1),
+			> path:nth-of-type(3) {
+				fill: ${Colors.gray500};
+			}
+
+			> path:nth-of-type(2) {
 				fill: ${Colors.white};
 			}
 		}

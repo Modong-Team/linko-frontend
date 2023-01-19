@@ -8,17 +8,17 @@ export default function NewEssentials() {
 			<h1>지원자 정보</h1>
 			<h2>아래 3가지 항목은 지원자들에게 기본적으로 제출받는 항목입니다.</h2>
 			<div>
-				<EssentialCheckInput label='성함' />
-				<EssentialCheckInput label='이메일' />
-				<EssentialCheckInput label='전화번호' />
+				<EssentialCheckInput label='성함' isFixed={true} />
+				<EssentialCheckInput label='이메일' isFixed={true} />
+				<EssentialCheckInput label='전화번호' isFixed={true} />
 			</div>
 			<h2>지원자에게 추가로 제출받을 항목을 선택해 주세요.</h2>
 			<div>
-				<EssentialCheckInput label='성별' />
-				<EssentialCheckInput label='생년월일' />
-				<EssentialCheckInput label='소속 학교' />
-				<EssentialCheckInput label='소속 과' />
-				<EssentialCheckInput label='학번' />
+				<EssentialCheckInput label='성별' isFixed={false} />
+				<EssentialCheckInput label='생년월일' isFixed={false} />
+				<EssentialCheckInput label='소속 학교' isFixed={false} />
+				<EssentialCheckInput label='소속 과' isFixed={false} />
+				<EssentialCheckInput label='학번' isFixed={false} />
 			</div>
 		</S.Container>
 	);
