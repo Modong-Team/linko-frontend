@@ -1,6 +1,5 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import { ActionType, createAction, createReducer } from 'typesafe-actions';
-import { updateFormApplicationId } from './forms';
 
 /**
  * Action
@@ -25,7 +24,6 @@ export const requestSetNewApplicationId = createAction(
 function* requestSetNewApplicationIdSaga({
 	payload,
 }: ActionType<typeof requestSetNewApplicationId>) {
-	yield put(updateFormApplicationId(payload.applicationId));
 	yield put(setNewApplicationId(payload.applicationId));
 }
 
@@ -37,7 +35,7 @@ export function* newApplicationIdSaga() {
  * Reducer
  */
 
-type NewApplicationIdStateType = number | null;
+export type NewApplicationIdStateType = number | null;
 
 type NewApplicationIdActionsType = ActionType<typeof setNewApplicationId>;
 
