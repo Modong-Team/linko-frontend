@@ -7,8 +7,15 @@ import { newApplicationIdSaga } from './newApplicationId';
 import newApplication from './newApplication';
 import { newSaga } from './api/new';
 import postedFormDataId from './api/postedFormDataId';
+import newApi from './api/new';
 
-const rootReducer = combineReducers({ forms, newApplicationId, newApplication, postedFormDataId });
+const rootReducer = combineReducers({
+	forms,
+	newApplicationId,
+	newApplication,
+	postedFormDataId,
+	newApi,
+});
 
 export function* rootSaga() {
 	yield all([formsSaga(), newApplicationIdSaga(), newSaga()]);
