@@ -23,6 +23,8 @@ import styled from 'styled-components';
 import NewIndicator from './NewIndicator';
 import NewMain from './NewMain';
 import NewNavigator from './NewNavigator';
+import NewPageButtons from './NewPageButtons';
+import { useState } from 'react';
 
 export default function NewPage() {
 	const dispatch = useDispatch();
@@ -38,6 +40,12 @@ export default function NewPage() {
 	const onRemoveQuestionOption = () => dispatch(removeQuestionOption(0, 0, 0));
 
 	const { value: title, onChange: onChangeTitle } = useInput('??');
+
+	const [page, setPage] = useState(-1);
+
+	const onChangePage = (page: number) => setPage(page);
+	const onPrevPage = () => setPage(page - 1);
+	const onNextPage = () => setPage(page + 1);
 
 	return (
 		<S.Container>
@@ -65,9 +73,10 @@ export default function NewPage() {
 			<br />
 			<button onClick={onRemoveQuestionOption}>onRemoveQuestionOption</button> */}
 			<ApplicationTitleInput value={''} onChange={console.log} isError={false} />
-			<NewIndicator />
-			<NewMain />
+			<NewIndicator page={page} />
+			<NewMain page={page} />
 			<NewNavigator />
+			<NewPageButtons page={page} onPrevPage={onPrevPage} onNextPage={onNextPage} />
 		</S.Container>
 	);
 }
@@ -82,7 +91,8 @@ namespace S {
 		justify-content: center;
 		padding-top: 4rem;
 
-		> div:first-of-type {
+		> div:first-of-type,
+		> div:last-of-type {
 			grid-column: 2/3;
 		}
 	`;

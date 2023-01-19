@@ -13,3 +13,7 @@ type IsCurrentType = {
 type IsHiddenType = {
 	isHidden: boolean;
 };
+
+type IsFixedType = {
+	isFixed: boolean;
+};

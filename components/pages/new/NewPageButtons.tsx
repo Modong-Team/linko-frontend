@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import NewPageButton from '../../buttons/NewPageButton';
 
-export default function NewPageButtons() {
+export default function NewPageButtons({ page, onPrevPage, onNextPage }: NewPageButtonsProps) {
 	return (
 		<S.Container>
-			<NewPageButton label='이전' onClick={console.log} isLeft isHidden={false} />
-			<NewPageButton label='다음' onClick={console.log} isRight isHidden={false} />
+			<NewPageButton label='이전' onClick={onPrevPage} isLeft isHidden={page === -1} />
+			<NewPageButton label='다음' onClick={onNextPage} isRight isHidden={false} />
 		</S.Container>
 	);
 }

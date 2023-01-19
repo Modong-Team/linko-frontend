@@ -1,8 +1,15 @@
 import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
+import NewEssentials from './NewEssentials';
+import NewForms from './NewForms';
 
-export default function NewMain() {
-	return <S.Container>NewMain</S.Container>;
+export default function NewMain({ page }: NewMainProps) {
+	return (
+		<S.Container>
+			{page === -1 && <NewEssentials />}
+			{page !== -1 && <NewForms formIdx={page} />}
+		</S.Container>
+	);
 }
 
 namespace S {

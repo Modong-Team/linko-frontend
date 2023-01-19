@@ -3,14 +3,14 @@ import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
 import { Styles } from '../../../styles/styles';
 
-export default function NewIndicator() {
+export default function NewIndicator({ page }: NewIndicatorProps) {
 	return (
 		<S.Container>
-			<S.IndicatorElement isCurrent={true}>
+			<S.IndicatorElement isCurrent={page === -1}>
 				<S.IndicatorCircle>1</S.IndicatorCircle>
 				지원자 정보
 			</S.IndicatorElement>
-			<S.IndicatorElement isCurrent={false}>
+			<S.IndicatorElement isCurrent={page !== -1}>
 				<S.IndicatorCircle>2</S.IndicatorCircle>질문 등록
 			</S.IndicatorElement>
 			<S.IndicatorElement isCurrent={false}>

@@ -2,12 +2,20 @@ import styled from 'styled-components';
 import { Colors } from '../../styles/colors';
 import { Fonts } from '../../styles/fonts';
 import { svgEntireCheckbox } from '../../styles/svgs';
+import { v4 as uuid } from 'uuid';
+import { useEffect, useState } from 'react';
 
 export default function EssentialCheckInput({ label }: EssentialCheckInputProps) {
+	const [id, setId] = useState('');
+
+	useEffect(() => {
+		setId(uuid());
+	}, []);
+
 	return (
 		<S.Container>
-			<input type='checkbox' id='checkbox' />
-			<label htmlFor='checkbox'>
+			<input type='checkbox' id={id} />
+			<label htmlFor={id}>
 				{svgEntireCheckbox}
 				<p>{label}</p>
 			</label>
