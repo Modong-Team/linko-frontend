@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import NewComplete from './NewComplete';
 import NewIndicator from './NewIndicator';
 
-export default function NewCompletePage() {
+export default function NewCompletePage({ applicationId }: NewCompletePageProps) {
 	return (
 		<S.Container>
 			<NewIndicator isComplete />
-			<NewComplete />
+			<NewComplete applicationId={applicationId} />
 		</S.Container>
 	);
 }

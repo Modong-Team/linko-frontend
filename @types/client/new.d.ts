@@ -20,3 +20,7 @@ type NewFormsProps = {
 type NewNavigatorProps = PageProps & {
 	onChangePage: (page: number) => void;
 };
+
+type NewCompletePageProps = {
+	applicationId: number;
+};

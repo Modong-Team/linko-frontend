@@ -6,9 +6,18 @@ import { Colors } from '../../../styles/colors';
 import { svgCopy } from '../../../styles/svgs';
 import useRouteToPath from '../../../hooks/useRouteToPath';
 import { Paths } from '../../../constants/paths';
+import { useEffect, useState } from 'react';
+import useGet from '../../../hooks/useGet';
+import { getApplication } from '../../../api/application';
 
-export default function NewComplete() {
+export default function NewComplete({ applicationId }: NewCompletePageProps) {
 	const onRouteToMain = useRouteToPath(Paths.main);
+	const [application, setApplication] = useState<ResponseApplication.Get>();
+
+	useEffect(() => {
+		if (!isNaN(applicationId)) useGet(() => getApplication(applicationId), setApplication);
+	}, [applicationId]);
+
 	return (
 		<S.Container>
 			<h1>
@@ -16,7 +25,10 @@ export default function NewComplete() {
 				<br />
 				공고 생성이 완료되었습니다!
 			</h1>
-			<div>www.modong.com/3H5os4{svgCopy}</div>
+			<div>
+				{application && application.data.urlId}
+				{svgCopy}
+			</div>
 			<div>
 				<button>수정하기</button>
 				<button onClick={onRouteToMain}>홈으로 돌아가기</button>
