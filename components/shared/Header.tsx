@@ -7,12 +7,14 @@ import { RootState } from '../../modules/index';
 import { useEffect, useState } from 'react';
 import useRouteToPath from '../../hooks/useRouteToPath';
 import { Paths } from '../../constants/paths';
+import useNewApplicationId from '../../hooks/useNewApplicationId';
 
 export default function Header({ isNew, isMain }: HeaderProps) {
 	const dispatch = useDispatch();
-	const onRouteToComplete = useRouteToPath(Paths.newComplete);
+	const { newApplicationId } = useNewApplicationId();
 	const { isLoading } = useSelector(({ newApi }: RootState) => newApi);
 	const [isWaitingForComplete, setIsWaitingForComplete] = useState(false);
+	const onRouteToComplete = useRouteToPath(Paths.newComplete + '/' + newApplicationId);
 
 	const onSave = () => {
 		setIsWaitingForComplete(false);
