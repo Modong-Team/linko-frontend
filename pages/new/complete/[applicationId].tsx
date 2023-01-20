@@ -17,5 +17,5 @@ export default function complete() {
 }
 
 complete.getLayout = function getLayout(page: ReactElement) {
-	return <NewLayout>{page}</NewLayout>;
+	return <NewLayout isNew={false}>{page}</NewLayout>;
 };
