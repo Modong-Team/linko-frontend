@@ -4,20 +4,27 @@ import { Fonts } from '../../styles/fonts';
 import { useState } from 'react';
 import useNewApplication from '../../hooks/useNewApplication';
 import React from 'react';
+import useApplicationTitleInputError from '../../hooks/useApplicationTitleInputError';
 
-export default function ApplicationTitleInput({ isError }: ApplicationTitleInputProps) {
+export default function ApplicationTitleInput() {
 	const [isFocus, setIsFocus] = useState(false);
 	const { newApplication, onSetNewApplicationTitle } = useNewApplication();
+	const { applicationTitleInputError, onSetApplicationTitleInputError } =
+		useApplicationTitleInputError();
 
 	const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
 		onSetNewApplicationTitle(e.target.value);
 	};
 
-	const onFocus = () => setIsFocus(true);
+	const onFocus = () => {
+		setIsFocus(true);
+		onSetApplicationTitleInputError(false);
+	};
+
 	const onBlur = () => setIsFocus(false);
 
 	return (
-		<S.Container isFocus={isFocus} isError={isError}>
+		<S.Container isFocus={isFocus} isError={applicationTitleInputError}>
 			<input
 				placeholder='공고 제목을 입력해주세요'
 				onFocus={onFocus}
@@ -25,7 +32,7 @@ export default function ApplicationTitleInput({ isError }: ApplicationTitleInput
 				value={newApplication.title}
 				onChange={onChangeTitle}
 			/>
-			{isError && <S.Error>내용을 입력해주세요.</S.Error>}
+			<S.Error isError={applicationTitleInputError}>내용을 입력해주세요.</S.Error>
 		</S.Container>
 	);
 }
@@ -58,12 +65,15 @@ namespace S {
 		}
 	`;
 
-	export const Error = styled.p`
+	export const Error = styled.p<IsErrorType>`
 		${Fonts.body12medium}
 		color: ${Colors.red500};
 		position: absolute;
 		left: 0;
-		bottom: 0;
-		transform: translateY(130%);
+		top: 0;
+		transform: translateY(-125%);
+		transition: 0.3s ease;
+		visibility: ${(props) => !props.isError && 'hidden'};
+		opacity: ${(props) => (!props.isError ? '0' : '1')};
 	`;
 }
