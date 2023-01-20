@@ -7,4 +7,5 @@ export const Styles = {
 	dropDownAlignLeft: '>div{width:9.2rem;}',
 	dropDownOptionRed: `color:${Colors.red500}; &:hover{background-color:${Colors.red100};}`,
 	dropDownAlignRightBottom: 'left:unset; transform:unset; right:0; bottom:0;',
+	snackBarAnimationDuration: '2000ms',
 } as const;

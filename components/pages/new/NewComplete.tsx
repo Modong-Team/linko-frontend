@@ -11,10 +11,21 @@ import useGet from '../../../hooks/useGet';
 import { getApplication } from '../../../api/application';
 import CustomButton from '../../buttons/CustomButton';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
+import copyToClipBoard from '../../../utils/copyToClipBoard';
+import SnackBar from '../../shared/SnackBar';
+import useSnackBar from '../../../hooks/useSnackBar';
 
 export default function NewComplete({ applicationId }: NewCompletePageProps) {
 	const onRouteToMain = useRouteToPath(Paths.main);
 	const [application, setApplication] = useState<ResponseApplication.Get>();
+	const { isShowSnackBar, onTriggerSnackBar } = useSnackBar();
+
+	const onClickClipBoard = () => {
+		const urlId = application?.data.urlId;
+		if (!urlId) return;
+		copyToClipBoard(urlId);
+		onTriggerSnackBar();
+	};
 
 	useEffect(() => {
 		if (!isNaN(applicationId)) useGet(() => getApplication(applicationId), setApplication);
@@ -27,7 +38,7 @@ export default function NewComplete({ applicationId }: NewCompletePageProps) {
 				<br />
 				공고 생성이 완료되었습니다!
 			</h1>
-			<div>
+			<div onClick={onClickClipBoard}>
 				{application && application.data.urlId}
 				{svgCopy}
 			</div>
@@ -45,6 +56,7 @@ export default function NewComplete({ applicationId }: NewCompletePageProps) {
 					buttonSize={ButtonSizes.medium}
 				/>
 			</div>
+			{isShowSnackBar && <SnackBar label={'링크를 복사했어요'} />}
 		</S.Container>
 	);
 }
@@ -73,7 +85,7 @@ namespace S {
 			cursor: pointer;
 		}
 
-		> div:last-of-type {
+		> div:nth-of-type(2) {
 			display: flex;
 			gap: 1.2rem;
 		}
