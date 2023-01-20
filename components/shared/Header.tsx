@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import useRouteToPath from '../../hooks/useRouteToPath';
 import { Paths } from '../../constants/paths';
 import useNewApplicationId from '../../hooks/useNewApplicationId';
+import CustomButton from '../buttons/CustomButton';
+import { ButtonTypes, ButtonSizes } from '../../constants/buttons';
 
 export default function Header({ isNew, isMain }: HeaderProps) {
 	const dispatch = useDispatch();
@@ -35,8 +37,18 @@ export default function Header({ isNew, isMain }: HeaderProps) {
 			<SC.HeaderLogo>{svgModong}</SC.HeaderLogo>
 			{isNew && (
 				<div>
-					<button onClick={onSave}>저장하기</button>
-					<button onClick={onComplete}>작성완료</button>
+					<CustomButton
+						label={'저장하기'}
+						onClick={onSave}
+						buttonType={ButtonTypes.secondary}
+						buttonSize={ButtonSizes.large}
+					/>
+					<CustomButton
+						label={'작성완료'}
+						onClick={onComplete}
+						buttonType={ButtonTypes.primary}
+						buttonSize={ButtonSizes.large}
+					/>
 				</div>
 			)}
 			{isMain && <div>프로필</div>}
