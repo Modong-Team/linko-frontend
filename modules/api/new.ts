@@ -16,6 +16,7 @@ import {
 	removePostedFormDataId,
 	PostedFormDataIdStateType,
 } from './postedFormDataId';
+import { setApplicationTitleInputError } from '../applicationTitleInputError';
 
 const REQUEST_SAVE = 'new/REQUEST_SAVE';
 const GO_THROUGH_PREPROCESS = 'new/START_PREPROCESS';
@@ -41,11 +42,17 @@ function* requestSaveSaga() {
 }
 
 function* goThroughPreprocessSaga() {
-	/* Set clubId & urlId */
 	const newApplication: NewApplicationStateType = yield selectState<NewApplicationStateType>(
 		(state) => state.newApplication,
 	);
 
+	/* Validation */
+	if (newApplication.title.replaceAll(' ', '') === '') {
+		yield put(setApplicationTitleInputError(true));
+		return;
+	}
+
+	/* Set clubId & urlId */
 	if (!newApplication.clubId) {
 		yield put(setNewApplicationClubId(1));
 		console.log('set');

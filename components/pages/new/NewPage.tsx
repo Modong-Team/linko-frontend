@@ -15,7 +15,7 @@ export default function NewPage() {
 
 	return (
 		<S.Container>
-			<ApplicationTitleInput isError={false} />
+			<ApplicationTitleInput />
 			<NewIndicator page={page} />
 			<NewMain page={page} />
 			<NewNavigator page={page} onChangePage={onChangePage} />
