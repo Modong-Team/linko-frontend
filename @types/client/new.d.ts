@@ -2,7 +2,9 @@ type PageProps = {
 	page: number;
 };
 
-type NewIndicatorProps = PageProps & {};
+type NewIndicatorProps = Partial<PageProps> & {
+	isComplete?: boolean;
+};
 
 type NewPageButtonsProps = PageProps & {
 	onPrevPage: () => void;

@@ -3,17 +3,17 @@ import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
 import { Styles } from '../../../styles/styles';
 
-export default function NewIndicator({ page }: NewIndicatorProps) {
+export default function NewIndicator({ page, isComplete }: NewIndicatorProps) {
 	return (
 		<S.Container>
-			<S.IndicatorElement isCurrent={page === -1}>
+			<S.IndicatorElement isCurrent={page === -1 && !isComplete}>
 				<S.IndicatorCircle>1</S.IndicatorCircle>
 				지원자 정보
 			</S.IndicatorElement>
-			<S.IndicatorElement isCurrent={page !== -1}>
+			<S.IndicatorElement isCurrent={page !== -1 && !isComplete}>
 				<S.IndicatorCircle>2</S.IndicatorCircle>질문 등록
 			</S.IndicatorElement>
-			<S.IndicatorElement isCurrent={false}>
+			<S.IndicatorElement isCurrent={!!isComplete}>
 				<S.IndicatorCircle>3</S.IndicatorCircle>작성 완료
 			</S.IndicatorElement>
 		</S.Container>
