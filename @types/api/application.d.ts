@@ -15,6 +15,32 @@ declare namespace RequestApplication {
 }
 
 declare namespace ResponseApplication {
+	type Get = {
+		status: number;
+		message: string;
+		code: string;
+		data: {
+			id: number;
+			title: string;
+			urlId: string;
+			essentialQuestions: {
+				id: number;
+				content: string;
+				require: boolean;
+			}[];
+			forms: {
+				id: number;
+				title: string;
+				questions: {
+					id: number;
+					content: string;
+					questionType: number;
+					options: string[];
+				}[];
+			}[];
+		};
+	};
+
 	type Post = {
 		status: number;
 		message: string;

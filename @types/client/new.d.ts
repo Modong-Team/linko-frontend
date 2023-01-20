@@ -2,7 +2,9 @@ type PageProps = {
 	page: number;
 };
 
-type NewIndicatorProps = PageProps & {};
+type NewIndicatorProps = Partial<PageProps> & {
+	isComplete?: boolean;
+};
 
 type NewPageButtonsProps = PageProps & {
 	onPrevPage: () => void;
@@ -17,4 +19,8 @@ type NewFormsProps = {
 
 type NewNavigatorProps = PageProps & {
 	onChangePage: (page: number) => void;
+};
+
+type NewCompletePageProps = {
+	applicationId: number;
 };

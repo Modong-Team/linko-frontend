@@ -14,4 +14,11 @@ export namespace SC {
 	`;
 
 	export const HeaderLogo = styled.h1``;
+
+	export const NewMainContainer = styled.div`
+		background-color: ${Colors.white};
+		border-radius: 0.8rem;
+		border: 0.1rem solid ${Colors.gray200};
+		padding: 4rem;
+	`;
 }
