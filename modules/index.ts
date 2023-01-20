@@ -8,6 +8,7 @@ import newApplication from './newApplication';
 import { newSaga } from './api/new';
 import postedFormDataId from './api/postedFormDataId';
 import newApi from './api/new';
+import applicationTitleInputError from './applicationTitleInputError';
 
 const rootReducer = combineReducers({
 	forms,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
 	newApplication,
 	postedFormDataId,
 	newApi,
+	applicationTitleInputError,
 });
 
 export function* rootSaga() {
