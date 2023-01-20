@@ -14,5 +14,5 @@ export default function index() {
 }
 
 index.getLayout = function getLayout(page: ReactElement) {
-	return <NewLayout>{page}</NewLayout>;
+	return <NewLayout isNew={true}>{page}</NewLayout>;
 };

@@ -9,6 +9,8 @@ import { Paths } from '../../../constants/paths';
 import { useEffect, useState } from 'react';
 import useGet from '../../../hooks/useGet';
 import { getApplication } from '../../../api/application';
+import CustomButton from '../../buttons/CustomButton';
+import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 
 export default function NewComplete({ applicationId }: NewCompletePageProps) {
 	const onRouteToMain = useRouteToPath(Paths.main);
@@ -30,8 +32,18 @@ export default function NewComplete({ applicationId }: NewCompletePageProps) {
 				{svgCopy}
 			</div>
 			<div>
-				<button>수정하기</button>
-				<button onClick={onRouteToMain}>홈으로 돌아가기</button>
+				<CustomButton
+					label='수정하기'
+					onClick={console.log}
+					buttonType={ButtonTypes.secondary}
+					buttonSize={ButtonSizes.medium}
+				/>
+				<CustomButton
+					label='홈으로 돌아가기'
+					onClick={onRouteToMain}
+					buttonType={ButtonTypes.primary}
+					buttonSize={ButtonSizes.medium}
+				/>
 			</div>
 		</S.Container>
 	);
