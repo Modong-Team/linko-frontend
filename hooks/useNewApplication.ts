@@ -3,12 +3,12 @@ import { RootState } from '../modules/index';
 import {
 	addNewApplicationEssential,
 	removeNewApplicationEssential,
-} from '../modules/newApplication';
+} from '../modules/new/newApplication';
 import {
 	setNewApplicationClubId,
 	setNewApplicationTitle,
 	setNewApplicationUrlId,
-} from '../modules/newApplication';
+} from '../modules/new/newApplication';
 
 export default function useNewApplication() {
 	const newApplication = useSelector(({ newApplication }: RootState) => newApplication);

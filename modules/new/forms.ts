@@ -1,10 +1,10 @@
 import produce from 'immer';
+import { select, put, takeLatest } from 'redux-saga/effects';
 import { ActionType, createAction, createReducer } from 'typesafe-actions';
-import { Form } from '../models/form';
-import { Question } from '../models/question';
-import { QuestionTypes } from '../constants/questionTypes';
-import { put, select, takeLatest } from 'redux-saga/effects';
-import { RootState } from './index';
+import { RootState } from '..';
+import { QuestionTypes } from '../../constants/questionTypes';
+import { Form } from '../../models/form';
+import { Question } from '../../models/question';
 
 /**
  * Action

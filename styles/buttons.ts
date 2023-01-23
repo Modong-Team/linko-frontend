@@ -9,7 +9,7 @@ export const ButtonStyles = {
 	large: `${Fonts.button14bold} ${CommonStyles.border} padding:1.4rem 2rem; border-radius:0.8rem;`,
 	medium: `${Fonts.button14bold} ${CommonStyles.border} padding:1rem 1.6rem; border-radius:0.8rem;`,
 	small: `${Fonts.button12bold} ${CommonStyles.border} padding:0.8rem 1.6rem; border-radius:0.8rem;`,
-	xsmall: `${Fonts.button14bold} ${CommonStyles.border} padding:0.4rem 0.8rem; border-radius:0.6rem;`,
+	xsmall: `${Fonts.button12bold} ${CommonStyles.border} padding:0.4rem 0.8rem; border-radius:0.6rem;`,
 } as const;
 
 export const PrimaryButtonColors = {

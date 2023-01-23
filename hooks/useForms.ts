@@ -10,9 +10,9 @@ import {
 	updateQuestionOption,
 	removeQuestionOption,
 	saveFormDataId,
-} from '../modules/forms';
+} from '../modules/new/forms';
 import { RootState } from '../modules/index';
-import { requestSetNewApplicationId } from '../modules/newApplicationId';
+import { requestSetNewApplicationId } from '../modules/new/newApplicationId';
 
 export default function useForms() {
 	const forms = useSelector(({ forms }: RootState) => forms);

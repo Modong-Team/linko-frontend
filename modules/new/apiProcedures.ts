@@ -6,17 +6,17 @@ import {
 	setNewApplicationClubId,
 	setNewApplicationUrlId,
 	NewApplicationStateType,
-} from '../newApplication';
+} from './newApplication';
 import { postApplication, putApplication } from '../../api/application';
-import { requestSetNewApplicationId, NewApplicationIdStateType } from '../newApplicationId';
-import { postForm, putForm, deleteForm } from '../../api/form';
-import { saveFormDataId, updateFormApplicationId, FormsStateType } from '../forms';
 import {
 	addPostedFormDataId,
 	removePostedFormDataId,
 	PostedFormDataIdStateType,
 } from './postedFormDataId';
-import { setApplicationTitleInputError } from '../applicationTitleInputError';
+import { setApplicationTitleInputError } from './applicationTitleInputError';
+import { postForm, putForm, deleteForm } from '../../api/form';
+import { updateFormApplicationId, FormsStateType, saveFormDataId } from './forms';
+import { NewApplicationIdStateType, requestSetNewApplicationId } from './newApplicationId';
 
 const REQUEST_SAVE = 'new/REQUEST_SAVE';
 const GO_THROUGH_PREPROCESS = 'new/START_PREPROCESS';

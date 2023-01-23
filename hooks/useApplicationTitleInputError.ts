@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../modules';
-import { setApplicationTitleInputError } from '../modules/applicationTitleInputError';
+import { setApplicationTitleInputError } from '../modules/new/applicationTitleInputError';
 
 export default function useApplicationTitleInputError() {
 	const applicationTitleInputError = useSelector(

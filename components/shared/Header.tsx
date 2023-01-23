@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { SC } from '../../styles/styled';
 import { svgModong } from '../../styles/svgs';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestSave } from '../../modules/api/new';
+import { requestSave } from '../../modules/new/apiProcedures';
 import { RootState } from '../../modules/index';
 import { useEffect, useState } from 'react';
 import useRouteToPath from '../../hooks/useRouteToPath';
