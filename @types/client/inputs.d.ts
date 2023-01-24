@@ -34,6 +34,6 @@ type ReplyCheckInputProps = ReplyTextInputProps & {
 	optionIdx: number;
 };
 
-type ReplyRadioInputProps = CheckButtonProps & {
+type ReplyRadioInputProps = ReplyCheckInputProps & {
 	name: string;
 };
