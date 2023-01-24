@@ -2,8 +2,21 @@ import ReplyMeta from './ReplyMeta';
 import ReplyMain from './ReplyMain';
 import NewPageButtons from '../new/NewPageButtons';
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import { getApplicationByUrlId } from '../../../api/application';
+import useGet from '../../../hooks/useGet';
 
-export default function ReplyPage() {
+export default function ReplyPage({ urlId }: ReplyPageProps) {
+	const [application, setApplication] = useState<ResponseApplication.Get>();
+
+	useEffect(() => {
+		if (urlId) useGet(() => getApplicationByUrlId(urlId), setApplication);
+	}, [urlId]);
+
+	useEffect(() => {
+		console.log(application);
+	}, [application]);
+
 	return (
 		<S.Container>
 			<ReplyMeta />
