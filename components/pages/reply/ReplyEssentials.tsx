@@ -64,12 +64,14 @@ export default function ReplyEssentials() {
 						label={'남성'}
 						errorMessage={''}
 						name={name}
+						isChecked={getEssentialAnswer(Essentials.gender) === '남성'}
 						onChange={() => onUpdateEssentialAnswer(Essentials.gender, '남성')}
 					/>
 					<ReplyRadioInput
 						label={'여성'}
 						errorMessage={''}
 						name={name}
+						isChecked={getEssentialAnswer(Essentials.gender) === '여성'}
 						onChange={() => onUpdateEssentialAnswer(Essentials.gender, '여성')}
 					/>
 				</div>

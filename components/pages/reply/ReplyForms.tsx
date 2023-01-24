@@ -5,9 +5,16 @@ import ReplyRadioInput from '../../inputs/ReplyRadioInput';
 import ReplyTextInput from '../../inputs/ReplyTextInput';
 import useApplication from '../../../hooks/useApplication';
 import { QuestionTypes } from '../../../constants/questionTypes';
+import useAnswers from '../../../hooks/useAnswers';
+import toggleMultiAnswer from '../../../utils/toggleMultiAnswer';
+import isMultiChecked from '../../../utils/isMultiChecked';
 
 export default function ReplyForms({ formIdx }: NewFormsProps) {
+	const { answers, onUpdateQuestionAnswer } = useAnswers();
 	const { application } = useApplication();
+
+	const getQuestionAnswer = (questionId: number) =>
+		answers.questionAnswers.find((essential) => essential.questionId === questionId)?.answer || '';
 
 	return (
 		<S.Container>
@@ -19,9 +26,9 @@ export default function ReplyForms({ formIdx }: NewFormsProps) {
 						<ReplyTextInput
 							label={'답변'}
 							errorMessage={''}
+							value={getQuestionAnswer(question.id)}
+							onChange={(e) => onUpdateQuestionAnswer(question.id, e.target.value)}
 							key={i}
-							value={''}
-							onChange={console.log}
 						/>
 					)}
 					{question.questionType === QuestionTypes.singleSelectQuestion &&
@@ -29,14 +36,26 @@ export default function ReplyForms({ formIdx }: NewFormsProps) {
 							<ReplyRadioInput
 								label={option}
 								errorMessage={''}
-								key={i}
 								name={question.id + ''}
-								onChange={console.log}
+								isChecked={getQuestionAnswer(question.id) === option}
+								onChange={() => onUpdateQuestionAnswer(question.id, option)}
+								key={i}
 							/>
 						))}
 					{question.questionType === QuestionTypes.multiSelectQuestion &&
 						question.options.map((option, i) => (
-							<ReplyCheckInput label={option} errorMessage={''} key={i} onChange={console.log} />
+							<ReplyCheckInput
+								label={option}
+								errorMessage={''}
+								isChecked={isMultiChecked(getQuestionAnswer(question.id), option)}
+								onChange={(e) =>
+									onUpdateQuestionAnswer(
+										question.id,
+										toggleMultiAnswer(getQuestionAnswer(question.id), option, e.target.checked),
+									)
+								}
+								key={i}
+							/>
 						))}
 				</div>
 			))}
