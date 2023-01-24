@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
+import useApplication from '../../../hooks/useApplication';
+
 export default function ReplyMeta() {
+	const { application } = useApplication();
 	return (
 		<S.Container>
 			<div>
@@ -10,7 +13,7 @@ export default function ReplyMeta() {
 				</S.Photo>
 				<S.Club>개발동아리</S.Club>
 			</div>
-			<S.Title>22기 신입 회원 모집 지원서</S.Title>
+			<S.Title>{application.data.title}</S.Title>
 		</S.Container>
 	);
 }

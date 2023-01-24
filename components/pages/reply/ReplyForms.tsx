@@ -3,40 +3,44 @@ import { Fonts } from '../../../styles/fonts';
 import ReplyCheckInput from '../../inputs/ReplyCheckInput';
 import ReplyRadioInput from '../../inputs/ReplyRadioInput';
 import ReplyTextInput from '../../inputs/ReplyTextInput';
+import useApplication from '../../../hooks/useApplication';
+import { QuestionTypes } from '../../../constants/questionTypes';
 
-export default function ReplyForms() {
+export default function ReplyForms({ formIdx }: NewFormsProps) {
+	const { application } = useApplication();
+
 	return (
 		<S.Container>
-			<h1>섹션 제목</h1>
-			<div>
-				<h2>텍스트질문</h2>
-				<ReplyTextInput label={'답변'} questionId={0} errorMessage={''} />
-			</div>
-			<div>
-				<h2>단일선택질문</h2>
-				<ReplyRadioInput
-					label={'단일선택예시1'}
-					questionId={0}
-					errorMessage={''}
-					optionIdx={0}
-					name={'test'}
-				/>
-				<ReplyRadioInput
-					label={'단일선택예시1'}
-					questionId={0}
-					errorMessage={''}
-					optionIdx={0}
-					name={'test'}
-				/>
-			</div>
-			<div>
-				<h2>다중선택질문</h2>
-				<ReplyCheckInput label={'다중선택예시1'} questionId={0} errorMessage={''} optionIdx={0} />
-				<ReplyCheckInput label={'다중선택예시2'} questionId={0} errorMessage={''} optionIdx={0} />
-				<ReplyCheckInput label={'다중선택예시3'} questionId={0} errorMessage={''} optionIdx={0} />
-				<ReplyCheckInput label={'다중선택예시4'} questionId={0} errorMessage={''} optionIdx={0} />
-				<ReplyCheckInput label={'다중선택예시5'} questionId={0} errorMessage={''} optionIdx={0} />
-			</div>
+			<h1>{application.data.forms[formIdx].title}</h1>
+			{application.data.forms[formIdx].questions.map((question, i) => (
+				<div key={i}>
+					<h2>{question.content}</h2>
+					{question.questionType === QuestionTypes.question && (
+						<ReplyTextInput label={'답변'} questionId={question.id} errorMessage={''} key={i} />
+					)}
+					{question.questionType === QuestionTypes.singleSelectQuestion &&
+						question.options.map((option, i) => (
+							<ReplyRadioInput
+								label={option}
+								questionId={question.id}
+								errorMessage={''}
+								key={i}
+								optionIdx={0}
+								name={question.id + ''}
+							/>
+						))}
+					{question.questionType === QuestionTypes.multiSelectQuestion &&
+						question.options.map((option, i) => (
+							<ReplyCheckInput
+								label={option}
+								questionId={question.id}
+								errorMessage={''}
+								key={i}
+								optionIdx={0}
+							/>
+						))}
+				</div>
+			))}
 		</S.Container>
 	);
 }
