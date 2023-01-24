@@ -5,16 +5,18 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { getApplicationByUrlId } from '../../../api/application';
 import useGet from '../../../hooks/useGet';
+import useAnswers from '../../../hooks/useAnswers';
 
 export default function ReplyPage({ urlId }: ReplyPageProps) {
 	const [application, setApplication] = useState<ResponseApplication.Get>();
+	const { onRequestCreateAnswers } = useAnswers();
 
 	useEffect(() => {
 		if (urlId) useGet(() => getApplicationByUrlId(urlId), setApplication);
 	}, [urlId]);
 
 	useEffect(() => {
-		console.log(application);
+		if (application) onRequestCreateAnswers(application);
 	}, [application]);
 
 	return (
