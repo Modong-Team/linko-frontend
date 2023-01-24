@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Colors } from './colors';
+import { Devices } from './devices';
 import { Styles } from './styles';
 
 export namespace SC {
@@ -25,6 +26,10 @@ export namespace SC {
 	export const ReplySelectInputContainer = styled.div`
 		&:not(:last-of-type) {
 			margin-bottom: 2rem;
+
+			@media ${Devices.mobile} {
+				margin-bottom: 2.97rem;
+			}
 		}
 
 		* {

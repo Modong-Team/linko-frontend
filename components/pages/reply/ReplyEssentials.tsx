@@ -6,6 +6,7 @@ import useApplication from '../../../hooks/useApplication';
 import useAnswers from '../../../hooks/useAnswers';
 import { EssentialCategories, Essentials } from '../../../constants/essentials';
 import useUniqueId from '../../../hooks/useUniqueId';
+import { Devices } from '../../../styles/devices';
 
 export default function ReplyEssentials() {
 	const name = useUniqueId();
@@ -113,11 +114,21 @@ namespace S {
 		> h1 {
 			${Fonts.heading24bold}
 			margin-bottom: 3.2rem;
+
+			@media ${Devices.mobile} {
+				${Fonts.heading20bold}
+				margin-bottom: 2.4rem;
+			}
 		}
 
 		> div > h2 {
 			${Fonts.heading20bold}
 			margin-bottom: 1.5rem;
+
+			@media ${Devices.mobile} {
+				${Fonts.heading18bold}
+				margin-bottom: 2.3rem;
+			}
 		}
 
 		> div:not(:last-of-type) {

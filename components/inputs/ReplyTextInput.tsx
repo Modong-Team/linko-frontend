@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Colors } from '../../styles/colors';
 import { Fonts } from '../../styles/fonts';
 import { css } from 'styled-components';
+import { Devices } from '../../styles/devices';
 
 export default function ReplyTextInput({
 	value,
@@ -24,10 +25,18 @@ namespace S {
 
 		&:first-of-type {
 			margin-top: 3.5rem;
+
+			@media ${Devices.mobile} {
+				margin-top: 4.3rem;
+			}
 		}
 
 		&:not(:last-of-type) {
 			margin-bottom: 3.5rem;
+
+			@media ${Devices.mobile} {
+				margin-bottom: 4rem;
+			}
 		}
 
 		&,

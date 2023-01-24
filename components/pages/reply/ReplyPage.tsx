@@ -1,6 +1,5 @@
 import ReplyMeta from './ReplyMeta';
 import ReplyMain from './ReplyMain';
-import NewPageButtons from '../new/NewPageButtons';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { getApplicationByUrlId } from '../../../api/application';
@@ -8,6 +7,7 @@ import useGet from '../../../hooks/useGet';
 import useAnswers from '../../../hooks/useAnswers';
 import useApplication from '../../../hooks/useApplication';
 import ReplyPageButtons from './ReplyPageButtons';
+import { Devices } from '../../../styles/devices';
 
 export default function ReplyPage({ urlId }: ReplyPageProps) {
 	const [application, setApplication] = useState<ResponseApplication.Get>();
@@ -47,5 +47,11 @@ namespace S {
 		display: flex;
 		flex-direction: column;
 		gap: 1.6rem;
+
+		@media ${Devices.mobile} {
+			width: 100%;
+			padding: 1.6rem;
+			padding-bottom: 6.4rem;
+		}
 	`;
 }
