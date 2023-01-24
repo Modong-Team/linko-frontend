@@ -5,7 +5,7 @@ import { css } from 'styled-components';
 
 export default function ReplyTextInput({ label, questionId, errorMessage }: ReplyTextInputProps) {
 	return (
-		<S.Container isError={true}>
+		<S.Container isError={false}>
 			<input placeholder=' ' />
 			<label>{label}</label>
 			<p>{errorMessage}</p>
@@ -16,7 +16,14 @@ export default function ReplyTextInput({ label, questionId, errorMessage }: Repl
 namespace S {
 	export const Container = styled.div<IsErrorType>`
 		position: relative;
-		margin-bottom: 3.2rem;
+
+		&:first-of-type {
+			margin-top: 3.5rem;
+		}
+
+		&:not(:last-of-type) {
+			margin-bottom: 3.5rem;
+		}
 
 		&,
 		> * {
@@ -24,10 +31,13 @@ namespace S {
 		}
 
 		> input {
+			width: 100%;
 			padding: 0.7rem 0.2rem;
 			background-color: transparent;
 			border-bottom: 0.1rem solid ${Colors.gray200};
 			caret-color: ${Colors.blue500};
+			position: relative;
+			z-index: 1;
 
 			&:hover {
 				border-color: ${Colors.gray700};
@@ -45,6 +55,7 @@ namespace S {
 			position: absolute;
 			left: 0.2rem;
 			bottom: 0.8rem;
+			z-index: 0;
 		}
 
 		/* Focus OR Filled */
@@ -52,7 +63,7 @@ namespace S {
 		> input:not(:placeholder-shown) + label {
 			${Fonts.button13medium}
 			color: ${Colors.gray700};
-			transform: translateY(calc(-100% - 1rem));
+			transform: translateY(calc(-100% - 0.9rem));
 		}
 
 		/* Error Message */
