@@ -2,17 +2,16 @@ import styled from 'styled-components';
 import { Colors } from '../../styles/colors';
 import { Fonts } from '../../styles/fonts';
 import { svgEntireCheckbox } from '../../styles/svgs';
-import { v4 as uuid } from 'uuid';
-import { useEffect, useState } from 'react';
 import { css } from 'styled-components';
 import useNewApplication from '../../hooks/useNewApplication';
+import useUniqueId from '../../hooks/useUniqueId';
 
 export default function EssentialCheckInput({
 	label,
 	isFixed,
 	essentialIdx,
 }: EssentialCheckInputProps) {
-	const [id, setId] = useState('');
+	const id = useUniqueId();
 	const { newApplication, onAddNewApplicationEssentials, onRemoveNewApplicationEssentials } =
 		useNewApplication();
 
@@ -21,10 +20,6 @@ export default function EssentialCheckInput({
 		if (isChecked) onAddNewApplicationEssentials(essentialIdx);
 		if (!isChecked) onRemoveNewApplicationEssentials(essentialIdx);
 	};
-
-	useEffect(() => {
-		setId(uuid());
-	}, []);
 
 	return (
 		<S.Container isFixed={isFixed}>
