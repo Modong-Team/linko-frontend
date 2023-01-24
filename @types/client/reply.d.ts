@@ -1,0 +1,3 @@
+type ReplyPageProps = {
+	urlId: string;
+};
