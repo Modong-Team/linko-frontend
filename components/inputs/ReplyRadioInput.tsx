@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { svgEntireCheckbox, svgRadioQuestion } from '../../styles/svgs';
+import { svgRadioQuestion } from '../../styles/svgs';
 import { v4 as uuid } from 'uuid';
-import { Colors } from '../../styles/colors';
+import { SC } from '../../styles/styled';
 
 export default function ReplyRadioInput({
 	label,
@@ -42,35 +42,14 @@ export default function ReplyRadioInput({
 }
 
 namespace S {
-	export const Container = styled.div`
-		&:not(:last-of-type) {
-			margin-bottom: 2rem;
-		}
-
-		* {
-			cursor: pointer;
-		}
-
-		> input {
-			display: none;
-		}
-
+	export const Container = styled(SC.ReplySelectInputContainer)`
 		/* Default */
-		svg > path {
-			transition: 0.3s ease;
-		}
-
-		/* Checked */
-		> input:checked + label > svg {
-			> path:nth-of-type(1) {
-				fill: ${Colors.blue500};
-			}
+		svg > path:nth-of-type(2) {
+			fill: white !important;
 		}
 
 		> label {
-			display: flex;
-			align-items: center;
-			gap: 0.88rem;
+			gap: 0.88rem !important;
 		}
 	`;
 }
