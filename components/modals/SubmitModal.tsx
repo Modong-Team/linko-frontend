@@ -5,6 +5,7 @@ import { Fonts } from '../../styles/fonts';
 import CustomButton from '../buttons/CustomButton';
 import { Icons } from '../../styles/icons';
 import usePreventScroll from '../../hooks/usePreventScroll';
+import { Devices } from '../../styles/devices';
 
 export default function SubmitModal({
 	title,
@@ -54,6 +55,10 @@ namespace S {
 		transition: 0.3s ease;
 		visibility: ${(props) => props.isHidden && 'hidden'};
 		opacity: ${(props) => (props.isHidden ? 0 : 1)};
+
+		@media ${Devices.mobile} {
+			padding: 2.4rem;
+		}
 	`;
 
 	export const ModalContainer = styled.div`
@@ -64,6 +69,11 @@ namespace S {
 		background-color: ${Colors.white};
 		box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.12);
 		border-radius: 1.2rem;
+
+		@media ${Devices.mobile} {
+			padding: 2rem;
+			padding-bottom: 2.4rem;
+		}
 	`;
 
 	export const Icon = styled.div`

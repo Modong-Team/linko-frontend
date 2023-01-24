@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Devices } from '../../../styles/devices';
 import ReplyComplete from './ReplyComplete';
 
 export default function ReplyCompletePage({ applicantId }: ReplyCompletePageProps) {
@@ -15,5 +16,10 @@ namespace S {
 		margin: 0 auto;
 		padding-top: 4rem;
 		padding-bottom: 12rem;
+
+		@media ${Devices.mobile} {
+			width: 100%;
+			padding: 1.6rem;
+		}
 	`;
 }

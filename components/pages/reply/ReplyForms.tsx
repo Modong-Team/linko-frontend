@@ -8,6 +8,7 @@ import { QuestionTypes } from '../../../constants/questionTypes';
 import useAnswers from '../../../hooks/useAnswers';
 import toggleMultiAnswer from '../../../utils/toggleMultiAnswer';
 import isMultiChecked from '../../../utils/isMultiChecked';
+import { Devices } from '../../../styles/devices';
 
 export default function ReplyForms({ formIdx }: NewFormsProps) {
 	const { answers, onUpdateQuestionAnswer } = useAnswers();
@@ -68,11 +69,21 @@ namespace S {
 		> h1 {
 			${Fonts.heading24bold}
 			margin-bottom: 3.2rem;
+
+			@media ${Devices.mobile} {
+				${Fonts.heading20bold}
+				margin-bottom: 2.4rem;
+			}
 		}
 
 		> div > h2 {
 			${Fonts.heading20bold}
 			margin-bottom: 1.5rem;
+
+			@media ${Devices.mobile} {
+				${Fonts.heading18bold}
+				margin-bottom: 2.3rem;
+			}
 		}
 
 		> div:not(:last-of-type) {

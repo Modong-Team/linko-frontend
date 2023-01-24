@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
 import useApplication from '../../../hooks/useApplication';
+import { Devices } from '../../../styles/devices';
 
 export default function ReplyMeta() {
 	const { application } = useApplication();
@@ -32,6 +33,16 @@ namespace S {
 			gap: 1.6rem;
 			margin-bottom: 2.2rem;
 		}
+
+		@media ${Devices.mobile} {
+			padding: 1.6rem 2.4rem;
+			padding-bottom: 1.8rem;
+
+			> div:first-of-type {
+				margin-bottom: 1.2rem;
+				gap: 0.8rem;
+			}
+		}
 	`;
 
 	export const Photo = styled.div`
@@ -45,14 +56,27 @@ namespace S {
 			height: 100%;
 			object-fit: cover;
 		}
+
+		@media ${Devices.mobile} {
+			width: 4rem;
+			height: 4rem;
+		}
 	`;
 
 	export const Club = styled.h2`
 		${Fonts.heading20bold}
 		color:${Colors.gray800};
+
+		@media ${Devices.mobile} {
+			${Fonts.subtitle16semibold}
+		}
 	`;
 
 	export const Title = styled.h1`
 		${Fonts.heading26bold}
+
+		@media ${Devices.mobile} {
+			${Fonts.heading20bold}
+		}
 	`;
 }
