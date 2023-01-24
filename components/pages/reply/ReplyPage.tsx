@@ -6,17 +6,22 @@ import { useState, useEffect } from 'react';
 import { getApplicationByUrlId } from '../../../api/application';
 import useGet from '../../../hooks/useGet';
 import useAnswers from '../../../hooks/useAnswers';
+import useApplication from '../../../hooks/useApplication';
 
 export default function ReplyPage({ urlId }: ReplyPageProps) {
 	const [application, setApplication] = useState<ResponseApplication.Get>();
 	const { onRequestCreateAnswers } = useAnswers();
+	const { onSetApplication } = useApplication();
 
 	useEffect(() => {
 		if (urlId) useGet(() => getApplicationByUrlId(urlId), setApplication);
 	}, [urlId]);
 
 	useEffect(() => {
-		if (application) onRequestCreateAnswers(application);
+		if (application) {
+			onRequestCreateAnswers(application);
+			onSetApplication(application);
+		}
 	}, [application]);
 
 	return (
