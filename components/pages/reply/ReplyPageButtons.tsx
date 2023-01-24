@@ -5,14 +5,14 @@ import useAnswers from '../../../hooks/useAnswers';
 import { postApplicant } from '../../../api/applicant';
 import SubmitModal from '../../modals/SubmitModal';
 import { useState, useEffect } from 'react';
-import useRouteToPath from '../../../hooks/useRouteToPath';
 import { Paths } from '../../../constants/paths';
+import { useRouter } from 'next/router';
 
 export default function ReplyPageButtons({ page, onPrevPage, onNextPage }: NewPageButtonsProps) {
 	const { answers } = useAnswers();
 	const { application } = useApplication();
 	const [isHideModal, setIsHideModal] = useState(true);
-	const onRouteToComplete = useRouteToPath(Paths.replyComplete);
+	const router = useRouter();
 
 	const checkIsLastPage = () => application.data.forms.length - 1 === page;
 
@@ -22,7 +22,8 @@ export default function ReplyPageButtons({ page, onPrevPage, onNextPage }: NewPa
 		const post = await postApplicant(answers);
 		console.log(post);
 		setIsHideModal(true);
-		onRouteToComplete();
+		const applicantId = post.data.id;
+		router.push(Paths.replyComplete + '/' + applicantId);
 	};
 
 	useEffect(() => {
