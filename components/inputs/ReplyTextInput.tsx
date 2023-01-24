@@ -63,7 +63,7 @@ namespace S {
 		> input:not(:placeholder-shown) + label {
 			${Fonts.button13medium}
 			color: ${Colors.gray700};
-			transform: translateY(calc(-100% - 0.9rem));
+			transform: translateY(calc(-100% - 1rem));
 		}
 
 		/* Error Message */
