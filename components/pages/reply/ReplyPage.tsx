@@ -2,21 +2,38 @@ import ReplyMeta from './ReplyMeta';
 import ReplyMain from './ReplyMain';
 import NewPageButtons from '../new/NewPageButtons';
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import { getApplicationByUrlId } from '../../../api/application';
+import useGet from '../../../hooks/useGet';
+import useAnswers from '../../../hooks/useAnswers';
+import useApplication from '../../../hooks/useApplication';
+import ReplyPageButtons from './ReplyPageButtons';
 
-export default function ReplyPage() {
+export default function ReplyPage({ urlId }: ReplyPageProps) {
+	const [application, setApplication] = useState<ResponseApplication.Get>();
+	const { onRequestCreateAnswers } = useAnswers();
+	const { onSetApplication } = useApplication();
+	const [page, setPage] = useState(-1);
+
+	const onPrevPage = () => setPage(page - 1);
+	const onNextPage = () => setPage(page + 1);
+
+	useEffect(() => {
+		if (urlId) useGet(() => getApplicationByUrlId(urlId), setApplication);
+	}, [urlId]);
+
+	useEffect(() => {
+		if (application) {
+			onRequestCreateAnswers(application);
+			onSetApplication(application);
+		}
+	}, [application]);
+
 	return (
 		<S.Container>
 			<ReplyMeta />
-			<ReplyMain />
-			<NewPageButtons
-				page={0}
-				onPrevPage={function (): void {
-					throw new Error('Function not implemented.');
-				}}
-				onNextPage={function (): void {
-					throw new Error('Function not implemented.');
-				}}
-			/>
+			<ReplyMain page={page} />
+			<ReplyPageButtons page={page} onPrevPage={onPrevPage} onNextPage={onNextPage} />
 		</S.Container>
 	);
 }

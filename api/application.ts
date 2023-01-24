@@ -7,6 +7,11 @@ export const getApplication = (applicationId: number) => {
 	return request.get<ResponseApplication.Get>(url);
 };
 
+export const getApplicationByUrlId = (urlId: string) => {
+	const url = `view${baseUrl}/${urlId}`;
+	return request.get<ResponseApplication.Get>(url);
+};
+
 export const postApplication = (data: RequestApplication.Post) => {
 	const url = `${baseUrl}`;
 	return request.post<ResponseApplication.Post, RequestApplication.Post>(url, data);

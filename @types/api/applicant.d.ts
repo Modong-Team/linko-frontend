@@ -1,6 +1,6 @@
 declare namespace RequestApplicant {
 	type Post = {
-		applicationId: number;
+		applicationId: number | null;
 		name: string;
 		essentialAnswers: {
 			answer: string;
@@ -10,5 +10,16 @@ declare namespace RequestApplicant {
 			answer: string;
 			questionId: number;
 		}[];
+	};
+}
+
+declare namespace ResponseApplicant {
+	type Post = {
+		status: number;
+		message: string;
+		code: string;
+		data: {
+			id: number;
+		};
 	};
 }
