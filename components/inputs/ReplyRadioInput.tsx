@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { svgRadioQuestion } from '../../styles/svgs';
-import { v4 as uuid } from 'uuid';
 import { SC } from '../../styles/styled';
+import useUniqueId from '../../hooks/useUniqueId';
 
 export default function ReplyRadioInput({
 	label,
@@ -10,7 +9,7 @@ export default function ReplyRadioInput({
 	optionIdx,
 	name,
 }: ReplyRadioInputProps) {
-	const [id, setId] = useState('');
+	const id = useUniqueId();
 
 	const onChangeIsChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
 		console.log(e.target.checked);
@@ -18,10 +17,6 @@ export default function ReplyRadioInput({
 		// if (isChecked) onAddNewApplicationEssentials(essentialIdx);
 		// if (!isChecked) onRemoveNewApplicationEssentials(essentialIdx);
 	};
-
-	useEffect(() => {
-		setId(uuid());
-	}, []);
 
 	return (
 		<S.Container>

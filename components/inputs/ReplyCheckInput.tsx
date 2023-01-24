@@ -1,20 +1,15 @@
 import { svgEntireCheckbox } from '../../styles/svgs';
-import { useState, useEffect } from 'react';
-import { v4 as uuid } from 'uuid';
 import { SC } from '../../styles/styled';
+import useUniqueId from '../../hooks/useUniqueId';
 
 export default function ReplyCheckInput({ label, questionId, optionIdx }: ReplyCheckInputProps) {
-	const [id, setId] = useState('');
+	const id = useUniqueId();
 
 	const onChangeIsChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
 		// const isChecked = e.target.checked;
 		// if (isChecked) onAddNewApplicationEssentials(essentialIdx);
 		// if (!isChecked) onRemoveNewApplicationEssentials(essentialIdx);
 	};
-
-	useEffect(() => {
-		setId(uuid());
-	}, []);
 
 	return (
 		<SC.ReplySelectInputContainer>
