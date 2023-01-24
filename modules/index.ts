@@ -9,6 +9,7 @@ import forms, { formsSaga } from './new/forms';
 import newApplicationId, { newApplicationIdSaga } from './new/newApplicationId';
 import answers from './reply/answers';
 import { answersSaga } from './reply/answers';
+import application from './reply/application';
 
 const rootReducer = combineReducers({
 	forms,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
 	newApi,
 	applicationTitleInputError,
 	answers,
+	application,
 });
 
 export function* rootSaga() {
