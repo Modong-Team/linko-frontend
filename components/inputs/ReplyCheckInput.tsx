@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import { Colors } from '../../styles/colors';
 
-export default function ReplyCheckInput({ label, questionIdx, optionIdx }: ReplyCheckInputProps) {
+export default function ReplyCheckInput({ label, questionId, optionIdx }: ReplyCheckInputProps) {
 	const [id, setId] = useState('');
 
 	const onChangeIsChecked = (e: React.ChangeEvent<HTMLInputElement>) => {

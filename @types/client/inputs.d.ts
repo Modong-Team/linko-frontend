@@ -25,8 +25,12 @@ type QuestionTitleInputProps = CommonInputProps & {
 	placeHolder: string;
 };
 
-type ReplyCheckInputProps = Omit<CommonButtonProps, 'onClick'> & {
-	questionIdx: number;
+type ReplyTextInputProps = Omit<CommonButtonProps, 'onClick'> & {
+	questionId: number;
+	errorMessage: string;
+};
+
+type ReplyCheckInputProps = ReplyTextInputProps & {
 	optionIdx: number;
 };
 
