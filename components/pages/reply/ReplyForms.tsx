@@ -16,28 +16,27 @@ export default function ReplyForms({ formIdx }: NewFormsProps) {
 				<div key={i}>
 					<h2>{question.content}</h2>
 					{question.questionType === QuestionTypes.question && (
-						<ReplyTextInput label={'답변'} questionId={question.id} errorMessage={''} key={i} />
+						<ReplyTextInput
+							label={'답변'}
+							errorMessage={''}
+							key={i}
+							value={''}
+							onChange={console.log}
+						/>
 					)}
 					{question.questionType === QuestionTypes.singleSelectQuestion &&
 						question.options.map((option, i) => (
 							<ReplyRadioInput
 								label={option}
-								questionId={question.id}
 								errorMessage={''}
 								key={i}
-								optionIdx={0}
 								name={question.id + ''}
+								onChange={console.log}
 							/>
 						))}
 					{question.questionType === QuestionTypes.multiSelectQuestion &&
 						question.options.map((option, i) => (
-							<ReplyCheckInput
-								label={option}
-								questionId={question.id}
-								errorMessage={''}
-								key={i}
-								optionIdx={0}
-							/>
+							<ReplyCheckInput label={option} errorMessage={''} key={i} onChange={console.log} />
 						))}
 				</div>
 			))}

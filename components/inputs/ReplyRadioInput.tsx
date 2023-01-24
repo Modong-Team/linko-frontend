@@ -3,31 +3,12 @@ import { svgRadioQuestion } from '../../styles/svgs';
 import { SC } from '../../styles/styled';
 import useUniqueId from '../../hooks/useUniqueId';
 
-export default function ReplyRadioInput({
-	label,
-	questionId,
-	optionIdx,
-	name,
-}: ReplyRadioInputProps) {
+export default function ReplyRadioInput({ onChange, label, name }: ReplyRadioInputProps) {
 	const id = useUniqueId();
-
-	const onChangeIsChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log(e.target.checked);
-		// const isChecked = e.target.checked;
-		// if (isChecked) onAddNewApplicationEssentials(essentialIdx);
-		// if (!isChecked) onRemoveNewApplicationEssentials(essentialIdx);
-	};
 
 	return (
 		<S.Container>
-			<input
-				type='radio'
-				id={id}
-				name={name}
-				// checked={true}
-				// checked={isFixed ? isFixed : newApplication.essentialQuestionIds.includes(essentialIdx)}
-				onChange={onChangeIsChecked}
-			/>
+			<input type='radio' id={id} name={name} onChange={onChange} />
 			<label htmlFor={id}>
 				{svgRadioQuestion}
 				<p>{label}</p>

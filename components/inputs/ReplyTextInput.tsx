@@ -3,10 +3,15 @@ import { Colors } from '../../styles/colors';
 import { Fonts } from '../../styles/fonts';
 import { css } from 'styled-components';
 
-export default function ReplyTextInput({ label, questionId, errorMessage }: ReplyTextInputProps) {
+export default function ReplyTextInput({
+	value,
+	onChange,
+	label,
+	errorMessage,
+}: ReplyTextInputProps) {
 	return (
 		<S.Container isError={false}>
-			<input placeholder=' ' />
+			<input placeholder=' ' value={value} onChange={onChange} />
 			<label>{label}</label>
 			<p>{errorMessage}</p>
 		</S.Container>
