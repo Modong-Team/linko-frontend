@@ -22,4 +22,26 @@ declare namespace ResponseApplicant {
 			id: number;
 		};
 	};
+
+	type Get = {
+		status: number;
+		message: string;
+		code: string;
+		data: {
+			id: number;
+			name: string;
+			rate: number;
+			status: string;
+			submitDate: string;
+			essentialAnswers: {
+				essentialQuestion: string;
+				essentialAnswer: string;
+			}[];
+			questionAnswers: {
+				essentialQuestion: string;
+				essentialAnswer: string;
+			}[];
+			fail: boolean;
+		};
+	};
 }
