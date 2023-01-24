@@ -7,6 +7,8 @@ import newApi from './new/apiProcedures';
 import applicationTitleInputError from './new/applicationTitleInputError';
 import forms, { formsSaga } from './new/forms';
 import newApplicationId, { newApplicationIdSaga } from './new/newApplicationId';
+import answers from './reply/answers';
+import { answersSaga } from './reply/answers';
 
 const rootReducer = combineReducers({
 	forms,
@@ -15,10 +17,11 @@ const rootReducer = combineReducers({
 	postedFormDataId,
 	newApi,
 	applicationTitleInputError,
+	answers,
 });
 
 export function* rootSaga() {
-	yield all([formsSaga(), newApplicationIdSaga(), newSaga()]);
+	yield all([formsSaga(), newApplicationIdSaga(), newSaga(), answersSaga()]);
 }
 
 export default rootReducer;
