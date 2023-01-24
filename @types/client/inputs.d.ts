@@ -24,3 +24,12 @@ type QuestionTitleInputProps = CommonInputProps & {
 	onClickRemove: () => void;
 	placeHolder: string;
 };
+
+type ReplyCheckInputProps = Omit<CommonButtonProps, 'onClick'> & {
+	questionIdx: number;
+	optionIdx: number;
+};
+
+type ReplyRadioInputProps = CheckButtonProps & {
+	name: string;
+};
