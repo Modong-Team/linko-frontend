@@ -4,22 +4,33 @@ import ReplyRadioInput from '../../inputs/ReplyRadioInput';
 import ReplyTextInput from '../../inputs/ReplyTextInput';
 import useApplication from '../../../hooks/useApplication';
 import useAnswers from '../../../hooks/useAnswers';
+import { EssentialCategories, Essentials } from '../../../constants/essentials';
+import useUniqueId from '../../../hooks/useUniqueId';
 
 export default function ReplyEssentials() {
+	const name = useUniqueId();
 	const { application } = useApplication();
 	const { answers, onUpdateName, onUpdateEssentialAnswer } = useAnswers();
 
 	const getDefault = () =>
-		application.data.essentialQuestions.filter((essential) => [1, 2, 3].includes(essential.id));
+		application.data.essentialQuestions.filter((essential) =>
+			EssentialCategories.default.includes(essential.id),
+		);
 
 	const getGender = () =>
-		application.data.essentialQuestions.filter((essential) => [4].includes(essential.id));
+		application.data.essentialQuestions.filter((essential) =>
+			EssentialCategories.gender.includes(essential.id),
+		);
 
 	const getBirth = () =>
-		application.data.essentialQuestions.filter((essential) => [5].includes(essential.id));
+		application.data.essentialQuestions.filter((essential) =>
+			EssentialCategories.birth.includes(essential.id),
+		);
 
 	const getAcademic = () =>
-		application.data.essentialQuestions.filter((essential) => [6, 7, 8].includes(essential.id));
+		application.data.essentialQuestions.filter((essential) =>
+			EssentialCategories.academic.includes(essential.id),
+		);
 
 	const getEssentialAnswer = (essentialQuestionId: number) =>
 		answers.essentialAnswers.find(
@@ -31,26 +42,20 @@ export default function ReplyEssentials() {
 			<h1>지원자 정보</h1>
 			<div>
 				<h2>기본정보</h2>
-				<ReplyTextInput
-					label={getDefault()[0]?.content}
-					errorMessage={''}
-					value={answers.name}
-					onChange={(e) =>
-						onUpdateName(e.target.value) && onUpdateEssentialAnswer(1, e.target.value)
-					}
-				/>
-				<ReplyTextInput
-					label={getDefault()[1]?.content}
-					errorMessage={''}
-					value={getEssentialAnswer(2) || ''}
-					onChange={(e) => onUpdateEssentialAnswer(2, e.target.value)}
-				/>
-				<ReplyTextInput
-					label={getDefault()[2]?.content}
-					errorMessage={''}
-					value={getEssentialAnswer(3) || ''}
-					onChange={(e) => onUpdateEssentialAnswer(3, e.target.value)}
-				/>
+				{getDefault().map((question, i) => (
+					<ReplyTextInput
+						label={question.content}
+						errorMessage={''}
+						value={getEssentialAnswer(question.id) || ''}
+						onChange={(e) =>
+							question.id === Essentials.name
+								? onUpdateName(e.target.value) &&
+								  onUpdateEssentialAnswer(question.id, e.target.value)
+								: onUpdateEssentialAnswer(question.id, e.target.value)
+						}
+						key={i}
+					/>
+				))}
 			</div>
 			{!!getGender().length && (
 				<div>
@@ -58,14 +63,14 @@ export default function ReplyEssentials() {
 					<ReplyRadioInput
 						label={'남성'}
 						errorMessage={''}
-						name={'gender'}
-						onChange={() => onUpdateEssentialAnswer(4, '남성')}
+						name={name}
+						onChange={() => onUpdateEssentialAnswer(Essentials.gender, '남성')}
 					/>
 					<ReplyRadioInput
 						label={'여성'}
 						errorMessage={''}
-						name={'gender'}
-						onChange={() => onUpdateEssentialAnswer(4, '여성')}
+						name={name}
+						onChange={() => onUpdateEssentialAnswer(Essentials.gender, '여성')}
 					/>
 				</div>
 			)}
