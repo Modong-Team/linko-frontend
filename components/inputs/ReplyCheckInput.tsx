@@ -35,7 +35,11 @@ export default function ReplyCheckInput({ label, questionId, optionIdx }: ReplyC
 }
 
 namespace S {
-	export const Container = styled.button`
+	export const Container = styled.div`
+		&:not(:last-of-type) {
+			margin-bottom: 2rem;
+		}
+
 		* {
 			cursor: pointer;
 		}

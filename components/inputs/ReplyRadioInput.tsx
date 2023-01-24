@@ -6,7 +6,7 @@ import { Colors } from '../../styles/colors';
 
 export default function ReplyRadioInput({
 	label,
-	questionIdx,
+	questionId,
 	optionIdx,
 	name,
 }: ReplyRadioInputProps) {
@@ -42,7 +42,11 @@ export default function ReplyRadioInput({
 }
 
 namespace S {
-	export const Container = styled.button`
+	export const Container = styled.div`
+		&:not(:last-of-type) {
+			margin-bottom: 2rem;
+		}
+
 		* {
 			cursor: pointer;
 		}
