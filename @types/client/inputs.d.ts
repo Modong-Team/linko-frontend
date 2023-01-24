@@ -30,7 +30,9 @@ type ReplyTextInputProps = CommonInputProps & {
 	errorMessage: string;
 };
 
-type ReplyCheckInputProps = Omit<ReplyTextInputProps, 'value'> & {};
+type ReplyCheckInputProps = Omit<ReplyTextInputProps, 'value'> & {
+	isChecked: boolean;
+};
 
 type ReplyRadioInputProps = ReplyCheckInputProps & {
 	name: string;

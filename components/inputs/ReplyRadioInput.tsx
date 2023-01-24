@@ -3,12 +3,16 @@ import { svgRadioQuestion } from '../../styles/svgs';
 import { SC } from '../../styles/styled';
 import useUniqueId from '../../hooks/useUniqueId';
 
-export default function ReplyRadioInput({ onChange, label, name }: ReplyRadioInputProps) {
+export default function ReplyRadioInput({
+	onChange,
+	label,
+	name,
+	isChecked,
+}: ReplyRadioInputProps) {
 	const id = useUniqueId();
-
 	return (
 		<S.Container>
-			<input type='radio' id={id} name={name} onChange={onChange} />
+			<input type='radio' id={id} name={name} onChange={onChange} checked={isChecked} />
 			<label htmlFor={id}>
 				{svgRadioQuestion}
 				<p>{label}</p>
