@@ -12,3 +12,14 @@ declare namespace RequestApplicant {
 		}[];
 	};
 }
+
+declare namespace ResponseApplicant {
+	type Post = {
+		status: number;
+		message: string;
+		code: string;
+		data: {
+			id: number;
+		};
+	};
+}
