@@ -24,8 +24,8 @@ export default function ReplyEssentials() {
 			<h1>지원자 정보</h1>
 			<div>
 				<h2>기본정보</h2>
-				{getDefault().map((question) => (
-					<ReplyTextInput label={question.content} questionId={0} errorMessage={''} />
+				{getDefault().map((question, i) => (
+					<ReplyTextInput label={question.content} questionId={0} errorMessage={''} key={i} />
 				))}
 			</div>
 			{!!getGender().length && (
@@ -50,16 +50,16 @@ export default function ReplyEssentials() {
 			{!!getBirth().length && (
 				<div>
 					<h2>생년월일</h2>
-					{getBirth().map((question) => (
-						<ReplyTextInput label={question.content} questionId={0} errorMessage={''} />
+					{getBirth().map((question, i) => (
+						<ReplyTextInput label={question.content} questionId={0} errorMessage={''} key={i} />
 					))}
 				</div>
 			)}
 			{!!getAcademic().length && (
 				<div>
 					<h2>학적</h2>
-					{getAcademic().map((question) => (
-						<ReplyTextInput label={question.content} questionId={0} errorMessage={''} />
+					{getAcademic().map((question, i) => (
+						<ReplyTextInput label={question.content} questionId={0} errorMessage={''} key={i} />
 					))}
 				</div>
 			)}
