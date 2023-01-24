@@ -169,4 +169,11 @@ export const ResetCSS = css`
 	button {
 		box-sizing: border-box;
 	}
+
+	textarea {
+		font-family: inherit;
+		border: none;
+		resize: none;
+		outline: none;
+	}
 `;

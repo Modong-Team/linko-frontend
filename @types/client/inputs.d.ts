@@ -1,6 +1,6 @@
 type CommonInputProps = {
 	value: string;
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
 type ApplicationTitleInputProps = {

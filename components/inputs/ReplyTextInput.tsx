@@ -3,6 +3,7 @@ import { Colors } from '../../styles/colors';
 import { Fonts } from '../../styles/fonts';
 import { css } from 'styled-components';
 import { Devices } from '../../styles/devices';
+import { MutableRefObject, useRef } from 'react';
 
 export default function ReplyTextInput({
 	value,
@@ -10,9 +11,24 @@ export default function ReplyTextInput({
 	label,
 	errorMessage,
 }: ReplyTextInputProps) {
+	const textAreaRef = useRef() as MutableRefObject<HTMLTextAreaElement>;
+
+	const onAutoResize = () => {
+		textAreaRef.current.style.height = 'auto';
+		const height = textAreaRef.current.scrollHeight;
+		textAreaRef.current.style.height = height / 10 + 'rem';
+	};
+
 	return (
 		<S.Container isError={false}>
-			<input placeholder=' ' value={value} onChange={onChange} />
+			<textarea
+				placeholder=' '
+				value={value}
+				onChange={onChange}
+				onInput={onAutoResize}
+				ref={textAreaRef}
+				rows={1}
+			/>
 			<label>{label}</label>
 			<p>{errorMessage}</p>
 		</S.Container>
@@ -27,7 +43,7 @@ namespace S {
 			margin-top: 3.5rem;
 
 			@media ${Devices.mobile} {
-				margin-top: 4.3rem;
+				margin-top: 4rem;
 			}
 		}
 
@@ -44,7 +60,7 @@ namespace S {
 			transition: 0.3s ease;
 		}
 
-		> input {
+		> textarea {
 			width: 100%;
 			padding: 0.7rem 0.2rem;
 			background-color: transparent;
@@ -52,6 +68,7 @@ namespace S {
 			caret-color: ${Colors.blue500};
 			position: relative;
 			z-index: 1;
+			overflow: hidden;
 
 			&:hover {
 				border-color: ${Colors.gray700};
@@ -59,6 +76,11 @@ namespace S {
 
 			&:focus {
 				border-color: ${Colors.blue500};
+			}
+
+			@media ${Devices.mobile} {
+				padding: 0.2rem;
+				line-height: 150%;
 			}
 		}
 
@@ -73,11 +95,15 @@ namespace S {
 		}
 
 		/* Focus OR Filled */
-		> input:focus + label,
-		> input:not(:placeholder-shown) + label {
+		> textarea:focus + label,
+		> textarea:not(:placeholder-shown) + label {
 			${Fonts.button13medium}
 			color: ${Colors.gray700};
-			transform: translateY(calc(-100% - 1rem));
+			bottom: 100%;
+
+			@media ${Devices.mobile} {
+				bottom: calc(100% + 0.25rem);
+			}
 		}
 
 		/* Error Message */
@@ -98,7 +124,7 @@ namespace S {
 	const ErrorStyle = css`
 		margin-bottom: calc(3.2rem + 2.2rem);
 
-		> input {
+		> textarea {
 			border-color: ${Colors.red500};
 		}
 
