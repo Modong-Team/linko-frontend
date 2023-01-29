@@ -34,6 +34,7 @@ namespace S {
 		position: relative;
 		display: flex;
 		align-items: center;
+		height: auto !important;
 
 		&:hover {
 			background-color: ${(props) => !props.isFocus && Colors.gray100};

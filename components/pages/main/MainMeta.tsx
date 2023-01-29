@@ -6,6 +6,8 @@ import copyToClipBoard from '../../../utils/copyToClipBoard';
 import useSnackBar from '../../../hooks/useSnackBar';
 import SnackBar from '../../shared/SnackBar';
 import MoreButton from '../../buttons/MoreButton';
+import CustomButton from '../../buttons/CustomButton';
+import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 
 export default function MainMeta() {
 	const { isShowSnackBar, onTriggerSnackBar } = useSnackBar();
@@ -23,6 +25,12 @@ export default function MainMeta() {
 				<S.BoardClipBoard onClick={onClickClipBoard}>
 					www.modong.co.kr/club1{svgCopy24}
 				</S.BoardClipBoard>
+				<CustomButton
+					label={'모집 중 (구현 중)'}
+					onClick={() => alert('미구현 피쳐')}
+					buttonType={ButtonTypes.primary}
+					buttonSize={ButtonSizes.medium}
+				/>
 				<MoreButton
 					label1={'지원서 수정'}
 					label2={'지원서 삭제'}
@@ -43,7 +51,7 @@ namespace S {
 		align-items: center;
 		border-bottom: 0.1rem solid ${Colors.gray200};
 
-		h1 {
+		> h1 {
 			${Fonts.heading26bold}
 		}
 
@@ -51,6 +59,10 @@ namespace S {
 			display: flex;
 			gap: 1.6rem;
 			align-items: center;
+
+			> button {
+				height: 4rem;
+			}
 		}
 	`;
 
