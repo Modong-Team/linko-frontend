@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Media } from '../../../styles/breakPoints';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
 import { svgLeft16, svgRight16 } from '../../../styles/svgs';
@@ -10,8 +11,6 @@ export default function MainPageButtons() {
 			<S.PageNumber>1</S.PageNumber>
 			<S.PageNumber>2</S.PageNumber>
 			<S.PageNumber>3</S.PageNumber>
-			<S.PageNumber>4</S.PageNumber>
-			<S.PageNumber>5</S.PageNumber>
 			{svgRight16}
 		</S.PageButtonsContainer>
 	);
@@ -25,6 +24,12 @@ namespace S {
 		justify-content: center;
 		align-items: center;
 		gap: 0.8rem;
+		transition: 0.3s ease;
+
+		${Media.small} {
+			padding-top: 1.1rem;
+			padding-bottom: 1.3rem;
+		}
 	`;
 
 	export const PageNumber = styled.div`
