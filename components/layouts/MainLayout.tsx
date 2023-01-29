@@ -1,7 +1,6 @@
 import { Header } from '../shared';
 import styled from 'styled-components';
 import MainSidebar from '../pages/main/MainSidebar';
-import { Colors } from '../../styles/colors';
 import DefaultLayout from './DefaultLayout';
 
 export default function MainLayout({ children, applicationId }: ChildrenType & MainPageProps) {
