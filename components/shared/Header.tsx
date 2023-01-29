@@ -48,6 +48,7 @@ export default function Header({ isNew, isMain }: HeaderProps) {
 						onClick={onComplete}
 						buttonType={ButtonTypes.primary}
 						buttonSize={ButtonSizes.large}
+						isLoading={isLoading}
 					/>
 				</div>
 			)}

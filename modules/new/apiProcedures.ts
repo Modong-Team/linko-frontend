@@ -49,6 +49,7 @@ function* goThroughPreprocessSaga() {
 	/* Validation */
 	if (newApplication.title.replaceAll(' ', '') === '') {
 		yield put(setApplicationTitleInputError(true));
+		yield put(setIsLoading(false));
 		return;
 	}
 
