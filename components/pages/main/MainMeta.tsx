@@ -8,22 +8,26 @@ import SnackBar from '../../shared/SnackBar';
 import MoreButton from '../../buttons/MoreButton';
 import CustomButton from '../../buttons/CustomButton';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
+import useApplication from '../../../hooks/useApplication';
+import createReplyUrl from '../../../utils/createReplyUrl';
 
 export default function MainMeta() {
+	const { application } = useApplication();
 	const { isShowSnackBar, onTriggerSnackBar } = useSnackBar();
 
-	const onClickClipBoard = () => {
-		copyToClipBoard('www.modong.co.kr/club1');
+	const onClickClipBoard = (url: string) => {
+		copyToClipBoard(url);
 		onTriggerSnackBar();
 	};
 
 	return (
 		<S.BoardHeader>
-			<h1>작성한 지원서1</h1>
+			<h1>{application.data.title}</h1>
 			<div>
 				<S.BoardLinkLabel>{svgLink24}지원 링크</S.BoardLinkLabel>
-				<S.BoardClipBoard onClick={onClickClipBoard}>
-					www.modong.co.kr/club1{svgCopy24}
+				<S.BoardClipBoard onClick={() => onClickClipBoard(createReplyUrl(application.data.urlId))}>
+					<div>{createReplyUrl(application.data.urlId)}</div>
+					<div>{svgCopy24}</div>
 				</S.BoardClipBoard>
 				<CustomButton
 					label={'모집 중 (구현 중)'}
@@ -79,16 +83,26 @@ namespace S {
 	`;
 
 	export const BoardClipBoard = styled.div`
-		${Fonts.body14regular}
-		border-radius: 0.8rem;
-		color: ${Colors.gray800};
-		background-color: ${Colors.gray200};
 		padding: 0.8rem 1.6rem;
+		border-radius: 0.8rem;
+		background-color: ${Colors.gray200};
 		display: flex;
-		justify-content: space-between;
 		align-items: center;
-		width: 21.8rem;
+		height: 4rem;
 		cursor: pointer;
+
+		> div:first-of-type {
+			${Fonts.body14regular}
+			color: ${Colors.gray800};
+			width: 16rem;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		> div:last-of-type {
+			display: flex;
+		}
 	`;
 
 	export const BoardVertical = styled.div`
