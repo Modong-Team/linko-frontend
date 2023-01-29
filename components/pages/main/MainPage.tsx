@@ -23,10 +23,11 @@ namespace S {
 		background-color: ${Colors.white};
 
 		> section {
-			width: 69vw;
-			min-width: 99.6rem;
-			max-width: 131.6rem;
+			width: clamp(99.6rem, 69vw, 131.6rem);
+			min-height: 100%;
 			margin: 0 auto;
+			display: flex;
+			flex-direction: column;
 		}
 	`;
 }
