@@ -2,25 +2,48 @@ import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
 import MoreButton from '../../buttons/MoreButton';
-import { svgStar16, svgUser16 } from '../../../styles/svgs';
+import { svgStar16, svgUser16, svgEntireCheckbox } from '../../../styles/svgs';
 import parseSubmitDate from '../../../utils/parseSubmitDate';
 import { Media } from '../../../styles/breakPoints';
+import IconButton from '../../buttons/IconButton';
+import useSelectedApplicants from '../../../hooks/useSelectedApplicants';
 
-export default function MainBoardCard({ id, name, rate, submitDate, fail }: MainBoardCardProps) {
+export default function MainBoardCard({
+	id,
+	name,
+	rate,
+	submitDate,
+	fail,
+	isSelected,
+}: MainBoardCardProps) {
+	const { selectedApplicants, onRequestSelectApplicant, onDeselectApplicant } =
+		useSelectedApplicants();
+
+	const onSelectFirstSingle = () => onRequestSelectApplicant(id);
+
+	const onToggleSelect = () => {
+		if (checkIfSelected()) onDeselectApplicant(id);
+		else onRequestSelectApplicant(id);
+	};
+
+	const checkIfSelected = () => selectedApplicants.includes(id);
+
 	return (
-		<S.Container>
+		<S.Container isSelected={checkIfSelected()} onClick={onToggleSelect}>
 			<div>
 				<h3>{name}</h3>
-				<MoreButton
-					label1={'선택하기'}
-					label2={'탈락'}
-					onClick1={function (): void {
-						throw new Error('Function not implemented.');
-					}}
-					onClick2={function (): void {
-						throw new Error('Function not implemented.');
-					}}
-				/>
+				{!isSelected ? (
+					<MoreButton
+						label1={'선택하기'}
+						label2={'탈락'}
+						onClick1={onSelectFirstSingle}
+						onClick2={function (): void {
+							throw new Error('Function not implemented.');
+						}}
+					/>
+				) : (
+					<IconButton svgIcon={svgEntireCheckbox} onClick={() => console.log()} />
+				)}
 			</div>
 			<div>
 				<h4>{parseSubmitDate(submitDate)}</h4>
@@ -52,16 +75,21 @@ function RaterStatusElement({ label }: StatusElementProps) {
 }
 
 namespace S {
-	export const Container = styled.div`
+	export const Container = styled.div<IsSelectedType>`
 		padding: 1.6rem;
 		padding-bottom: 1.5rem;
-		background-color: ${Colors.white};
-		border: 0.1rem solid ${Colors.gray200};
+		background-color: ${(props) => (props.isSelected ? Colors.blue100 : Colors.white)};
+		border: 0.1rem solid ${(props) => (props.isSelected ? Colors.blue500 : Colors.gray200)};
 		border-radius: 0.8rem;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		transition: 0.3s ease;
+		cursor: pointer;
+
+		&,
+		> * {
+			transition: 0.3s ease;
+		}
 
 		> div {
 			display: flex;
@@ -74,7 +102,7 @@ namespace S {
 
 			> h4 {
 				${Fonts.body12medium}
-				color:${Colors.gray500}
+				color: ${(props) => (props.isSelected ? Colors.gray700 : Colors.gray500)};
 			}
 
 			> button {

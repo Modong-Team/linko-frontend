@@ -8,6 +8,7 @@ type MainBoardCardProps = {
 	rate: number;
 	submitDate: string;
 	fail: boolean;
+	isSelected: boolean;
 };
 
 type StatusElementProps = {
