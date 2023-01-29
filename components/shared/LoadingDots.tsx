@@ -27,5 +27,6 @@ namespace S {
 		left: 0;
 		visibility: ${(props) => props.isHidden && 'hidden'};
 		opacity: ${(props) => (props.isHidden ? 0 : 1)};
+		transition: 1s ease;
 	`;
 }
