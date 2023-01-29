@@ -39,23 +39,20 @@ export default function DropDown({
 
 namespace S {
 	export const DropDownContainer = styled.div<Partial<CustomCSSType> & Partial<IsHiddenType>>`
+		width: fit-content;
+		padding: 0.4rem;
 		white-space: nowrap;
-		position: absolute;
-		bottom: -10.8rem;
-		left: 50%;
-		transform: translateX(-50%);
 		text-align: left;
 		background-color: ${Colors.white};
 		border: 0.1rem solid ${Colors.gray200};
 		border-radius: 0.8rem;
-		padding: 0.4rem;
-		box-shadow: 6px 7px 16px rgba(106, 106, 106, 0.17);
-		cursor: pointer;
+		position: absolute;
 		z-index: 5;
-		width: fit-content;
+		box-shadow: 6px 7px 16px rgba(106, 106, 106, 0.17);
 		visibility: ${(props) => props.isHidden && 'hidden'};
 		opacity: ${(props) => (props.isHidden ? 0 : 1)};
 		transition: 0.3s ease;
+		cursor: pointer;
 
 		div {
 			${Fonts.button13medium}

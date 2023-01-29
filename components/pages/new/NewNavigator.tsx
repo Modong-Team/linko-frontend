@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
-import { Styles } from '../../../styles/styles';
+import { DynamicStyles, Styles } from '../../../styles/styles';
 import useForms from '../../../hooks/useForms';
 import { useState } from 'react';
 import { svgMore } from '../../../styles/svgs';
@@ -45,7 +45,9 @@ export default function NewNavigator({ page, onChangePage }: NewNavigatorProps) 
 						option2={'복제하기'}
 						onClick1={(e) => onClickRemove(e, i)}
 						onClick2={() => alert('미구현된 피쳐입니다.')}
-						customCSS={`${Styles.dropDownAlignRightBottom} bottom:-6rem; right:-2rem; div:first-of-type{${Styles.dropDownOptionRed}}`}
+						customCSS={
+							DynamicStyles.dropDownNthOptionRed(1) + DynamicStyles.dropDownTranslate(26, 85)
+						}
 						isHidden={showMoreFor !== i}
 					/>
 				</S.NavigatorElement>

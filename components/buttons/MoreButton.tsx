@@ -31,7 +31,12 @@ namespace S {
 		border-radius: 0.6rem;
 		background-color: ${(props) => props.isFocus && Colors.gray200};
 		transition: 0.3s ease;
-		display: flex;
 		position: relative;
+		display: flex;
+		align-items: center;
+
+		&:hover {
+			background-color: ${(props) => !props.isFocus && Colors.gray100};
+		}
 	`;
 }
