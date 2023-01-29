@@ -101,7 +101,6 @@ namespace S {
 
 		button {
 			width: 100%;
-			text-align: center;
 		}
 	`;
 }

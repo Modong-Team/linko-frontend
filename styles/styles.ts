@@ -5,6 +5,7 @@ export const Styles = {
 	headerHeight: '8rem',
 	sidebarWidth: '22rem',
 	snackBarAnimationDuration: '2000ms',
+	dropDownTextAlignLeft: '>div{width:9.2rem;}',
 } as const;
 
 export const DynamicStyles = {

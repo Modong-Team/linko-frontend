@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { svgMore24 } from '../../styles/svgs';
 import { Colors } from '../../styles/colors';
 import DropDown from '../dropdowns/DropDown';
-import { DynamicStyles } from '../../styles/styles';
+import { DynamicStyles, Styles } from '../../styles/styles';
 
 export default function MoreButton({ label1, label2, onClick1, onClick2 }: MoreButtonProps) {
 	const [isFocus, setIsFocus] = useState(false);
@@ -19,7 +19,11 @@ export default function MoreButton({ label1, label2, onClick1, onClick2 }: MoreB
 				option2={label2}
 				onClick1={onClick1}
 				onClick2={onClick2}
-				customCSS={DynamicStyles.dropDownNthOptionRed(2) + DynamicStyles.dropDownTranslate(70, 110)}
+				customCSS={
+					Styles.dropDownTextAlignLeft +
+					DynamicStyles.dropDownNthOptionRed(2) +
+					DynamicStyles.dropDownTranslate(75, 110)
+				}
 				isHidden={!isFocus}
 			/>
 		</S.Button>
