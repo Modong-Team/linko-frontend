@@ -8,11 +8,11 @@ export default function index() {
 	return (
 		<>
 			<CustomHead title={Seo.Title.main} />
-			<MainPage />
+			<MainPage applicationId={0} />
 		</>
 	);
 }
 
 index.getLayout = function getLayout(page: ReactElement) {
-	return <MainLayout>{page}</MainLayout>;
+	return <MainLayout applicationId={0}>{page}</MainLayout>;
 };

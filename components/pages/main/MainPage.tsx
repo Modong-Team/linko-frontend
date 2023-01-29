@@ -1,3 +1,3 @@
-export default function MainPage() {
-	return <>Main Page</>;
+export default function MainPage({ applicationId }: MainPageProps) {
+	return <></>;
 }

@@ -1,11 +1,11 @@
-import { WithHeaderLayout } from '.';
 import { Header } from '../shared';
+import DefaultLayout from './DefaultLayout';
 
 export default function NewLayout({ children, isNew }: NewLayoutProps) {
 	return (
-		<WithHeaderLayout>
+		<DefaultLayout>
 			<Header isNew={isNew} />
 			{children}
-		</WithHeaderLayout>
+		</DefaultLayout>
 	);
 }

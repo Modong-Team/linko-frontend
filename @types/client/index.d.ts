@@ -5,6 +5,7 @@ type CustomButtonProps = CommonButtonProps & {
 	buttonType: keyof typeof ButtonTypes;
 	buttonSize: keyof typeof ButtonSizes;
 	isLoading?: boolean;
+	svgIcon?: JSX;
 };
 
 type CustomButtonType = Omit<CustomButtonProps, 'label'>;

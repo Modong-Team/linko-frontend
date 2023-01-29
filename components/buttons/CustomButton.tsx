@@ -16,6 +16,7 @@ export default function CustomButton({
 	onClick,
 	buttonSize,
 	buttonType,
+	svgIcon,
 	isLoading = false,
 }: CustomButtonProps) {
 	return (
@@ -24,7 +25,10 @@ export default function CustomButton({
 			buttonType={buttonType}
 			onClick={onClick}
 			isLoading={isLoading}>
-			<span>{label}</span>
+			<span>
+				{svgIcon}
+				{label}
+			</span>
 			<LoadingDots width={LoadingWidths.button} isWhite isHidden={!isLoading} />
 		</S.Button>
 	);
@@ -63,6 +67,9 @@ namespace S {
 		}
 
 		> span {
+			display: flex;
+			align-items: center;
+			gap: 0.4rem;
 			visibility: ${(props) => props.isLoading && 'hidden'};
 		}
 	`;

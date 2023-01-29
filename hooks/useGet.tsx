@@ -9,5 +9,7 @@ export default async function useGet<T>(
 	if (onStartLoading) onStartLoading();
 	const res = await api();
 	await dispatch(res);
-	onFinishLoading();
+	setTimeout(() => {
+		onFinishLoading();
+	}, 500);
 }

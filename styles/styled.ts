@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Colors } from './colors';
 import { Devices } from './devices';
 import { Styles } from './styles';
@@ -68,6 +68,14 @@ export namespace SC {
 			display: flex;
 			align-items: center;
 			gap: 0.97rem;
+		}
+	`;
+
+	export const HideScrollBar = css`
+		scrollbar-width: none;
+
+		&::-webkit-scrollbar {
+			display: none;
 		}
 	`;
 }

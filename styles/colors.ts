@@ -25,8 +25,6 @@ export const Colors = {
 	blue700: '#6894EB',
 	blue900: '#3F74DB',
 
-	blue500twenty: 'rgba(125, 169, 255, 0.2)',
-
 	background: '#F4F6F8',
 	shade: 'rgba(20, 20, 22, 0.53)',
 } as const;

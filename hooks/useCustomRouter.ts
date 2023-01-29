@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
-export default function useCustomRouter(path: string) {
+export default function useCustomRouter() {
 	const router = useRouter();
-	const onRouteToPath = () => router.push(path);
+	const onRouteToPath = (path: string) => router.push(path);
 	return { onRouteToPath };
 }

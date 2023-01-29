@@ -1,11 +1,11 @@
-import { WithHeaderLayout } from '.';
+import { DefaultLayout } from '.';
 import { Header } from '../shared';
 
 export default function ReplyCompleteLayout({ children }: ChildrenType) {
 	return (
-		<WithHeaderLayout>
+		<DefaultLayout>
 			<Header />
 			{children}
-		</WithHeaderLayout>
+		</DefaultLayout>
 	);
 }
