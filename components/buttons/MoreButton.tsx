@@ -4,6 +4,7 @@ import { svgMore24 } from '../../styles/svgs';
 import { Colors } from '../../styles/colors';
 import DropDown from '../dropdowns/DropDown';
 import { DynamicStyles, Styles } from '../../styles/styles';
+import withoutPropagation from '../../utils/withoutPropagation';
 
 export default function MoreButton({ label1, label2, onClick1, onClick2 }: MoreButtonProps) {
 	const [isFocus, setIsFocus] = useState(false);
@@ -12,7 +13,7 @@ export default function MoreButton({ label1, label2, onClick1, onClick2 }: MoreB
 	const onBlur = () => setIsFocus(false);
 
 	return (
-		<S.Button isFocus={isFocus} onClick={onFocus} onBlur={onBlur}>
+		<S.Button isFocus={isFocus} onClick={(e) => withoutPropagation(e, onFocus)} onBlur={onBlur}>
 			{svgMore24}
 			<DropDown
 				option1={label1}
