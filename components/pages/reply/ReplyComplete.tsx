@@ -5,12 +5,20 @@ import { Fonts } from '../../../styles/fonts';
 import { useState, useEffect } from 'react';
 import useGet from '../../../hooks/useGet';
 import { getApplicant } from '../../../api/applicant';
+import useLoadingStatus from '../../../hooks/useLoadingStatus';
 
 export default function ReplyComplete({ applicantId }: ReplyCompletePageProps) {
 	const [applicant, setApplicant] = useState<ResponseApplicant.Get>();
+	const { onStartGlobalLoading, onFinishGlobalLoading } = useLoadingStatus();
 
 	useEffect(() => {
-		if (!isNaN(applicantId)) useGet(() => getApplicant(applicantId), setApplicant);
+		if (!isNaN(applicantId))
+			useGet(
+				() => getApplicant(applicantId),
+				setApplicant,
+				onStartGlobalLoading,
+				onFinishGlobalLoading,
+			);
 	}, [applicantId]);
 
 	return (

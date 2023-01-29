@@ -21,10 +21,13 @@ export default function ReplyPage({ urlId }: ReplyPageProps) {
 	const onNextPage = () => setPage(page + 1);
 
 	useEffect(() => {
-		if (urlId) {
-			onStartGlobalLoading();
-			useGet(() => getApplicationByUrlId(urlId), setApplication, onFinishGlobalLoading);
-		}
+		if (urlId)
+			useGet(
+				() => getApplicationByUrlId(urlId),
+				setApplication,
+				onStartGlobalLoading,
+				onFinishGlobalLoading,
+			);
 	}, [urlId]);
 
 	useEffect(() => {
