@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
 import { Styles } from '../../../styles/styles';
-import { svgUser24, svgNewPlus, svgPlus16 } from '../../../styles/svgs';
+import { svgUser24, svgNewPlus } from '../../../styles/svgs';
 import useRouteToPath from '../../../hooks/useRouteToPath';
 import { Paths } from '../../../constants/paths';
 import CustomButton from '../../buttons/CustomButton';
@@ -15,11 +15,13 @@ import useLocalLoading from '../../../hooks/useLocalLoading';
 import LoadingDots from '../../shared/LoadingDots';
 import { LoadingWidths } from '../../../constants/loadingWidths';
 import { SC } from '../../../styles/styled';
+import useCustomRouter from '../../../hooks/useCustomRouter';
 
-export default function MainSidebar() {
+export default function MainSidebar({ applicationId }: MainPageProps) {
 	const routeToNew = useRouteToPath(Paths.new);
 	const [applications, setApplications] = useState<ResponseApplications.Get>();
 	const { isLocalLoading, onStartLocalLoading, onFinishLocalLoading } = useLocalLoading();
+	const { onRouteToPath } = useCustomRouter();
 
 	useEffect(() => {
 		onStartLocalLoading();
@@ -36,14 +38,21 @@ export default function MainSidebar() {
 				<h3>동아리 ID</h3>
 				<S.ProfilePopulation>{svgUser24} 3</S.ProfilePopulation>
 			</S.SidebarProfile>
-			<S.SidebarList>
+			<S.SidebarApplications>
 				<h3>지원서 목록</h3>
 				<ul>
 					{applications &&
-						applications.data.map((application, i) => <li key={i}>{application.title}</li>)}
-					<LoadingDots width={LoadingWidths.section} isHidden={!isLocalLoading} />
+						applications.data.map((application, i) => (
+							<S.ApplicationItem
+								isFocus={applicationId === application.id}
+								onClick={() => onRouteToPath(Paths.main + '/' + application.id)}
+								key={i}>
+								{application.title}
+							</S.ApplicationItem>
+						))}
 				</ul>
-			</S.SidebarList>
+				<LoadingDots width={LoadingWidths.section} isHidden={!isLocalLoading} />
+			</S.SidebarApplications>
 			<CustomButton
 				onClick={routeToNew}
 				label={'새로운 지원서'}
@@ -121,39 +130,31 @@ namespace S {
 		align-items: center;
 		margin-top: 1.9rem;
 		gap: 0.35em;
-
-		> svg {
-			position: relative;
-			top: -0.1rem;
-		}
 	`;
 
-	export const SidebarList = styled.section`
+	export const SidebarApplications = styled.section`
 		padding: 2.4rem 1.1rem;
-		text-align: center;
+		display: flex;
+		flex-direction: column;
+		gap: 1.2rem;
 
 		> h3 {
 			${Fonts.subtitle14semibold}
-			padding-bottom:1.2rem;
+			text-align: center;
 		}
+	`;
 
-		> ul {
-			li {
-				${Fonts.subtitle16semibold}
-				color: ${Colors.gray700};
-				text-align: left;
-				padding: 1.2rem 1.7rem;
-				border-radius: 0.8rem;
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				cursor: pointer;
-
-				&:first-of-type {
-					background-color: ${Colors.blue500}${AlphaToHex['0.2']};
-					color: ${Colors.gray990};
-				}
-			}
-		}
+	export const ApplicationItem = styled.li<IsFocusType>`
+		${Fonts.subtitle16semibold}
+		cursor: pointer;
+		text-align: left;
+		padding: 1.2rem 1.7rem;
+		border-radius: 0.8rem;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		transition: 0.3s ease;
+		background-color: ${(props) => props.isFocus && Colors.blue500 + AlphaToHex['0.2']};
+		color: ${(props) => (props.isFocus ? Colors.gray990 : Colors.gray700)};
 	`;
 }
