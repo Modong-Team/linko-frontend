@@ -5,28 +5,49 @@ import CustomButton from '../../buttons/CustomButton';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 import { Fonts } from '../../../styles/fonts';
 import MainPageButtons from './MainPageButtons';
+import useApplicants from '../../../hooks/useApplicants';
+import { MainBoardColumnProps } from '../../../@types/client';
+import { ApplicantStatusCodeLabel } from '../../../constants/applicantStatusCode';
+import { useState, useEffect } from 'react';
 
-export default function MainBoardColumn() {
+export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumnProps) {
+	const { applicants } = useApplicants();
+	const [applicantsWithCertainStatusCode, setApplicantsWithCertainStatusCode] =
+		useState<ResponseApplicants.Data[]>();
+
+	const pickApplicantsByStatusCode = () => {
+		const result = applicants?.data.filter((applicant) => applicant.status === applicantStatusCode);
+		setApplicantsWithCertainStatusCode(result);
+	};
+
+	useEffect(() => {
+		if (applicantStatusCode) pickApplicantsByStatusCode();
+	}, [applicants]);
+
 	return (
 		<S.Container>
 			<S.Meta>
-				<h2>지원 접수</h2>
+				<h2>{ApplicantStatusCodeLabel[applicantStatusCode]}</h2>
 				<div>8</div>
 				<CustomButton
 					label={'상태 변경'}
-					onClick={function (): void {
-						throw new Error('Function not implemented.');
-					}}
+					onClick={() => alert('미구현')}
 					buttonType={ButtonTypes.line}
 					buttonSize={ButtonSizes.small}
 				/>
 			</S.Meta>
-			<MainBoardCard />
-			<MainBoardCard />
-			<MainBoardCard />
-			<MainBoardCard />
-			<MainBoardCard />
-			<MainBoardCard />
+			<S.Applicants>
+				{applicantsWithCertainStatusCode?.slice(0, 6).map((applicant, i) => (
+					<MainBoardCard
+						id={applicant.id}
+						name={applicant.name}
+						rate={applicant.rate}
+						submitDate={applicant.submitDate}
+						fail={applicant.fail}
+						key={i}
+					/>
+				))}
+			</S.Applicants>
 			<MainPageButtons />
 		</S.Container>
 	);
@@ -59,5 +80,11 @@ namespace S {
 		> button {
 			margin-left: auto;
 		}
+	`;
+
+	export const Applicants = styled.div`
+		display: grid;
+		grid-template-rows: repeat(6, 1fr);
+		gap: 0.4rem;
 	`;
 }

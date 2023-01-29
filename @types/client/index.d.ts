@@ -1,5 +1,6 @@
 import { ButtonTypes, ButtonSizes } from '../../constants/buttons';
 import { LoadingWidths } from '../../constants/loadingWidths';
+import { ApplicantStatusCodeKeys } from '../../constants/applicantStatusCode';
 
 type CustomButtonProps = CommonButtonProps & {
 	buttonType: keyof typeof ButtonTypes;
@@ -14,4 +15,8 @@ type LoadingDotsProps = {
 	width: typeof LoadingWidths[keyof typeof LoadingWidths];
 	isWhite?: boolean;
 	isHidden: boolean;
+};
+
+type MainBoardColumnProps = {
+	applicantStatusCode: typeof ApplicantStatusCodeKeys[keyof typeof ApplicantStatusCodeKeys];
 };
