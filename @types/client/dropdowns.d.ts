@@ -9,4 +9,5 @@ type DropDownProps = {
 	onClick2: (e: any) => void;
 	onClick3?: (e: any) => void;
 	customCSS?: string;
+	isHidden: boolean;
 };

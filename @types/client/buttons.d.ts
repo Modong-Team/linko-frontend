@@ -19,3 +19,16 @@ type NewQuestionButtonProps = {
 	onCreateSingleSelectQuestion: () => void;
 	onCreateMultiSelectQuestion: () => void;
 };
+
+type MoreButtonProps = {
+	label1: string;
+	label2: string;
+	onClick1: () => void;
+	onClick2: () => void;
+};
+
+type FilterButtonProps = {
+	label: string;
+	onClick: () => void;
+	onBlur: () => void;
+};

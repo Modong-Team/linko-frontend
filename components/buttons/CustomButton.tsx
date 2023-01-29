@@ -69,6 +69,7 @@ namespace S {
 		> span {
 			display: flex;
 			align-items: center;
+			justify-content: center;
 			gap: 0.4rem;
 			visibility: ${(props) => props.isLoading && 'hidden'};
 		}

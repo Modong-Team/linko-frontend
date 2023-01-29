@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { svgCheckBox, svgCirclePlus, svgPencil, svgTick } from '../../styles/svgs';
 import DropDown from '../dropdowns/DropDown';
 import { QuestionLabels } from '../../constants/questionTypes';
+import { DynamicStyles } from '../../styles/styles';
 
 export default function NewQuestionButton({
 	onCreateTextQuestion,
@@ -17,19 +18,19 @@ export default function NewQuestionButton({
 	return (
 		<S.Button onClick={onClick} onBlur={onBlur}>
 			{svgCirclePlus}
-			{showMenu && (
-				<DropDown
-					svg1={svgPencil}
-					svg2={svgTick}
-					svg3={svgCheckBox}
-					option1={QuestionLabels[1]}
-					option2={QuestionLabels[2]}
-					option3={QuestionLabels[3]}
-					onClick1={onCreateTextQuestion}
-					onClick2={onCreateSingleSelectQuestion}
-					onClick3={onCreateMultiSelectQuestion}
-				/>
-			)}
+			<DropDown
+				svg1={svgPencil}
+				svg2={svgTick}
+				svg3={svgCheckBox}
+				option1={QuestionLabels[1]}
+				option2={QuestionLabels[2]}
+				option3={QuestionLabels[3]}
+				onClick1={onCreateTextQuestion}
+				onClick2={onCreateSingleSelectQuestion}
+				onClick3={onCreateMultiSelectQuestion}
+				customCSS={DynamicStyles.dropDownTranslateToCenter(110)}
+				isHidden={!showMenu}
+			/>
 		</S.Button>
 	);
 }
