@@ -21,3 +21,11 @@ type IsFixedType = {
 type CustomCSSType = {
 	customCSS: string;
 };
+
+type IsFailedType = {
+	isFailed: boolean;
+};
+
+type IsSelectedType = {
+	isSelected: boolean;
+};
