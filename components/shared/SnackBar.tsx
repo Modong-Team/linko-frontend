@@ -17,24 +17,26 @@ namespace S {
 		color: ${Colors.white};
 		position: fixed;
 		bottom: 4rem;
+		left: 50%;
+		transform: translate(-50%, 200%);
 		animation: snackBarAnimation ${Styles.snackBarAnimationDuration} ease;
-		transform: translateY(200%);
+		z-index: 100;
 
 		@keyframes snackBarAnimation {
 			0% {
-				transform: translateY(200%);
+				transform: translate(-50%, 200%);
 				opacity: 0;
 			}
 			25% {
-				transform: translateY(0%);
+				transform: translate(-50%, 0%);
 				opacity: 1;
 			}
 			55% {
-				transform: translateY(0%);
+				transform: translate(-50%, 0%);
 				opacity: 1;
 			}
 			100% {
-				transform: translateY(200%);
+				transform: translate(-50%, 200%);
 				opacity: 0;
 			}
 		}
