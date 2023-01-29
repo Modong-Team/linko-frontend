@@ -14,11 +14,13 @@ import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 import copyToClipBoard from '../../../utils/copyToClipBoard';
 import SnackBar from '../../shared/SnackBar';
 import useSnackBar from '../../../hooks/useSnackBar';
+import useLoadingStatus from '../../../hooks/useLoadingStatus';
 
 export default function NewComplete({ applicationId }: NewCompletePageProps) {
 	const onRouteToMain = useRouteToPath(Paths.main);
 	const [application, setApplication] = useState<ResponseApplication.Get>();
 	const { isShowSnackBar, onTriggerSnackBar } = useSnackBar();
+	const { onStartGlobalLoading, onFinishGlobalLoading } = useLoadingStatus();
 
 	const onClickClipBoard = () => {
 		const urlId = application?.data.urlId;
@@ -28,8 +30,13 @@ export default function NewComplete({ applicationId }: NewCompletePageProps) {
 	};
 
 	useEffect(() => {
-		if (!isNaN(applicationId)) useGet(() => getApplication(applicationId), setApplication);
+		if (!isNaN(applicationId))
+			useGet(() => getApplication(applicationId), setApplication, onFinishGlobalLoading);
 	}, [applicationId]);
+
+	useEffect(() => {
+		onStartGlobalLoading();
+	}, []);
 
 	return (
 		<S.Container>
