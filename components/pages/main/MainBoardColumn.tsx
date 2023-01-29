@@ -28,7 +28,7 @@ export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumn
 		<S.Container>
 			<S.Meta>
 				<h2>{ApplicantStatusCodeLabel[applicantStatusCode]}</h2>
-				<div>8</div>
+				<div>{applicantsWithCertainStatusCode?.length}</div>
 				<CustomButton
 					label={'상태 변경'}
 					onClick={() => alert('미구현')}

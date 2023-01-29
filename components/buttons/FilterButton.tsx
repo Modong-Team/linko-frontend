@@ -1,27 +1,52 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Colors } from '../../styles/colors';
 import { Fonts } from '../../styles/fonts';
+import { Styles, DynamicStyles } from '../../styles/styles';
 import { svgDown8 } from '../../styles/svgs';
+import DropDown from '../dropdowns/DropDown';
 
-export default function FilterButton({ label, onClick, onBlur }: FilterButtonProps) {
+export default function FilterButton({
+	label1,
+	label2,
+	label3,
+	onClick1,
+	onClick2,
+	onClick3,
+}: FilterButtonProps) {
+	const [isFocus, setIsFocus] = useState(false);
+
+	const onFocus = () => setIsFocus(true);
+	const onBlur = () => setIsFocus(false);
+
 	return (
-		<S.FilterContainer onClick={onClick} onBlur={onBlur}>
-			{label}
+		<S.FilterContainer onClick={onFocus} onBlur={onBlur} isFocus={isFocus}>
+			현재 상태
 			{svgDown8}
+			<DropDown
+				option1={label1}
+				option2={label2}
+				option3={label3}
+				onClick1={onClick1}
+				onClick2={onClick2}
+				onClick3={onClick3}
+				customCSS={Styles.dropDownTextAlignLeft + DynamicStyles.dropDownTranslateToCenter(105)}
+				isHidden={!isFocus}
+			/>
 		</S.FilterContainer>
 	);
 }
 
 namespace S {
-	export const FilterContainer = styled.button`
+	export const FilterContainer = styled.button<IsFocusType>`
 		${Fonts.button14medium}
 		display: flex;
 		gap: 0.6rem;
 		width: fit-content;
 		padding: 0.6rem 1.4rem;
 		align-items: center;
-		background-color: ${Colors.white};
-		border: 0.1rem solid ${Colors.gray200};
+		background-color: ${(props) => (props.isFocus ? Colors.gray200 : Colors.white)};
+		border: 0.1rem solid ${(props) => (props.isFocus ? Colors.gray300 : Colors.gray200)};
 		border-radius: 1.6rem;
 		position: relative;
 		transition: 0.3s ease;
