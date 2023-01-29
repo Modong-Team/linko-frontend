@@ -57,12 +57,20 @@ namespace S {
 
 		> h1 {
 			${Fonts.heading26bold}
+			white-space: nowrap;
+			max-width: 55%;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 
 		> div {
 			display: flex;
 			gap: 1.6rem;
 			align-items: center;
+
+			> * {
+				flex-shrink: 0;
+			}
 
 			> button {
 				height: 4rem;

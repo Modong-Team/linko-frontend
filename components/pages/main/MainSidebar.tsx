@@ -54,26 +54,28 @@ export default function MainSidebar({ applicationId }: MainPageProps) {
 				<h3>동아리 ID</h3>
 				<S.ProfilePopulation>{svgUser24} 3</S.ProfilePopulation>
 			</S.SidebarProfile>
-			<S.SidebarApplications>
-				<h3>지원서 목록</h3>
-				{applications &&
-					applications.data.map((application, i) => (
-						<S.ApplicationItem
-							isFocus={checkIsValidFocus(application.id)}
-							onClick={() => onClickTitle(application.id)}
-							key={i}>
-							{application.title}
-						</S.ApplicationItem>
-					))}
+			<S.SidebarApplicationsList>
+				<S.SidebarApplications>
+					<h3>지원서 목록</h3>
+					{applications &&
+						applications.data.map((application, i) => (
+							<S.ApplicationItem
+								isFocus={checkIsValidFocus(application.id)}
+								onClick={() => onClickTitle(application.id)}
+								key={i}>
+								{application.title}
+							</S.ApplicationItem>
+						))}
+				</S.SidebarApplications>
+				<CustomButton
+					onClick={routeToNew}
+					label={'새로운 지원서'}
+					buttonType={ButtonTypes.primary}
+					buttonSize={ButtonSizes.large}
+					svgIcon={svgNewPlus}
+				/>
 				<LoadingDots width={LoadingWidths.section} isHidden={!isLocalLoading} />
-			</S.SidebarApplications>
-			<CustomButton
-				onClick={routeToNew}
-				label={'새로운 지원서'}
-				buttonType={ButtonTypes.primary}
-				buttonSize={ButtonSizes.large}
-				svgIcon={svgNewPlus}
-			/>
+			</S.SidebarApplicationsList>
 		</S.SidebarContainer>
 	);
 }
@@ -90,9 +92,10 @@ namespace S {
 		min-width: 22rem;
 		max-width: 27.2rem;
 		background-color: ${Colors.white};
-		overflow: scroll;
+		display: flex;
+		flex-direction: column;
 
-		> button {
+		button {
 			display: block;
 			margin: 0 auto;
 			margin-bottom: 2.4rem;
@@ -144,6 +147,11 @@ namespace S {
 		align-items: center;
 		margin-top: 1.9rem;
 		gap: 0.35em;
+	`;
+
+	export const SidebarApplicationsList = styled.div`
+		position: relative;
+		overflow: scroll;
 	`;
 
 	export const SidebarApplications = styled.section`
