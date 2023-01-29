@@ -7,7 +7,10 @@ export default function useLoadingStatus() {
 	const dispatch = useDispatch();
 
 	const onStartGlobalLoading = () => dispatch(startGlobalLoading());
-	const onFinishGlobalLoading = () => dispatch(finishGlobalLoading());
+	const onFinishGlobalLoading = () =>
+		setTimeout(() => {
+			dispatch(finishGlobalLoading());
+		}, 500);
 
 	return { loadingStatus, onStartGlobalLoading, onFinishGlobalLoading };
 }
