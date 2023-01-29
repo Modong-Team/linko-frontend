@@ -5,19 +5,18 @@ import useForms from '../../../hooks/useForms';
 import { useState } from 'react';
 import { svgMore } from '../../../styles/svgs';
 import DropDown from '../../dropdowns/DropDown';
+import withoutPropagation from '../../../utils/withoutPropagation';
 
 export default function NewNavigator({ page, onChangePage }: NewNavigatorProps) {
 	const { forms, onRemoveForm } = useForms();
 	const [showMoreFor, setShowMoreFor] = useState<number | null>(null);
 
 	const onClickMore = (e: React.MouseEvent, idx: number) => {
-		e.stopPropagation();
 		setShowMoreFor(idx);
 	};
 	const onBlur = () => setShowMoreFor(-1);
 
 	const onClickRemove = (e: React.MouseEvent, idx: number) => {
-		e.stopPropagation();
 		setShowMoreFor(null);
 		onRouteToAppropriatePage(idx);
 		onRemoveForm(idx);
@@ -40,16 +39,15 @@ export default function NewNavigator({ page, onChangePage }: NewNavigatorProps) 
 					onBlur={onBlur}
 					key={i}>
 					<span>{form.title}</span>
-					<span onClick={(e) => onClickMore(e, i)}>{svgMore}</span>
-					{showMoreFor === i && (
-						<DropDown
-							option1={'삭제하기'}
-							option2={'복제하기'}
-							onClick1={(e) => onClickRemove(e, i)}
-							onClick2={() => alert('미구현된 피쳐입니다.')}
-							customCSS={`${Styles.dropDownAlignRightBottom} bottom:-6rem; right:-2rem; div:first-of-type{${Styles.dropDownOptionRed}}`}
-						/>
-					)}
+					<span onClick={(e) => withoutPropagation(e, () => onClickMore(e, i))}>{svgMore}</span>
+					<DropDown
+						option1={'삭제하기'}
+						option2={'복제하기'}
+						onClick1={(e) => onClickRemove(e, i)}
+						onClick2={() => alert('미구현된 피쳐입니다.')}
+						customCSS={`${Styles.dropDownAlignRightBottom} bottom:-6rem; right:-2rem; div:first-of-type{${Styles.dropDownOptionRed}}`}
+						isHidden={showMoreFor !== i}
+					/>
 				</S.NavigatorElement>
 			))}
 		</S.Container>

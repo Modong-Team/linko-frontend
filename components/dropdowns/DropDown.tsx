@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Colors } from '../../styles/colors';
 import { Fonts } from '../../styles/fonts';
+import React from 'react';
+import withoutPropagation from '../../utils/withoutPropagation';
 
 export default function DropDown({
 	svg1,
@@ -13,19 +15,20 @@ export default function DropDown({
 	onClick2,
 	onClick3,
 	customCSS,
+	isHidden,
 }: DropDownProps) {
 	return (
-		<S.DropDownContainer customCSS={customCSS}>
-			<div onClick={onClick1}>
+		<S.DropDownContainer customCSS={customCSS} isHidden={isHidden}>
+			<div onClick={(e) => withoutPropagation(e, onClick1)}>
 				{svg1}
 				{option1}
 			</div>
-			<div onClick={onClick2}>
+			<div onClick={(e) => withoutPropagation(e, onClick2)}>
 				{svg2}
 				{option2}
 			</div>
-			{option3 && (
-				<div onClick={onClick3}>
+			{option3 && onClick3 && (
+				<div onClick={(e) => withoutPropagation(e, onClick3)}>
 					{svg3}
 					{option3}
 				</div>
@@ -35,7 +38,7 @@ export default function DropDown({
 }
 
 namespace S {
-	export const DropDownContainer = styled.div<Partial<CustomCSSType>>`
+	export const DropDownContainer = styled.div<Partial<CustomCSSType> & Partial<IsHiddenType>>`
 		white-space: nowrap;
 		position: absolute;
 		bottom: -10.8rem;
@@ -50,6 +53,9 @@ namespace S {
 		cursor: pointer;
 		z-index: 5;
 		width: fit-content;
+		visibility: ${(props) => props.isHidden && 'hidden'};
+		opacity: ${(props) => (props.isHidden ? 0 : 1)};
+		transition: 0.3s ease;
 
 		div {
 			${Fonts.button13medium}
