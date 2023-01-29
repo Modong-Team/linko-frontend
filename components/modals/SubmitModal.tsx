@@ -6,6 +6,7 @@ import CustomButton from '../buttons/CustomButton';
 import { Icons } from '../../styles/icons';
 import usePreventScroll from '../../hooks/usePreventScroll';
 import { Devices } from '../../styles/devices';
+import useLoadingStatus from '../../hooks/useLoadingStatus';
 
 export default function SubmitModal({
 	title,
@@ -14,6 +15,7 @@ export default function SubmitModal({
 	onConfirm,
 	isHidden,
 }: CommonModalProps) {
+	const { loadingStatus } = useLoadingStatus();
 	usePreventScroll(!isHidden);
 	return (
 		<S.ModalBackground isHidden={isHidden}>
@@ -33,6 +35,7 @@ export default function SubmitModal({
 						buttonSize={ButtonSizes.large}
 						buttonType={ButtonTypes.primary}
 						onClick={onConfirm}
+						isLoading={loadingStatus.isGlobalLoading}
 					/>
 				</S.ButtonWrapper>
 			</S.ModalContainer>

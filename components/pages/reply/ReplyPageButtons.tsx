@@ -7,27 +7,38 @@ import SubmitModal from '../../modals/SubmitModal';
 import { useState, useEffect } from 'react';
 import { Paths } from '../../../constants/paths';
 import { useRouter } from 'next/router';
+import useLoadingStatus from '../../../hooks/useLoadingStatus';
 
 export default function ReplyPageButtons({ page, onPrevPage, onNextPage }: NewPageButtonsProps) {
+	const router = useRouter();
 	const { answers } = useAnswers();
 	const { application } = useApplication();
 	const [isHideModal, setIsHideModal] = useState(true);
-	const router = useRouter();
+	const { onStartGlobalLoading, onFinishGlobalLoading } = useLoadingStatus();
 
 	const checkIsLastPage = () => application.data.forms.length - 1 === page;
 
 	const onSubmit = () => setIsHideModal(false);
 
 	const onConfirm = async () => {
-		const post = await postApplicant(answers);
-		console.log(post);
-		setIsHideModal(true);
-		const applicantId = post.data.id;
-		router.push(Paths.replyComplete + '/' + applicantId);
+		onStartGlobalLoading();
+		try {
+			const post = await postApplicant(answers);
+			const applicantId = post.data.id;
+			router.push(Paths.replyComplete + '/' + applicantId);
+		} catch (e) {
+			console.log(e);
+		} finally {
+			onFinishGlobalLoading();
+			setIsHideModal(true);
+		}
 	};
 
 	useEffect(() => {
-		return () => setIsHideModal(true);
+		return () => {
+			setIsHideModal(true);
+			onFinishGlobalLoading();
+		};
 	}, []);
 
 	return (
