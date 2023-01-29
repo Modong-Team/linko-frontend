@@ -9,7 +9,7 @@ export default function DefaultLayout({ children }: ChildrenType) {
 	return (
 		<S.Layout>
 			{children}
-			<LoadingDots width={LoadingWidths.fullscreen} isHidden={!loadingStatus.isLoading} />
+			<LoadingDots width={LoadingWidths.fullscreen} isHidden={!loadingStatus.isGlobalLoading} />
 		</S.Layout>
 	);
 }

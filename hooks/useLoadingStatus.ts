@@ -1,13 +1,13 @@
 import { RootState } from '../modules/index';
 import { useSelector, useDispatch } from 'react-redux';
-import { startLoading, finishLoading } from '../modules/loading/loadingStatus';
+import { startGlobalLoading, finishGlobalLoading } from '../modules/loading/loadingStatus';
 
 export default function useLoadingStatus() {
 	const loadingStatus = useSelector(({ loadingStatus }: RootState) => loadingStatus);
 	const dispatch = useDispatch();
 
-	const onStartLoading = () => dispatch(startLoading());
-	const onFinsishLoading = () => dispatch(finishLoading());
+	const onStartGlobalLoading = () => dispatch(startGlobalLoading());
+	const onFinishGlobalLoading = () => dispatch(finishGlobalLoading());
 
-	return { loadingStatus, onStartLoading, onFinsishLoading };
+	return { loadingStatus, onStartGlobalLoading, onFinishGlobalLoading };
 }

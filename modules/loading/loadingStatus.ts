@@ -3,32 +3,32 @@ import { createReducer, createAction, ActionType } from 'typesafe-actions';
  * Action
  */
 
-const START_LOADING = 'loadingStatus/START_LOADING';
-const FINISH_LOADING = 'loadingStatus/FINISH_LOADING';
+const START_GLOBAL_LOADING = 'loadingStatus/START_GLOBAL_LOADING';
+const FINISH_GLOBAL_LOADING = 'loadingStatus/FINISH_GLOBAL_LOADING';
 
-export const startLoading = createAction(START_LOADING)();
-export const finishLoading = createAction(FINISH_LOADING)();
+export const startGlobalLoading = createAction(START_GLOBAL_LOADING)();
+export const finishGlobalLoading = createAction(FINISH_GLOBAL_LOADING)();
 
 /**
  * Reducer
  */
 
 export type LoadingStatusStateType = {
-	isLoading: boolean;
+	isGlobalLoading: boolean;
 };
 
 type LoadingStatusActionType = ActionType<
-	| typeof startLoading //
-	| typeof finishLoading
+	| typeof startGlobalLoading //
+	| typeof finishGlobalLoading
 >;
 
 const initialState = {
-	isLoading: false,
+	isGlobalLoading: false,
 };
 
 const loadingStatus = createReducer<LoadingStatusStateType, LoadingStatusActionType>(initialState, {
-	[START_LOADING]: (state) => ({ isLoading: true }),
-	[FINISH_LOADING]: (state) => ({ isLoading: false }),
+	[START_GLOBAL_LOADING]: (state) => ({ isGlobalLoading: true }),
+	[FINISH_GLOBAL_LOADING]: (state) => ({ isGlobalLoading: false }),
 });
 
 export default loadingStatus;
