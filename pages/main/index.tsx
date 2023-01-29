@@ -8,7 +8,7 @@ export default function index() {
 	return (
 		<>
 			<CustomHead title={Seo.Title.main} />
-			<MainPage applicationId={0} />
+			<MainPage />
 		</>
 	);
 }

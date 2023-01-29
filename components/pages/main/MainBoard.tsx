@@ -1,6 +1,7 @@
 import FilterButton from '../../buttons/FilterButton';
 import MainBoardColumn from './MainBoardColumn';
 import styled from 'styled-components';
+import { ApplicantStatusCodeKeys } from '../../../constants/applicantStatusCode';
 
 export default function MainBoard() {
 	return (
@@ -18,10 +19,10 @@ export default function MainBoard() {
 				/>
 			</S.FilterButtons>
 			<S.BoardContainer>
-				<MainBoardColumn />
-				<MainBoardColumn />
-				<MainBoardColumn />
-				<MainBoardColumn />
+				<MainBoardColumn applicantStatusCode={ApplicantStatusCodeKeys.accept} />
+				<MainBoardColumn applicantStatusCode={ApplicantStatusCodeKeys.application} />
+				<MainBoardColumn applicantStatusCode={ApplicantStatusCodeKeys.interview} />
+				<MainBoardColumn applicantStatusCode={ApplicantStatusCodeKeys.success} />
 			</S.BoardContainer>
 		</S.Container>
 	);

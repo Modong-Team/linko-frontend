@@ -2,12 +2,13 @@ import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
 import MoreButton from '../../buttons/MoreButton';
-import { svgStar16 } from '../../../styles/svgs';
+import { svgStar16, svgUser16 } from '../../../styles/svgs';
+import parseSubmitDate from '../../../utils/parseSubmitDate';
 
-export default function MainBoardCard() {
+export default function MainBoardCard({ id, name, rate, submitDate, fail }: MainBoardCardProps) {
 	return (
 		<S.Container>
-			<h3>박병진</h3>
+			<h3>{name}</h3>
 			<MoreButton
 				label1={'선택하기'}
 				label2={'탈락'}
@@ -18,21 +19,30 @@ export default function MainBoardCard() {
 					throw new Error('Function not implemented.');
 				}}
 			/>
-			<h4>2022. 11. 2</h4>
+			<h4>{parseSubmitDate(submitDate)}</h4>
 			<S.StatusElements>
-				<StatusElement />
-				<StatusElement />
+				<RateStatusElement label={rate} />
+				<RaterStatusElement label={rate} />
 			</S.StatusElements>
 		</S.Container>
 	);
 }
 
-function StatusElement() {
+function RateStatusElement({ label }: StatusElementProps) {
 	return (
-		<S.Status>
+		<S.RateStatus>
 			{svgStar16}
-			9.3
-		</S.Status>
+			{label}
+		</S.RateStatus>
+	);
+}
+
+function RaterStatusElement({ label }: StatusElementProps) {
+	return (
+		<S.RaterStatus>
+			{svgUser16}
+			{label}/3
+		</S.RaterStatus>
 	);
 }
 
@@ -68,13 +78,20 @@ namespace S {
 		gap: 0.4rem;
 	`;
 
-	export const Status = styled.div`
+	const Status = styled.div`
 		${Fonts.body12medium}
 		padding: 0.3rem 0.8rem;
-		background-color: ${Colors.blue100};
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
 		border-radius: 2rem;
+	`;
+
+	export const RateStatus = styled(Status)`
+		background-color: ${Colors.blue100};
+	`;
+
+	export const RaterStatus = styled(Status)`
+		background-color: ${Colors.gray100};
 	`;
 }

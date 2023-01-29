@@ -16,12 +16,28 @@ import LoadingDots from '../../shared/LoadingDots';
 import { LoadingWidths } from '../../../constants/loadingWidths';
 import { SC } from '../../../styles/styled';
 import useCustomRouter from '../../../hooks/useCustomRouter';
+import useApplicationId from '../../../hooks/useApplicationId';
 
 export default function MainSidebar({ applicationId }: MainPageProps) {
 	const routeToNew = useRouteToPath(Paths.new);
+	const { onRouteToPath } = useCustomRouter();
 	const [applications, setApplications] = useState<ResponseApplications.Get>();
 	const { isLocalLoading, onStartLocalLoading, onFinishLocalLoading } = useLocalLoading();
-	const { onRouteToPath } = useCustomRouter();
+	const { applicationId: selectedApplicationId, onRequestSetApplicationId } = useApplicationId();
+
+	const onClickTitle = (id: number) => {
+		onRequestSetApplicationId(id);
+		onRouteToPath(Paths.main + '/' + id);
+	};
+
+	const checkIsValidFocus = (id: number) => applicationId === id && selectedApplicationId === id;
+
+	useEffect(() => {
+		if (applications?.data.length) {
+			if (!applicationId) onClickTitle(applications.data[0].id);
+			else onClickTitle(applicationId);
+		}
+	}, [applications]);
 
 	useEffect(() => {
 		onStartLocalLoading();
@@ -43,8 +59,8 @@ export default function MainSidebar({ applicationId }: MainPageProps) {
 				{applications &&
 					applications.data.map((application, i) => (
 						<S.ApplicationItem
-							isFocus={applicationId === application.id}
-							onClick={() => onRouteToPath(Paths.main + '/' + application.id)}
+							isFocus={checkIsValidFocus(application.id)}
+							onClick={() => onClickTitle(application.id)}
 							key={i}>
 							{application.title}
 						</S.ApplicationItem>

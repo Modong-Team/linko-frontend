@@ -11,6 +11,8 @@ import answers from './reply/answers';
 import { answersSaga } from './reply/answers';
 import application from './reply/application';
 import loadingStatus from './loading/loadingStatus';
+import applicationId, { applicationIdSaga } from './main/applicationId';
+import applicants from './main/applicants';
 
 const rootReducer = combineReducers({
 	forms,
@@ -22,10 +24,12 @@ const rootReducer = combineReducers({
 	answers,
 	application,
 	loadingStatus,
+	applicationId,
+	applicants,
 });
 
 export function* rootSaga() {
-	yield all([formsSaga(), newApplicationIdSaga(), newSaga(), answersSaga()]);
+	yield all([formsSaga(), newApplicationIdSaga(), newSaga(), answersSaga(), applicationIdSaga()]);
 }
 
 export default rootReducer;

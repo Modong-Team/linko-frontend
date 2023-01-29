@@ -3,7 +3,7 @@ import { Colors } from '../../../styles/colors';
 import MainBoard from './MainBoard';
 import MainMeta from './MainMeta';
 
-export default function MainPage({ applicationId }: MainPageProps) {
+export default function MainPage() {
 	return (
 		<S.Container>
 			<section>

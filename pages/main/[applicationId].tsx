@@ -6,12 +6,10 @@ import { CustomHead } from '../../components/seo';
 import { Seo } from '../../constants/seo';
 
 export default function main() {
-	const router = useRouter();
-	const applicationId = router.query.applicationId;
 	return (
 		<>
 			<CustomHead title={Seo.Title.main} />
-			<MainPage applicationId={+(applicationId || 0)} />
+			<MainPage />
 		</>
 	);
 }
