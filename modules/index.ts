@@ -10,6 +10,7 @@ import newApplicationId, { newApplicationIdSaga } from './new/newApplicationId';
 import answers from './reply/answers';
 import { answersSaga } from './reply/answers';
 import application from './reply/application';
+import loadingStatus from './loading/loadingStatus';
 
 const rootReducer = combineReducers({
 	forms,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
 	applicationTitleInputError,
 	answers,
 	application,
+	loadingStatus,
 });
 
 export function* rootSaga() {
