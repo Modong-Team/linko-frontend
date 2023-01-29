@@ -1,0 +1,3 @@
+type MainPageProps = {
+	applicationId: number;
+};
