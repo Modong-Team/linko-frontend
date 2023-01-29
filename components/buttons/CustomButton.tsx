@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CustomButtonProps, CustomButtonType } from '../../@types/client/dep';
+import { CustomButtonProps, CustomButtonType } from '../../@types/client';
 import { ButtonTypes } from '../../constants/buttons';
 import {
 	ButtonStyles,
@@ -8,22 +8,31 @@ import {
 	RedButtonColors,
 	SecondaryButtonColors,
 } from '../../styles/buttons';
+import LoadingDots from '../shared/LoadingDots';
+import { LoadingWidths } from '../../constants/loadingWidths';
 
 export default function CustomButton({
 	label = '버튼',
 	onClick,
 	buttonSize,
 	buttonType,
+	isLoading = false,
 }: CustomButtonProps) {
 	return (
-		<S.Button buttonSize={buttonSize} buttonType={buttonType} onClick={onClick}>
-			{label}
+		<S.Button
+			buttonSize={buttonSize}
+			buttonType={buttonType}
+			onClick={onClick}
+			isLoading={isLoading}>
+			<span>{label}</span>
+			<LoadingDots width={LoadingWidths.button} isWhite isHidden={!isLoading} />
 		</S.Button>
 	);
 }
 
 namespace S {
 	export const Button = styled.button<CustomButtonType>`
+		position: relative;
 		transition: 0.3s ease;
 		${(props) => ButtonStyles[props.buttonSize]}
 
@@ -51,6 +60,10 @@ namespace S {
 			${(props) => props.buttonType === ButtonTypes.secondary && SecondaryButtonColors.disabled}
       ${(props) => props.buttonType === ButtonTypes.red && RedButtonColors.disabled}
       ${(props) => props.buttonType === ButtonTypes.line && LineButtonColors.disabled}
+		}
+
+		> span {
+			visibility: ${(props) => props.isLoading && 'hidden'};
 		}
 	`;
 }
