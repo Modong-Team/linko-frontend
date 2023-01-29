@@ -83,6 +83,7 @@ namespace S {
 	`;
 
 	export const Applicants = styled.div`
+		height: 100%;
 		display: grid;
 		grid-template-rows: repeat(6, 1fr);
 		gap: 0.4rem;
