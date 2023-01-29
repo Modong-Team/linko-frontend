@@ -4,26 +4,31 @@ import { Fonts } from '../../../styles/fonts';
 import MoreButton from '../../buttons/MoreButton';
 import { svgStar16, svgUser16 } from '../../../styles/svgs';
 import parseSubmitDate from '../../../utils/parseSubmitDate';
+import { Media } from '../../../styles/breakPoints';
 
 export default function MainBoardCard({ id, name, rate, submitDate, fail }: MainBoardCardProps) {
 	return (
 		<S.Container>
-			<h3>{name}</h3>
-			<MoreButton
-				label1={'선택하기'}
-				label2={'탈락'}
-				onClick1={function (): void {
-					throw new Error('Function not implemented.');
-				}}
-				onClick2={function (): void {
-					throw new Error('Function not implemented.');
-				}}
-			/>
-			<h4>{parseSubmitDate(submitDate)}</h4>
-			<S.StatusElements>
-				<RateStatusElement label={rate} />
-				<RaterStatusElement label={rate} />
-			</S.StatusElements>
+			<div>
+				<h3>{name}</h3>
+				<MoreButton
+					label1={'선택하기'}
+					label2={'탈락'}
+					onClick1={function (): void {
+						throw new Error('Function not implemented.');
+					}}
+					onClick2={function (): void {
+						throw new Error('Function not implemented.');
+					}}
+				/>
+			</div>
+			<div>
+				<h4>{parseSubmitDate(submitDate)}</h4>
+				<S.StatusElements>
+					<RateStatusElement label={rate} />
+					<RaterStatusElement label={rate} />
+				</S.StatusElements>
+			</div>
 		</S.Container>
 	);
 }
@@ -50,26 +55,36 @@ namespace S {
 	export const Container = styled.div`
 		padding: 1.6rem;
 		padding-bottom: 1.5rem;
-		display: grid;
-		grid-template-columns: repeat(2, max-content);
-		justify-content: space-between;
-		align-items: center;
-		row-gap: 1.9rem;
 		background-color: ${Colors.white};
 		border: 0.1rem solid ${Colors.gray200};
 		border-radius: 0.8rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		transition: 0.3s ease;
 
-		> h3 {
-			${Fonts.heading20bold}
+		> div {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			> h3 {
+				${Fonts.heading20bold}
+			}
+
+			> h4 {
+				${Fonts.body12medium}
+				color:${Colors.gray500}
+			}
+
+			> button {
+				justify-self: end;
+			}
 		}
 
-		> h4 {
-			${Fonts.body12medium}
-			color:${Colors.gray500}
-		}
-
-		> button {
-			justify-self: end;
+		${Media.small} {
+			padding: 0.8rem 1.6rem;
+			min-height: 7.6rem;
 		}
 	`;
 
