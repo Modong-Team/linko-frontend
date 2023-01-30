@@ -11,6 +11,10 @@ declare namespace RequestApplicant {
 			questionId: number;
 		}[];
 	};
+
+	type Patch = {
+		applicantStatusCode: number;
+	};
 }
 
 declare namespace ResponseApplicant {
@@ -43,5 +47,9 @@ declare namespace ResponseApplicant {
 			}[];
 			fail: boolean;
 		};
+	};
+
+	type Patch = {
+		id: number;
 	};
 }
