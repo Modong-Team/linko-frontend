@@ -13,6 +13,10 @@ import application from './reply/application';
 import loadingStatus from './loading/loadingStatus';
 import applicationId, { applicationIdSaga } from './main/applicationId';
 import applicants from './main/applicants';
+import selectedStatus from './main/selectedStatus';
+import selectedApplicants from './main/selectedApplicants';
+import { selectedApplicantsSaga } from './main/selectedApplicants';
+import { selectedStatusSaga } from './main/selectedStatus';
 
 const rootReducer = combineReducers({
 	forms,
@@ -26,10 +30,20 @@ const rootReducer = combineReducers({
 	loadingStatus,
 	applicationId,
 	applicants,
+	selectedStatus,
+	selectedApplicants,
 });
 
 export function* rootSaga() {
-	yield all([formsSaga(), newApplicationIdSaga(), newSaga(), answersSaga(), applicationIdSaga()]);
+	yield all([
+		formsSaga(),
+		newApplicationIdSaga(),
+		newSaga(),
+		answersSaga(),
+		applicationIdSaga(),
+		selectedStatusSaga(),
+		selectedApplicantsSaga(),
+	]);
 }
 
 export default rootReducer;

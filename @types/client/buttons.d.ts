@@ -27,8 +27,7 @@ type MoreButtonProps = {
 	onClick2: () => void;
 };
 
-type FilterButtonProps = {
-	label: string;
-	onClick: () => void;
-	onBlur: () => void;
+type FilterButtonProps = MoreButtonProps & {
+	label3: string;
+	onClick3: () => void;
 };

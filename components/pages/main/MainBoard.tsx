@@ -8,14 +8,20 @@ export default function MainBoard() {
 		<S.Container>
 			<S.FilterButtons>
 				<FilterButton
-					label={'모든 지원자'}
-					onClick={() => alert('미구현 피쳐')}
-					onBlur={() => alert('미구현 피쳐')}
+					label1={'모든 지원자'}
+					label2={'평가중'}
+					label3={'탈락'}
+					onClick1={() => alert('미구현')}
+					onClick2={() => alert('미구현')}
+					onClick3={() => alert('미구현')}
 				/>
 				<FilterButton
-					label={'가나다 순'}
-					onClick={() => alert('미구현 피쳐')}
-					onBlur={() => alert('미구현 피쳐')}
+					label1={'가나다 순'}
+					label2={'높은 평점 순'}
+					label3={'낮은 평점 순'}
+					onClick1={() => alert('미구현')}
+					onClick2={() => alert('미구현')}
+					onClick3={() => alert('미구현')}
 				/>
 			</S.FilterButtons>
 			<S.BoardContainer>

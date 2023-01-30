@@ -18,7 +18,8 @@ export default function CustomButton({
 	buttonType,
 	svgIcon,
 	isLoading = false,
-}: CustomButtonProps) {
+	children,
+}: CustomButtonProps & Partial<ChildrenType>) {
 	return (
 		<S.Button
 			buttonSize={buttonSize}
@@ -29,6 +30,7 @@ export default function CustomButton({
 				{svgIcon}
 				{label}
 			</span>
+			{children}
 			<LoadingDots width={LoadingWidths.button} isWhite isHidden={!isLoading} />
 		</S.Button>
 	);
