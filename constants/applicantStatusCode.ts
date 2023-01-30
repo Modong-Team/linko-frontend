@@ -7,11 +7,11 @@ export const ApplicantStatusCodeKeys = {
 } as const;
 
 export const ApplicantStatusCode = {
-	fail: 1,
-	accept: 2,
-	application: 3,
-	interview: 4,
-	success: 5,
+	FAIL: 1,
+	ACCEPT: 2,
+	APPLICATION: 3,
+	INTERVIEW: 4,
+	SUCCESS: 5,
 } as const;
 
 export const ApplicantStatusCodeLabel = {
