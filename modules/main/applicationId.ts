@@ -5,6 +5,7 @@ import { setApplicants } from './applicants';
 import { getApplication } from '../../api/application';
 import { setApplication } from '../reply/application';
 import { startGlobalLoading, finishGlobalLoading } from '../loading/loadingStatus';
+import { requestResetStatus } from './selectedStatus';
 
 /**
  * Action
@@ -29,6 +30,8 @@ export const requestSetApplicationId = createAction(
 
 function* requestSetApplicationIdSaga({ payload }: ActionType<typeof requestSetApplicationId>) {
 	yield put(startGlobalLoading());
+
+	yield put(requestResetStatus());
 
 	const applicationId = payload.applicationId;
 	yield put(setApplicationId(applicationId));
