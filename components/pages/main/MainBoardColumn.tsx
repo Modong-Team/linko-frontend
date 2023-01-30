@@ -7,17 +7,26 @@ import { Fonts } from '../../../styles/fonts';
 import MainPageButtons from './MainPageButtons';
 import useApplicants from '../../../hooks/useApplicants';
 import { MainBoardColumnProps } from '../../../@types/client';
-import { ApplicantStatusCodeLabel } from '../../../constants/applicantStatusCode';
+import {
+	ApplicantStatusCodeLabel,
+	ApplicantStatusCode,
+	ApplicantStatusCodeKeys,
+} from '../../../constants/applicantStatusCode';
 import { useState, useEffect } from 'react';
 import useSelectedStatus from '../../../hooks/useSelectedStatus';
 import DropDown from '../../dropdowns/DropDown';
 import { DynamicStyles, Styles } from '../../../styles/styles';
+import useSelectedApplicants from '../../../hooks/useSelectedApplicants';
+import { patchApplicant } from '../../../api/applicant';
+import useApplicationId from '../../../hooks/useApplicationId';
 
 export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumnProps) {
 	const { applicants } = useApplicants();
+	const { selectedStatus, onSelectStatus, onRequestResetStatus } = useSelectedStatus();
+	const { selectedApplicants } = useSelectedApplicants();
+	const { onRefreshApplicantsStatus } = useApplicationId();
 	const [applicantsWithCertainStatusCode, setApplicantsWithCertainStatusCode] =
 		useState<ResponseApplicants.Data[]>();
-	const { selectedStatus, onSelectStatus, onRequestResetStatus } = useSelectedStatus();
 
 	const pickApplicantsByStatusCode = () => {
 		const result = applicants?.data.filter((applicant) => applicant.status === applicantStatusCode);
@@ -30,6 +39,44 @@ export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumn
 	};
 
 	const checkIsSelected = () => selectedStatus === applicantStatusCode;
+
+	const checkIfHasOnlyPrevStep = () => applicantStatusCode === ApplicantStatusCodeKeys.success;
+
+	const checkIfHasBothStep = () =>
+		applicantStatusCode === ApplicantStatusCodeKeys.application ||
+		applicantStatusCode === ApplicantStatusCodeKeys.interview;
+
+	const checkIfHasOnlyNextStep = () => applicantStatusCode === ApplicantStatusCodeKeys.accept;
+
+	const onMoveToNextStep = async () => {
+		const promises = selectedApplicants.map(async (applicant) => {
+			const nextStatusCode = Math.min(ApplicantStatusCode[applicantStatusCode] + 1, 5);
+			const patch = await patchApplicant(applicant, { applicantStatusCode: nextStatusCode });
+			console.log(patch);
+		});
+		await Promise.all(promises);
+		onRefreshApplicantsStatus();
+	};
+
+	const onMoveToPrevStep = async () => {
+		const promises = selectedApplicants.map(async (applicant) => {
+			const prevStatusCode = Math.max(ApplicantStatusCode[applicantStatusCode] - 1, 2);
+			const patch = await patchApplicant(applicant, { applicantStatusCode: prevStatusCode });
+			console.log(patch);
+		});
+		await Promise.all(promises);
+		onRefreshApplicantsStatus();
+	};
+
+	const onMarkAsFail = async () => {
+		const promises = selectedApplicants.map(async (applicant) => {
+			const failStatusCode = ApplicantStatusCode.FAIL;
+			const patch = await patchApplicant(applicant, { applicantStatusCode: failStatusCode });
+			console.log(patch);
+		});
+		await Promise.all(promises);
+		onRefreshApplicantsStatus();
+	};
 
 	useEffect(() => {
 		if (applicantStatusCode) pickApplicantsByStatusCode();
@@ -48,18 +95,50 @@ export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumn
 						}
 						buttonType={ButtonTypes.line}
 						buttonSize={ButtonSizes.small}>
-						<DropDown
-							option1={'다음 단계로'}
-							option2={'탈락'}
-							onClick1={console.log}
-							onClick2={console.log}
-							isHidden={!checkIsSelected()}
-							customCSS={
-								Styles.dropDownTextAlignLeft +
-								DynamicStyles.dropDownNthOptionRed(2) +
-								DynamicStyles.dropDownTranslate(105, 1)
-							}
-						/>
+						{checkIfHasOnlyPrevStep() && (
+							<DropDown
+								option1={'이전 단계로'}
+								option2={'탈락'}
+								onClick1={onMoveToPrevStep}
+								onClick2={onMarkAsFail}
+								isHidden={!checkIsSelected()}
+								customCSS={
+									Styles.dropDownTextAlignLeft +
+									DynamicStyles.dropDownNthOptionRed(2) +
+									DynamicStyles.dropDownTranslate(105, 1)
+								}
+							/>
+						)}
+						{checkIfHasBothStep() && (
+							<DropDown
+								option1={'이전 단계로'}
+								option2={'다음 단계로'}
+								option3={'탈락'}
+								onClick1={onMoveToPrevStep}
+								onClick2={onMoveToNextStep}
+								onClick3={onMarkAsFail}
+								isHidden={!checkIsSelected()}
+								customCSS={
+									Styles.dropDownTextAlignLeft +
+									DynamicStyles.dropDownNthOptionRed(3) +
+									DynamicStyles.dropDownTranslate(105, 1)
+								}
+							/>
+						)}
+						{checkIfHasOnlyNextStep() && (
+							<DropDown
+								option1={'다음 단계로'}
+								option2={'탈락'}
+								onClick1={onMoveToNextStep}
+								onClick2={onMarkAsFail}
+								isHidden={!checkIsSelected()}
+								customCSS={
+									Styles.dropDownTextAlignLeft +
+									DynamicStyles.dropDownNthOptionRed(2) +
+									DynamicStyles.dropDownTranslate(105, 1)
+								}
+							/>
+						)}
 					</CustomButton>
 				)}
 			</S.Meta>

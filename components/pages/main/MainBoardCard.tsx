@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
 import MoreButton from '../../buttons/MoreButton';
@@ -10,6 +10,7 @@ import useSelectedApplicants from '../../../hooks/useSelectedApplicants';
 import { MainBoardCardContainerProps, StatusElementProps } from '../../../@types/client';
 import { CardModes } from '../../../styles/cardModes';
 import useSelectedStatus from '../../../hooks/useSelectedStatus';
+import useApplicationId from '../../../hooks/useApplicationId';
 
 export default function MainBoardCard({
 	id,
@@ -22,6 +23,7 @@ export default function MainBoardCard({
 	const { selectedStatus } = useSelectedStatus();
 	const { selectedApplicants, onRequestSelectApplicant, onDeselectApplicant } =
 		useSelectedApplicants();
+	const { onRefreshApplicantsStatus } = useApplicationId();
 
 	const onSelectFirstSingle = () => onRequestSelectApplicant(id);
 
@@ -33,6 +35,10 @@ export default function MainBoardCard({
 
 	const checkIfSelected = () => selectedApplicants.includes(id);
 
+	const checkShouldShowMoreButton = () => !selectedStatus && !isSelected;
+
+	const checkShouldShowCheckButton = () => isSelected && !fail;
+
 	const checkCardMode = () => {
 		if (!selectedStatus && fail) return CardModes.basicOut;
 		if (selectedStatus && fail) return CardModes.selectOutDisabled;
@@ -41,11 +47,16 @@ export default function MainBoardCard({
 		return CardModes.basicDefault;
 	};
 
+	const onCancelFail = async () => {
+		/* 탈락 취소 API */
+		onRefreshApplicantsStatus();
+	};
+
 	return (
 		<S.Container onClick={onToggleSelect} cardMode={checkCardMode()}>
 			<div>
 				<h3>{name}</h3>
-				{!isSelected ? (
+				{checkShouldShowMoreButton() && !fail && (
 					<MoreButton
 						label1={'선택하기'}
 						label2={'탈락'}
@@ -54,8 +65,12 @@ export default function MainBoardCard({
 							throw new Error('Function not implemented.');
 						}}
 					/>
-				) : (
-					!fail && <IconButton svgIcon={svgEntireCheckbox} onClick={() => console.log()} />
+				)}
+				{checkShouldShowMoreButton() && fail && (
+					<MoreButton label1={'탈락 취소'} onClick1={onCancelFail} />
+				)}
+				{checkShouldShowCheckButton() && (
+					<IconButton svgIcon={svgEntireCheckbox} onClick={() => console.log()} />
 				)}
 			</div>
 			<div>

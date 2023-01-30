@@ -22,9 +22,9 @@ type NewQuestionButtonProps = {
 
 type MoreButtonProps = {
 	label1: string;
-	label2: string;
+	label2?: string;
 	onClick1: () => void;
-	onClick2: () => void;
+	onClick2?: () => void;
 };
 
 type FilterButtonProps = MoreButtonProps & {
