@@ -23,10 +23,12 @@ export default function DropDown({
 				{svg1}
 				{option1}
 			</div>
-			<div onClick={(e) => withoutPropagation(e, onClick2)}>
-				{svg2}
-				{option2}
-			</div>
+			{option2 && onClick2 && (
+				<div onClick={(e) => withoutPropagation(e, onClick2)}>
+					{svg2}
+					{option2}
+				</div>
+			)}
 			{option3 && onClick3 && (
 				<div onClick={(e) => withoutPropagation(e, onClick3)}>
 					{svg3}

@@ -22,7 +22,7 @@ export default function MoreButton({ label1, label2, onClick1, onClick2 }: MoreB
 				onClick2={onClick2}
 				customCSS={
 					Styles.dropDownTextAlignLeft +
-					DynamicStyles.dropDownNthOptionRed(2) +
+					DynamicStyles.dropDownNthOptionRed(onClick2 ? 2 : 1) +
 					DynamicStyles.dropDownTranslate(75, 110)
 				}
 				isHidden={!isFocus}
