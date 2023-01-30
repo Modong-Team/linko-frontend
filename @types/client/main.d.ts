@@ -10,7 +10,3 @@ type MainBoardCardProps = {
 	fail: boolean;
 	isSelected: boolean;
 };
-
-type StatusElementProps = {
-	label: number;
-};

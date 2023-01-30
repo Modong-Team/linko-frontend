@@ -29,3 +29,11 @@ type IsFailedType = {
 type IsSelectedType = {
 	isSelected: boolean;
 };
+
+type IsDisabledType = {
+	isDisabled: boolean;
+};
+
+type IsGrayType = {
+	isGray: boolean;
+};

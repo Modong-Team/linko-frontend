@@ -1,6 +1,7 @@
 import { ButtonTypes, ButtonSizes } from '../../constants/buttons';
 import { LoadingWidths } from '../../constants/loadingWidths';
 import { ApplicantStatusCodeKeys } from '../../constants/applicantStatusCode';
+import { CardModes } from '../../styles/cardModes';
 
 type CustomButtonProps = CommonButtonProps & {
 	buttonType: keyof typeof ButtonTypes;
@@ -19,4 +20,13 @@ type LoadingDotsProps = {
 
 type MainBoardColumnProps = {
 	applicantStatusCode: typeof ApplicantStatusCodeKeys[keyof typeof ApplicantStatusCodeKeys];
+};
+
+type MainBoardCardContainerProps = {
+	cardMode: typeof CardModes[keyof typeof CardModes];
+};
+
+type StatusElementProps = MainBoardCardContainerProps & {
+	label: string;
+	isGray: boolean;
 };
