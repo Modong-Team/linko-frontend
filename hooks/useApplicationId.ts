@@ -9,5 +9,9 @@ export default function useApplicationId() {
 	const onRequestSetApplicationId = (applicationId: number) =>
 		dispatch(requestSetApplicationId(applicationId));
 
-	return { applicationId, onRequestSetApplicationId };
+	const onRefreshApplicantsStatus = () => {
+		if (applicationId) onRequestSetApplicationId(applicationId);
+	};
+
+	return { applicationId, onRequestSetApplicationId, onRefreshApplicantsStatus };
 }
