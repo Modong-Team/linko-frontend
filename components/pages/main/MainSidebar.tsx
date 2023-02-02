@@ -8,7 +8,7 @@ import { Paths } from '../../../constants/paths';
 import CustomButton from '../../buttons/CustomButton';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 import { AlphaToHex } from '../../../styles/alphaToHex';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, MutableRefObject } from 'react';
 import useGet from '../../../hooks/useGet';
 import { getApplications } from '../../../api/applications';
 import useLocalLoading from '../../../hooks/useLocalLoading';
@@ -19,8 +19,10 @@ import useCustomRouter from '../../../hooks/useCustomRouter';
 import useApplicationId from '../../../hooks/useApplicationId';
 
 export default function MainSidebar({ applicationId }: MainPageProps) {
+	const scroller = useRef() as MutableRefObject<HTMLUListElement>;
 	const routeToNew = useRouteToPath(Paths.new);
 	const { onRouteToPath } = useCustomRouter();
+	const [isShowScroll, setIsShowScroll] = useState(false);
 	const [applications, setApplications] = useState<ResponseApplications.Get>();
 	const { isLocalLoading, onStartLocalLoading, onFinishLocalLoading } = useLocalLoading();
 	const { applicationId: selectedApplicationId, onRequestSetApplicationId } = useApplicationId();
@@ -37,6 +39,8 @@ export default function MainSidebar({ applicationId }: MainPageProps) {
 			if (!applicationId) onClickTitle(applications.data[0].id);
 			else onClickTitle(applicationId);
 		}
+		if (scroller.current.scrollHeight > scroller.current.clientHeight) setIsShowScroll(true);
+		else setIsShowScroll(false);
 	}, [applications]);
 
 	useEffect(() => {
@@ -54,9 +58,18 @@ export default function MainSidebar({ applicationId }: MainPageProps) {
 				<h3>동아리 ID</h3>
 				<S.ProfilePopulation>{svgUser24} 3</S.ProfilePopulation>
 			</S.SidebarProfile>
-			<S.SidebarApplicationsList>
-				<S.SidebarApplications>
-					<h3>지원서 목록</h3>
+			<S.SidebarApplications isShowScroll={isShowScroll}>
+				<h3>
+					지원서 목록
+					<CustomButton
+						onClick={routeToNew}
+						label={''}
+						buttonType={ButtonTypes.primary}
+						buttonSize={ButtonSizes.large}
+						svgIcon={svgNewPlus}
+					/>
+				</h3>
+				<ul ref={scroller}>
 					{applications &&
 						applications.data.map((application, i) => (
 							<S.ApplicationItem
@@ -66,16 +79,9 @@ export default function MainSidebar({ applicationId }: MainPageProps) {
 								{application.title}
 							</S.ApplicationItem>
 						))}
-				</S.SidebarApplications>
-				<CustomButton
-					onClick={routeToNew}
-					label={'새로운 지원서'}
-					buttonType={ButtonTypes.primary}
-					buttonSize={ButtonSizes.large}
-					svgIcon={svgNewPlus}
-				/>
-				<LoadingDots width={LoadingWidths.section} isHidden={!isLocalLoading} />
-			</S.SidebarApplicationsList>
+					<LoadingDots width={LoadingWidths.section} isHidden={!isLocalLoading} />
+				</ul>
+			</S.SidebarApplications>
 		</S.SidebarContainer>
 	);
 }
@@ -96,14 +102,12 @@ namespace S {
 		flex-direction: column;
 
 		button {
-			display: block;
-			margin: 0 auto;
-			margin-bottom: 2.4rem;
-
-			svg {
-				position: relative;
-				top: -0.05rem;
-			}
+			width: 2.4rem;
+			height: 2.4rem;
+			padding: 0.5rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 	`;
 
@@ -112,7 +116,6 @@ namespace S {
 		flex-direction: column;
 		align-items: center;
 		padding: 4rem 2.6rem 2.85rem 2.6rem;
-		border-bottom: 0.1rem solid ${Colors.gray200};
 
 		> h2 {
 			${Fonts.heading18bold}
@@ -149,17 +152,38 @@ namespace S {
 		gap: 0.35em;
 	`;
 
-	export const SidebarApplicationsList = styled.div`
-		position: relative;
-		overflow: scroll;
-	`;
-
-	export const SidebarApplications = styled.section`
-		padding: 2.4rem 1.1rem;
+	export const SidebarApplications = styled.section<IsShowScrollType>`
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
 
 		> h3 {
-			${Fonts.subtitle14semibold}
-			text-align: center;
+			${Fonts.subtitle16semibold}
+			display: flex;
+			justify-content: space-between;
+			padding: 1.6rem 2.4rem;
+			border-top: 0.1rem solid ${Colors.gray200};
+			border-bottom: 0.1rem solid ${Colors.gray200};
+		}
+
+		> ul {
+			height: 100%;
+			position: relative;
+			white-space: nowrap;
+			overflow-y: auto;
+			padding: 1.2rem;
+			padding-right: ${(props) => props.isShowScroll && '0rem'};
+
+			::-webkit-scrollbar {
+				width: 1.2rem;
+			}
+
+			::-webkit-scrollbar-thumb {
+				background: ${Colors.gray400};
+				background-clip: padding-box;
+				border: 0.3rem solid transparent;
+				border-radius: 1rem;
+			}
 		}
 	`;
 
@@ -175,9 +199,5 @@ namespace S {
 		transition: 0.3s ease;
 		background-color: ${(props) => props.isFocus && Colors.blue500 + AlphaToHex['0.2']};
 		color: ${(props) => (props.isFocus ? Colors.gray990 : Colors.gray700)};
-
-		&:first-of-type {
-			margin-top: 1.2rem;
-		}
 	`;
 }

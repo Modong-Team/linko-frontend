@@ -18,6 +18,9 @@ export default function CustomButton({
 	buttonType,
 	svgIcon,
 	isLoading = false,
+	isSvgIconAtRight,
+	width,
+	justify,
 	children,
 }: CustomButtonProps & Partial<ChildrenType>) {
 	return (
@@ -25,10 +28,13 @@ export default function CustomButton({
 			buttonSize={buttonSize}
 			buttonType={buttonType}
 			onClick={onClick}
-			isLoading={isLoading}>
+			isLoading={isLoading}
+			width={width}
+			justify={justify}>
 			<span>
-				{svgIcon}
+				{!isSvgIconAtRight && svgIcon}
 				{label}
+				{isSvgIconAtRight && svgIcon}
 			</span>
 			{children}
 			<LoadingDots width={LoadingWidths.button} isWhite isHidden={!isLoading} />
@@ -38,6 +44,7 @@ export default function CustomButton({
 
 namespace S {
 	export const Button = styled.button<CustomButtonType>`
+		width: ${(props) => props.width};
 		position: relative;
 		transition: 0.3s ease;
 		${(props) => ButtonStyles[props.buttonSize]}
@@ -71,7 +78,7 @@ namespace S {
 		> span {
 			display: flex;
 			align-items: center;
-			justify-content: center;
+			justify-content: ${(props) => (props.justify ? props.justify : 'center')};
 			gap: 0.4rem;
 			visibility: ${(props) => props.isLoading && 'hidden'};
 		}

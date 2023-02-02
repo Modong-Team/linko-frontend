@@ -199,9 +199,21 @@ export const svgCopy = (
 );
 
 export const svgNewPlus = (
-	<svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
-		<path d='M13.5 7.99996H2.50004' stroke='white' strokeWidth='1.4' strokeLinecap='round' />
-		<path d='M7.99996 13.5V2.50004' stroke='white' strokeWidth='1.4' strokeLinecap='round' />
+	<svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
+		<path
+			d='M9 2V16'
+			stroke='white'
+			strokeWidth='2.15385'
+			strokeLinecap='round'
+			strokeLinejoin='round'
+		/>
+		<path
+			d='M16 9L2 9'
+			stroke='white'
+			strokeWidth='2.15385'
+			strokeLinecap='round'
+			strokeLinejoin='round'
+		/>
 	</svg>
 );
 

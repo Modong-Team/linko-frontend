@@ -8,6 +8,9 @@ type CustomButtonProps = CommonButtonProps & {
 	buttonSize: keyof typeof ButtonSizes;
 	isLoading?: boolean;
 	svgIcon?: JSX;
+	isSvgIconAtRight?: boolean;
+	width?: string;
+	justify?: string;
 };
 
 type CustomButtonType = Omit<CustomButtonProps, 'label'>;
