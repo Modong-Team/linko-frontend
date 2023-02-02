@@ -37,3 +37,7 @@ type IsDisabledType = {
 type IsGrayType = {
 	isGray: boolean;
 };
+
+type IsShowScrollType = {
+	isShowScroll: boolean;
+};

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
-import { svgLink24, svgCopy24 } from '../../../styles/svgs';
+import { svgLink24, svgCopy24, svgDown16 } from '../../../styles/svgs';
 import copyToClipBoard from '../../../utils/copyToClipBoard';
 import useSnackBar from '../../../hooks/useSnackBar';
 import SnackBar from '../../shared/SnackBar';
@@ -10,15 +10,21 @@ import CustomButton from '../../buttons/CustomButton';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 import useApplication from '../../../hooks/useApplication';
 import createReplyUrl from '../../../utils/createReplyUrl';
+import DropDown from '../../dropdowns/DropDown';
+import { DynamicStyles } from '../../../styles/styles';
+import { useState } from 'react';
 
 export default function MainMeta() {
 	const { application } = useApplication();
 	const { isShowSnackBar, onTriggerSnackBar } = useSnackBar();
+	const [isShowStopRecruitDropDown, setIsShowStopRecruitDropDown] = useState(false);
 
 	const onClickClipBoard = (url: string) => {
 		copyToClipBoard(url);
 		onTriggerSnackBar();
 	};
+
+	const onToggleStopRecruit = () => setIsShowStopRecruitDropDown(!isShowStopRecruitDropDown);
 
 	return (
 		<S.BoardHeader>
@@ -30,11 +36,23 @@ export default function MainMeta() {
 					<div>{svgCopy24}</div>
 				</S.BoardClipBoard>
 				<CustomButton
-					label={'모집 중 (구현 중)'}
-					onClick={() => alert('미구현 피쳐')}
+					label={'모집 중'}
+					onClick={onToggleStopRecruit}
 					buttonType={ButtonTypes.primary}
 					buttonSize={ButtonSizes.medium}
-				/>
+					svgIcon={svgDown16}
+					isSvgIconAtRight={true}
+					width={'10rem'}
+					justify={'space-between'}>
+					<DropDown
+						option1={'모집 마감하기'}
+						onClick1={() => alert('미구현')}
+						isHidden={!isShowStopRecruitDropDown}
+						customCSS={
+							DynamicStyles.dropDownNthOptionRed(1) + DynamicStyles.dropDownTranslateToCenter(115)
+						}
+					/>
+				</CustomButton>
 				<MoreButton
 					label1={'지원서 수정'}
 					label2={'지원서 삭제'}
@@ -74,6 +92,10 @@ namespace S {
 
 			> button {
 				height: 4rem;
+
+				path {
+					stroke: ${Colors.white};
+				}
 			}
 		}
 	`;
