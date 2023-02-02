@@ -28,13 +28,16 @@ export default function LoadingDots({ width, isWhite, isHidden }: LoadingDotsPro
 
 namespace S {
 	export const Container = styled.div<IsHiddenType>`
-		width: 100%;
-		height: 100%;
 		position: absolute;
-		top: 0;
-		left: 0;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 		visibility: ${(props) => props.isHidden && 'hidden'};
 		opacity: ${(props) => (props.isHidden ? 0 : 1)};
 		transition: 1s ease;
+
+		> div {
+			display: flex;
+		}
 	`;
 }
