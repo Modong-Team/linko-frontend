@@ -13,17 +13,17 @@ type CustomButtonProps = CommonButtonProps & {
 type CustomButtonType = Omit<CustomButtonProps, 'label'>;
 
 type LoadingDotsProps = {
-	width: typeof LoadingWidths[keyof typeof LoadingWidths];
+	width: ValueOf<typeof LoadingWidths>;
 	isWhite?: boolean;
 	isHidden: boolean;
 };
 
 type MainBoardColumnProps = {
-	applicantStatusCode: typeof ApplicantStatusCodeKeys[keyof typeof ApplicantStatusCodeKeys];
+	applicantStatusCode: ValueOf<typeof ApplicantStatusCodeKeys>;
 };
 
 type MainBoardCardContainerProps = {
-	cardMode: typeof CardModes[keyof typeof CardModes];
+	cardMode: ValueOf<typeof CardModes>;
 };
 
 type StatusElementProps = MainBoardCardContainerProps & {

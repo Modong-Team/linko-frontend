@@ -53,7 +53,7 @@ function* requestSelectApplicantSaga({ payload }: ActionType<typeof requestSelec
 		);
 		const applicant = applicants?.data.find((applicant) => applicant.id === payload.applicantId);
 		/* prettier-ignore */
-		if (applicant) yield put(selectStatus(applicant.status as typeof ApplicantStatusCodeKeys[keyof typeof ApplicantStatusCodeKeys]));
+		if (applicant) yield put(selectStatus(applicant.status as ValueOf<typeof ApplicantStatusCodeKeys>));
 	}
 
 	yield put(selectApplicant(payload.applicantId));

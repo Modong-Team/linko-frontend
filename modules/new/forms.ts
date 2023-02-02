@@ -39,7 +39,7 @@ export const updateFormTitle = createAction(
 export const createQuestion = createAction(
 	CREATE_QUESTION,
 	// prettier-ignore
-	(formIdx: number, questionType: typeof QuestionTypes[keyof typeof QuestionTypes]) => ({ formIdx, questionType }),
+	(formIdx: number, questionType: ValueOf<typeof QuestionTypes>) => ({ formIdx, questionType }),
 )();
 export const removeQuestion = createAction(
 	REMOVE_QUESTION,

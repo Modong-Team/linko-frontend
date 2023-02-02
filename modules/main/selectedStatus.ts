@@ -13,7 +13,7 @@ const REQUEST_RESET_STATUS = 'selectedStatus/REQUEST_RESET_STATUS';
 
 export const selectStatus = createAction(
 	SELECT_STATUS, //
-	(applicantStatusCode: typeof ApplicantStatusCodeKeys[keyof typeof ApplicantStatusCodeKeys]) => ({
+	(applicantStatusCode: ValueOf<typeof ApplicantStatusCodeKeys>) => ({
 		applicantStatusCode,
 	}),
 )();
@@ -39,9 +39,7 @@ export function* selectedStatusSaga() {
  * Reducer
  */
 
-export type SelectedStatusStateType =
-	| typeof ApplicantStatusCodeKeys[keyof typeof ApplicantStatusCodeKeys]
-	| null;
+export type SelectedStatusStateType = ValueOf<typeof ApplicantStatusCodeKeys> | null;
 
 type SelectedStatusActionsType = ActionType<typeof selectStatus | typeof resetStatus>;
 

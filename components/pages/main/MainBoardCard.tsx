@@ -128,10 +128,6 @@ namespace S {
 				${Fonts.body12medium}
 				color: ${Colors.gray500};
 			}
-
-			> button {
-				justify-self: end;
-			}
 		}
 
 		${(props) =>
@@ -148,9 +144,8 @@ namespace S {
 				> button > svg > * {
 				fill: ${Colors.gray600};
 				stroke: ${Colors.gray600};
+				}
 			}
-			}
-			
 			`}
 
 		${(props) =>

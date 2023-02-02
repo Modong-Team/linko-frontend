@@ -7,9 +7,8 @@ export default function useSelectedStatus() {
 	const selectedStatus = useSelector(({ selectedStatus }: RootState) => selectedStatus);
 	const dispatch = useDispatch();
 
-	const onSelectStatus = (
-		applicantStatusCode: typeof ApplicantStatusCodeKeys[keyof typeof ApplicantStatusCodeKeys],
-	) => dispatch(selectStatus(applicantStatusCode));
+	const onSelectStatus = (applicantStatusCode: ValueOf<typeof ApplicantStatusCodeKeys>) =>
+		dispatch(selectStatus(applicantStatusCode));
 
 	const onRequestResetStatus = () => dispatch(requestResetStatus());
 
