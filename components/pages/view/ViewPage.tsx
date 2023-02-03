@@ -11,7 +11,6 @@ export default function ViewPage({ applicantId }: ViewPageProps) {
 			<ViewHeader />
 			<ViewSidebar />
 			<ViewMain />
-			<ViewDrawer />
 		</S.Container>
 	);
 }
@@ -19,7 +18,8 @@ export default function ViewPage({ applicantId }: ViewPageProps) {
 namespace S {
 	export const Container = styled.div`
 		display: grid;
-		grid-template-columns: 28rem auto 36rem;
+		grid-template-columns: 28rem 1fr;
+		position: relative;
 
 		> header {
 			grid-column: 2/4;
