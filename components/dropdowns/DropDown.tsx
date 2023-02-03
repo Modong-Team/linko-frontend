@@ -11,9 +11,13 @@ export default function DropDown({
 	option1,
 	option2,
 	option3,
+	option4,
+	option5,
 	onClick1,
 	onClick2,
 	onClick3,
+	onClick4,
+	onClick5,
 	customCSS,
 	isHidden,
 }: DropDownProps) {
@@ -33,6 +37,18 @@ export default function DropDown({
 				<div onClick={(e) => withoutPropagation(e, onClick3)}>
 					{svg3}
 					{option3}
+				</div>
+			)}
+			{option4 && onClick4 && (
+				<div onClick={(e) => withoutPropagation(e, onClick4)}>
+					{svg3}
+					{option4}
+				</div>
+			)}
+			{option5 && onClick5 && (
+				<div onClick={(e) => withoutPropagation(e, onClick5)}>
+					{svg3}
+					{option5}
 				</div>
 			)}
 		</S.DropDownContainer>

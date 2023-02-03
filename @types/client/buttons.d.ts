@@ -28,6 +28,10 @@ type MoreButtonProps = {
 };
 
 type FilterButtonProps = MoreButtonProps & {
-	label3: string;
-	onClick3: () => void;
+	label3?: string;
+	label4?: string;
+	label5?: string;
+	onClick3?: () => void;
+	onClick4?: () => void;
+	onClick5?: () => void;
 };
