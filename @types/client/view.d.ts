@@ -23,3 +23,11 @@ type ViewCommentProps = {
 type ViewCommentBoxProps = ChildrenType & {
 	maxHeight: string;
 };
+
+type ViewRateTabProps = {
+	onSelectRateEditTab: () => void;
+};
+
+type ViewRateEditTabProps = {
+	onSelectRateTab: () => void;
+};

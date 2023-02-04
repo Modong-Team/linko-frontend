@@ -7,7 +7,7 @@ import CustomButton from '../../buttons/CustomButton';
 import ViewComment from './ViewComment';
 import ViewCommentBox from './ViewCommentBox';
 
-export default function ViewRateTab() {
+export default function ViewRateTab({ onSelectRateEditTab }: ViewRateTabProps) {
 	return (
 		<S.Container>
 			<S.RateInfo>
@@ -23,7 +23,7 @@ export default function ViewRateTab() {
 			</S.RateInfo>
 			<CustomButton
 				label={'평가하기'}
-				onClick={() => alert('평가 수정하기')}
+				onClick={onSelectRateEditTab}
 				buttonType={ButtonTypes.primary}
 				buttonSize={ButtonSizes.large}
 				width={'100%'}

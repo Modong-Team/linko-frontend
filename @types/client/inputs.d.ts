@@ -46,4 +46,5 @@ type AutoResizeTextAreaProps = CommonInputProps & {
 	placeholder: string;
 	onFocus?: () => void;
 	onBlur?: () => void;
+	row?: number;
 };

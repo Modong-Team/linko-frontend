@@ -6,13 +6,11 @@ import { useEffect, useState } from 'react';
 import { ButtonTypes, ButtonSizes } from '../../constants/buttons';
 import CustomButton from '../buttons/CustomButton';
 import AutoResizeTextArea from './AutoResizeTextArea';
+import useActive from '../../hooks/useActive';
 
 export default function ViewMemoInput({ value, onChange, onSubmit }: ViewMemoInputProps) {
-	const [isFocus, setIsFocus] = useState(false);
+	const { isActive, onActivate, onDeactivate } = useActive();
 	const [isEmpty, setIsEmpty] = useState(true);
-
-	const onFocus = () => setIsFocus(true);
-	const onBlur = () => setIsFocus(false);
 
 	useEffect(() => {
 		if (value !== '') setIsEmpty(false);
@@ -21,13 +19,13 @@ export default function ViewMemoInput({ value, onChange, onSubmit }: ViewMemoInp
 
 	return (
 		<S.Container>
-			<S.InputBox isFocus={isFocus}>
+			<S.InputBox isFocus={isActive}>
 				<AutoResizeTextArea
 					value={value}
 					onChange={onChange}
 					placeholder={'메모를 입력해주세요.'}
-					onFocus={onFocus}
-					onBlur={onBlur}
+					onFocus={onActivate}
+					onBlur={onDeactivate}
 				/>
 				{isEmpty && svgMemo}
 			</S.InputBox>
@@ -69,7 +67,7 @@ namespace S {
 
 	export const InputBox = styled.div<IsFocusType>`
 		margin-top: 1.2rem;
-		padding: 1.4rem 1.6rem;
+		padding: 1.2rem 1.6rem;
 		border: 0.1rem solid;
 		border-color: ${(props) => (props.isFocus ? Colors.blue500 : Colors.gray200)};
 		border-radius: 0.8rem;
@@ -83,7 +81,7 @@ namespace S {
 			flex-grow: 1;
 
 			::placeholder {
-				color: ${Colors.gray700};
+				color: ${Colors.gray400};
 			}
 		}
 	`;

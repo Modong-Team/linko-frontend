@@ -6,26 +6,33 @@ import { useState } from 'react';
 import { Fonts } from '../../../styles/fonts';
 import ViewRateTab from './ViewRateTab';
 import ViewMemoTab from './ViewMemoTab';
+import ViewRateEditTab from './ViewRateEditTab';
 
 export default function ViewDrawer({ isDrawerOpen, onCloseDrawer }: ViewDrawerProps) {
-	const [isRateTab, setIsRateTab] = useState(true);
+	const [tab, setTab] = useState(1);
 
-	const onSelectRateTab = () => setIsRateTab(true);
-	const onSelectMemoTab = () => setIsRateTab(false);
+	const onSelectRateTab = () => setTab(1);
+	const onSelectMemoTab = () => setTab(2);
+	const onSelectRateEditTab = () => setTab(3);
 
 	return (
 		<S.Container isOpen={isDrawerOpen}>
-			<IconButton svgIcon={svgClose} onClick={onCloseDrawer} />
-			<S.TabNavigator>
-				<S.TabButton isFocus={isRateTab} onClick={onSelectRateTab}>
-					평가
-				</S.TabButton>
-				<S.TabButton isFocus={!isRateTab} onClick={onSelectMemoTab}>
-					메모
-				</S.TabButton>
-			</S.TabNavigator>
-			{isRateTab && <ViewRateTab />}
-			{!isRateTab && <ViewMemoTab />}
+			{tab !== 3 && (
+				<>
+					<IconButton svgIcon={svgClose} onClick={onCloseDrawer} />
+					<S.TabNavigator>
+						<S.TabButton isFocus={tab === 1} onClick={onSelectRateTab}>
+							평가
+						</S.TabButton>
+						<S.TabButton isFocus={tab === 2 || tab === 3} onClick={onSelectMemoTab}>
+							메모
+						</S.TabButton>
+					</S.TabNavigator>
+				</>
+			)}
+			{tab === 1 && <ViewRateTab onSelectRateEditTab={onSelectRateEditTab} />}
+			{tab === 2 && <ViewMemoTab />}
+			{tab === 3 && <ViewRateEditTab onSelectRateTab={onSelectRateTab} />}
 		</S.Container>
 	);
 }

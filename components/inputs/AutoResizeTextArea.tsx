@@ -6,6 +6,7 @@ export default function AutoResizeTextArea({
 	placeholder,
 	onFocus,
 	onBlur,
+	row,
 }: AutoResizeTextAreaProps) {
 	const textAreaRef = useRef() as MutableRefObject<HTMLTextAreaElement>;
 
@@ -27,7 +28,7 @@ export default function AutoResizeTextArea({
 			onFocus={onFocus}
 			onBlur={onBlur}
 			ref={textAreaRef}
-			rows={1}
+			rows={row || 1}
 		/>
 	);
 }
