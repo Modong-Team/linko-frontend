@@ -1,9 +1,14 @@
+import ViewMemoInput from '../../inputs/ViewMemoInput';
 import ViewComment from './ViewComment';
 import ViewCommentBox from './ViewCommentBox';
+import styled from 'styled-components';
+import useInput from '../../../hooks/useInput';
 
 export default function ViewMemoTab() {
+	const { value, onChange } = useInput();
+
 	return (
-		<>
+		<S.Container>
 			<ViewCommentBox>
 				<ViewComment
 					name={'linko'}
@@ -27,8 +32,15 @@ export default function ViewMemoTab() {
 				<ViewComment name={'ruby'} content={'나름 괜찮은데요?'} isMine={false} />
 				<ViewComment name={'ruby'} content={'나름 괜찮은데요?'} isMine={false} />
 			</ViewCommentBox>
-		</>
+			<ViewMemoInput value={value} onChange={onChange} onSubmit={() => alert('메모등록')} />
+		</S.Container>
 	);
 }
 
-namespace S {}
+namespace S {
+	export const Container = styled.div`
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	`;
+}

@@ -739,3 +739,53 @@ export const svgNextS = (
 		/>
 	</svg>
 );
+
+export const svgMemo = (
+	<svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
+		<rect
+			x='3.33398'
+			y='4.16602'
+			width='13.3333'
+			height='9.16667'
+			rx='1'
+			fill='#C0C4CF'
+			stroke='#C0C4CF'
+			strokeWidth='1.66667'
+			strokeLinejoin='round'
+		/>
+		<path
+			d='M3.33398 7.5H16.6673L3.33398 15.8333V7.5Z'
+			fill='#C0C4CF'
+			stroke='#C0C4CF'
+			strokeWidth='1.66667'
+			strokeLinejoin='round'
+		/>
+		<circle
+			cx='14.1667'
+			cy='8.74935'
+			r='0.833333'
+			transform='rotate(90 14.1667 8.74935)'
+			fill='white'
+			stroke='white'
+			strokeWidth='0.833333'
+		/>
+		<circle
+			cx='10.0007'
+			cy='8.74935'
+			r='0.833333'
+			transform='rotate(90 10.0007 8.74935)'
+			fill='white'
+			stroke='white'
+			strokeWidth='0.833333'
+		/>
+		<circle
+			cx='5.83464'
+			cy='8.74935'
+			r='0.833333'
+			transform='rotate(90 5.83464 8.74935)'
+			fill='white'
+			stroke='white'
+			strokeWidth='0.833333'
+		/>
+	</svg>
+);

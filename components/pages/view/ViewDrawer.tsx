@@ -37,6 +37,7 @@ namespace S {
 		background-color: ${Colors.white};
 		border-left: 0.1rem solid ${Colors.gray200};
 		padding: 1.6rem 2.4rem;
+		padding-bottom: 3.2rem;
 		position: absolute;
 		top: 0;
 		right: ${(props) => (props.isOpen ? 0 : '-36rem')};
