@@ -11,27 +11,29 @@ export default function ViewReply({ isDrawerOpen, onOpenDrawer }: ViewReplyProps
 	return (
 		<S.Container isOpen={!isDrawerOpen}>
 			<S.Taskbar>
-				<CustomButton
-					svgIcon={svgPrevS}
-					label={'이전 페이지'}
-					onClick={() => alert('이전')}
-					buttonType={ButtonTypes.line}
-					buttonSize={ButtonSizes.medium}
-				/>
-				<S.Page>1/3</S.Page>
-				<CustomButton
-					svgIcon={svgNextS}
-					label={'다음 페이지'}
-					onClick={() => alert('다음')}
-					buttonType={ButtonTypes.line}
-					buttonSize={ButtonSizes.medium}
-					isSvgIconAtRight
-				/>
-				{/* {!isDrawerOpen && (
-					<S.DrawerButtonBox>
+				<div>
+					<CustomButton
+						svgIcon={svgPrevS}
+						label={'이전 페이지'}
+						onClick={() => alert('이전')}
+						buttonType={ButtonTypes.line}
+						buttonSize={ButtonSizes.medium}
+					/>
+					<S.Page>1/3</S.Page>
+					<CustomButton
+						svgIcon={svgNextS}
+						label={'다음 페이지'}
+						onClick={() => alert('다음')}
+						buttonType={ButtonTypes.line}
+						buttonSize={ButtonSizes.medium}
+						isSvgIconAtRight
+					/>
+				</div>
+				{!isDrawerOpen && (
+					<div onClick={onOpenDrawer}>
 						<IconButton svgIcon={svgOpen} onClick={onOpenDrawer} />
-					</S.DrawerButtonBox>
-				)} */}
+					</div>
+				)}
 			</S.Taskbar>
 			<S.ReplyBox>
 				<S.ReplyPaper>
@@ -57,30 +59,39 @@ namespace S {
 
 	export const Taskbar = styled.div`
 		flex-shrink: 0;
-		padding: 0 2.4rem;
-		width: 100%;
+
 		height: 5.6rem;
 		background-color: ${Colors.white};
 		border-bottom: 0.1rem solid ${Colors.gray200};
 		display: flex;
-		align-items: center;
-		justify-content: space-between;
 
-		> button {
-			padding: 1rem 2rem;
+		> div:nth-of-type(1) {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0 2.4rem;
+			width: 100%;
+
+			> button {
+				padding: 1rem 2rem;
+			}
+		}
+
+		> div:nth-of-type(2) {
+			width: fit-content;
+			border-left: 0.1rem solid ${Colors.gray200};
+			display: flex;
+			align-items: center;
+			padding: 1.6rem 2.4rem;
+			cursor: pointer;
 		}
 	`;
 
 	export const Page = styled.div`
 		${Fonts.subtitle16medium}
 		color: ${Colors.gray800};
-	`;
-
-	export const DrawerButtonBox = styled.div`
-		border-left: 0.1rem solid ${Colors.gray200};
-		display: flex;
-		align-items: center;
-		padding: 1.6rem 2.4rem;
 	`;
 
 	export const ReplyBox = styled.div`

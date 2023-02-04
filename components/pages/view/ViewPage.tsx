@@ -17,6 +17,8 @@ export default function ViewPage({ applicantId }: ViewPageProps) {
 
 namespace S {
 	export const Container = styled.div`
+		width: 100%;
+		overflow-x: hidden;
 		display: grid;
 		grid-template-columns: 28rem 1fr;
 		position: relative;
