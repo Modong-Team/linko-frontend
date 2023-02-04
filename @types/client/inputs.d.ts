@@ -37,3 +37,14 @@ type ReplyCheckInputProps = Omit<ReplyTextInputProps, 'value'> & {
 type ReplyRadioInputProps = ReplyCheckInputProps & {
 	name: string;
 };
+
+type ViewMemoInputProps = CommonInputProps & {
+	onSubmit: () => void;
+};
+
+type AutoResizeTextAreaProps = CommonInputProps & {
+	placeholder: string;
+	onFocus?: () => void;
+	onBlur?: () => void;
+	row?: number;
+};

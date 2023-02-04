@@ -10,9 +10,13 @@ export default function FilterButton({
 	label1,
 	label2,
 	label3,
+	label4,
+	label5,
 	onClick1,
 	onClick2,
 	onClick3,
+	onClick4,
+	onClick5,
 }: FilterButtonProps) {
 	const [isFocus, setIsFocus] = useState(false);
 
@@ -27,10 +31,18 @@ export default function FilterButton({
 				option1={label1}
 				option2={label2}
 				option3={label3}
+				option4={label4}
+				option5={label5}
 				onClick1={onClick1}
 				onClick2={onClick2}
 				onClick3={onClick3}
-				customCSS={Styles.dropDownTextAlignLeft + DynamicStyles.dropDownTranslateToCenter(105)}
+				onClick4={onClick4}
+				onClick5={onClick5}
+				customCSS={
+					Styles.dropDownTextAlignLeft +
+					DynamicStyles.dropDownNthOptionRed(5) +
+					DynamicStyles.dropDownTranslateToCenter(105)
+				}
 				isHidden={!isFocus}
 			/>
 		</S.FilterContainer>

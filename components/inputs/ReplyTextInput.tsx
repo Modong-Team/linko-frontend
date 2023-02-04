@@ -3,8 +3,7 @@ import { Colors } from '../../styles/colors';
 import { Fonts } from '../../styles/fonts';
 import { css } from 'styled-components';
 import { Devices } from '../../styles/devices';
-import { MutableRefObject, useRef } from 'react';
-import { useEffect } from 'react';
+import AutoResizeTextArea from './AutoResizeTextArea';
 
 export default function ReplyTextInput({
 	value,
@@ -12,27 +11,9 @@ export default function ReplyTextInput({
 	label,
 	errorMessage,
 }: ReplyTextInputProps) {
-	const textAreaRef = useRef() as MutableRefObject<HTMLTextAreaElement>;
-
-	const onAutoResize = () => {
-		textAreaRef.current.style.height = 'auto';
-		const height = textAreaRef.current.scrollHeight;
-		textAreaRef.current.style.height = height / 10 + 'rem';
-	};
-
-	useEffect(() => {
-		onAutoResize();
-	}, [value]);
-
 	return (
 		<S.Container isError={false}>
-			<textarea
-				placeholder=' '
-				value={value}
-				onChange={onChange as any}
-				ref={textAreaRef}
-				rows={1}
-			/>
+			<AutoResizeTextArea value={value} onChange={onChange} placeholder={' '} />
 			<label>{label}</label>
 			<p>{errorMessage}</p>
 		</S.Container>
