@@ -26,7 +26,7 @@ namespace S {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		gap: 0.5rem;
+		gap: 1rem;
 		transition: 0.3s ease;
 
 		:hover,
