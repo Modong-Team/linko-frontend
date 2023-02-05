@@ -45,3 +45,11 @@ type IsScrollExistType = {
 type IsOpenType = {
 	isOpen: boolean;
 };
+
+type IsWhiteType = {
+	isWhite?: boolean;
+};
+
+type IsExceptionType = {
+	isException?: boolean;
+};
