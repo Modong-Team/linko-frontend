@@ -9,7 +9,7 @@ import AutoResizeTextArea from './AutoResizeTextArea';
 import useActive from '../../hooks/useActive';
 
 export default function ViewMemoInput({ value, onChange, onSubmit }: ViewMemoInputProps) {
-	const { isActive, onActivate, onDeactivate } = useActive();
+	const [isFocus, onFocus, onBlur] = useActive();
 	const [isEmpty, setIsEmpty] = useState(true);
 
 	useEffect(() => {
@@ -19,13 +19,13 @@ export default function ViewMemoInput({ value, onChange, onSubmit }: ViewMemoInp
 
 	return (
 		<S.Container>
-			<S.InputBox isFocus={isActive}>
+			<S.InputBox isFocus={isFocus}>
 				<AutoResizeTextArea
 					value={value}
 					onChange={onChange}
 					placeholder={'메모를 입력해주세요.'}
-					onFocus={onActivate}
-					onBlur={onDeactivate}
+					onFocus={onFocus}
+					onBlur={onBlur}
 				/>
 				{isEmpty && svgMemo}
 			</S.InputBox>

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import useInput from '../../../hooks/useInput';
 
 export default function ViewMemoTab() {
-	const { value, onChange } = useInput();
+	const [memo, onChangeMemo] = useInput();
 
 	return (
 		<S.Container>
@@ -32,7 +32,7 @@ export default function ViewMemoTab() {
 				<ViewComment name={'ruby'} content={'나름 괜찮은데요?'} isMine={false} />
 				<ViewComment name={'ruby'} content={'나름 괜찮은데요?'} isMine={false} />
 			</ViewCommentBox>
-			<ViewMemoInput value={value} onChange={onChange} onSubmit={() => alert('메모등록')} />
+			<ViewMemoInput value={memo} onChange={onChangeMemo} onSubmit={() => alert('메모등록')} />
 		</S.Container>
 	);
 }
