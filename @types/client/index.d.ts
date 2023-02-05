@@ -11,6 +11,7 @@ type CustomButtonProps = CommonButtonProps & {
 	isSvgIconAtRight?: boolean;
 	width?: string;
 	justify?: string;
+	disabled?: boolean;
 };
 
 type CustomButtonType = Omit<CustomButtonProps, 'label'>;
