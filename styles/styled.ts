@@ -78,4 +78,19 @@ export namespace SC {
 			display: none;
 		}
 	`;
+
+	export const CustomizedScrollbar = css<IsScrollExistType>`
+		padding-right: ${(props) => props.isScrollExist && '0rem'};
+
+		::-webkit-scrollbar {
+			width: 1.2rem;
+		}
+
+		::-webkit-scrollbar-thumb {
+			background: ${Colors.gray400};
+			background-clip: padding-box;
+			border: 0.3rem solid transparent;
+			border-radius: 1rem;
+		}
+	`;
 }
