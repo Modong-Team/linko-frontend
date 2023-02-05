@@ -1,14 +1,17 @@
 import styled from 'styled-components';
 import SignUpOptionButton from '../../buttons/SignUpOptionButton';
 import { svgNewClub, svgExistClub } from '../../../styles/svgs';
+import useRouteToPath from '../../../hooks/useRouteToPath';
+import { Paths } from '../../../constants/paths';
 
 export default function SignUpPage() {
+	const onRouteToSignUpClub = useRouteToPath(Paths.signUpClub);
 	return (
 		<S.Container>
 			<SignUpOptionButton //
 				svgIcon={svgNewClub}
 				label={'신규 동아리 등록'}
-				onClick={console.log}
+				onClick={onRouteToSignUpClub}
 			/>
 			<SignUpOptionButton
 				svgIcon={svgExistClub}
