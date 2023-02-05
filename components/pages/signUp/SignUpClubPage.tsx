@@ -8,22 +8,32 @@ import { Fonts } from '../../../styles/fonts';
 import { Colors } from '../../../styles/colors';
 import SignUpModal from '../../modals/SignUpModal';
 import useActive from '../../../hooks/useActive';
+import useUniqueId from '../../../hooks/useUniqueId';
+import { useRef, MutableRefObject } from 'react';
+import useInputFile from '../../../hooks/useInputFile';
 
 export default function SignUpClubPage() {
+	const id = useUniqueId();
 	const { value, onChange } = useInput();
+	const { file, onChangeFile } = useInputFile();
 	const { isActive, onActivate, onDeactivate } = useActive();
+	const labelRef = useRef() as MutableRefObject<HTMLLabelElement>;
+
+	const onClickLabel = () => labelRef.current.click();
 
 	return (
 		<S.Container>
 			<h2>동아리 로고</h2>
 			<div>
-				<ClubLogoPreview />
+				<ClubLogoPreview file={file} />
 				<CustomButton
 					label={'이미지 선택'}
-					onClick={console.log}
+					onClick={onClickLabel}
 					buttonType={ButtonTypes.secondary}
 					buttonSize={ButtonSizes.medium}
 				/>
+				<label htmlFor={id} ref={labelRef} />
+				<input type='file' id={id} onChange={onChangeFile} />
 			</div>
 			<ReplyTextInput value={value} onChange={onChange} label={'동아리 이름'} errorMessage={''} />
 			<p>
@@ -63,6 +73,11 @@ namespace S {
 			margin-bottom: 5.5rem;
 			display: flex;
 			align-items: center;
+
+			> label,
+			> input {
+				display: none;
+			}
 		}
 
 		> div:nth-of-type(2) {

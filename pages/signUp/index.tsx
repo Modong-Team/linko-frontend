@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import SignLayout from '../../components/layouts/SignLayout';
-import SignUpPage from '../../components/pages/sign-up/SignUpPage';
+import SignUpPage from '../../components/pages/signUp/SignUpPage';
 import { CustomHead } from '../../components/seo';
 import { Seo } from '../../constants/seo';
 

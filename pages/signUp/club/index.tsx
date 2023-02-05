@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import SignLayout from '../../../components/layouts/SignLayout';
 import { CustomHead } from '../../../components/seo';
 import { Seo } from '../../../constants/seo';
-import SignUpClubPage from '../../../components/pages/sign-up/SignUpClubPage';
+import SignUpClubPage from '../../../components/pages/signUp/SignUpClubPage';
 
 export default function index() {
 	return (
