@@ -22,6 +22,7 @@ export default function CustomButton({
 	width,
 	justify,
 	children,
+	disabled,
 }: CustomButtonProps & Partial<ChildrenType>) {
 	return (
 		<S.Button
@@ -30,7 +31,8 @@ export default function CustomButton({
 			onClick={onClick}
 			isLoading={isLoading}
 			width={width}
-			justify={justify}>
+			justify={justify}
+			disabled={disabled}>
 			<span>
 				{!isSvgIconAtRight && svgIcon}
 				{label}

@@ -1,11 +1,12 @@
 import { ButtonSizes, ButtonTypes } from '../../constants/buttons';
 import CustomButton from '../buttons/CustomButton';
-import { Icons } from '../../styles/icons';
 import usePreventScroll from '../../hooks/usePreventScroll';
 import useLoadingStatus from '../../hooks/useLoadingStatus';
 import { SC } from '../../styles/styled';
+import styled from 'styled-components';
+import { Devices } from '../../styles/devices';
 
-export default function SubmitModal({
+export default function SignUpModal({
 	title,
 	description,
 	onCancel,
@@ -16,9 +17,8 @@ export default function SubmitModal({
 	usePreventScroll(!isHidden);
 	return (
 		<SC.ModalBackground isHidden={isHidden}>
-			<SC.ModalContainer>
-				<SC.ModalIcon>{Icons.pencil}</SC.ModalIcon>
-				<SC.ModalTitle>{title}</SC.ModalTitle>
+			<S.Container>
+				<SC.ModalTitle>동아리 이름을 ‘{title}’(으)로 등록할까요?</SC.ModalTitle>
 				<SC.ModalSubtitle>{description}</SC.ModalSubtitle>
 				<SC.ModalButtonWrapper>
 					<CustomButton
@@ -28,14 +28,31 @@ export default function SubmitModal({
 						onClick={onCancel}
 					/>
 					<CustomButton
-						label='제출하기'
+						label='등록하기'
 						buttonSize={ButtonSizes.large}
 						buttonType={ButtonTypes.primary}
 						onClick={onConfirm}
 						isLoading={loadingStatus.isGlobalLoading}
 					/>
 				</SC.ModalButtonWrapper>
-			</SC.ModalContainer>
+			</S.Container>
 		</SC.ModalBackground>
 	);
+}
+
+namespace S {
+	export const Container = styled(SC.ModalContainer)`
+		min-height: 24rem;
+		display: flex;
+		flex-direction: column;
+
+		> div:last-of-type {
+			margin-top: auto;
+		}
+
+		@media ${Devices.mobile} {
+			padding: 2.4rem;
+			padding-top: 4rem;
+		}
+	`;
 }

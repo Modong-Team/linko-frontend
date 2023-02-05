@@ -38,10 +38,18 @@ type IsGrayType = {
 	isGray: boolean;
 };
 
-type IsShowScrollType = {
-	isShowScroll: boolean;
+type IsScrollExistType = {
+	isScrollExist: boolean;
 };
 
 type IsOpenType = {
 	isOpen: boolean;
+};
+
+type IsWhiteType = {
+	isWhite?: boolean;
+};
+
+type IsExceptionType = {
+	isException?: boolean;
 };
