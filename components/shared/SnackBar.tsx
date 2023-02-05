@@ -1,43 +1,50 @@
 import styled from 'styled-components';
 import { Colors } from '../../styles/colors';
 import { Fonts } from '../../styles/fonts';
-import { Styles } from '../../styles/styles';
+import { useRef, MutableRefObject, useEffect } from 'react';
 
-export default function SnackBar({ label }: SnackBarProps) {
-	return <S.Container>{label}</S.Container>;
+export default function SnackBar({ label, isShown, width, bottom }: SnackBarProps) {
+	const ref = useRef() as MutableRefObject<HTMLDivElement>;
+
+	useEffect(() => {
+		if (isShown) ref.current.style.animationName = 'snackBarAnimation';
+		else ref.current.style.animationName = '';
+	}, [isShown]);
+
+	return (
+		<S.Container width={width} bottom={bottom} isShown={isShown} ref={ref}>
+			{label}
+		</S.Container>
+	);
 }
 
 namespace S {
-	export const Container = styled.div`
+	export const Container = styled.div<WidthType & BottomType & IsShownType>`
 		${Fonts.heading18bold}
-		width:80rem;
+		width:${(props) => props.width ?? '80rem'};
 		padding: 1.8rem 2.4rem;
 		border-radius: 0.8rem;
 		background-color: ${Colors.gray900};
 		color: ${Colors.white};
-		position: fixed;
-		bottom: 4rem;
+		position: absolute;
+		bottom: ${(props) => props.bottom ?? '4rem'};
 		left: 50%;
-		transform: translate(-50%, 200%);
-		animation: snackBarAnimation ${Styles.snackBarAnimationDuration} ease;
+		transform: translate(-50%, 100%);
 		z-index: 100;
+		animation-duration: 2s;
+		animation-timing-function: ease;
+		opacity: 0;
+		visibility: ${(props) => !props.isShown && 'hidden'};
+		transition: 5s ease;
 
 		@keyframes snackBarAnimation {
-			0% {
-				transform: translate(-50%, 200%);
-				opacity: 0;
-			}
-			25% {
+			30% {
 				transform: translate(-50%, 0%);
 				opacity: 1;
 			}
-			55% {
+			60% {
 				transform: translate(-50%, 0%);
 				opacity: 1;
-			}
-			100% {
-				transform: translate(-50%, 200%);
-				opacity: 0;
 			}
 		}
 	`;

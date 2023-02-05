@@ -4,7 +4,7 @@ export const Styles = {
 	stickyIndicatorAndNavigator: 'position:sticky; top:10rem; height:fit-content;',
 	headerHeight: '8rem',
 	sidebarWidth: '22rem',
-	snackBarAnimationDuration: '2000ms',
+	snackBarAnimationDuration: '2500ms',
 	dropDownTextAlignLeft: '>div{width:9.2rem;}',
 } as const;
 

@@ -60,7 +60,7 @@ export default function MainMeta() {
 					onClick2={() => console.log('지원서 삭제')}
 				/>
 			</div>
-			{isShowSnackBar && <SnackBar label={'링크를 복사했어요.'} />}
+			<SnackBar label={'링크를 복사했어요.'} isShown={isShowSnackBar} />
 		</S.BoardHeader>
 	);
 }
