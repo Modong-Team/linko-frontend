@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@next/font": "^13.1.1",
+    "aws-sdk": "^2.1309.0",
     "axios": "^1.2.2",
     "immer": "^9.0.18",
     "next": "13.1.1",
@@ -26,6 +27,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
     "@types/axios": "^0.14.0",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
