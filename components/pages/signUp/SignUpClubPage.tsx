@@ -11,15 +11,35 @@ import useActive from '../../../hooks/useActive';
 import useUniqueId from '../../../hooks/useUniqueId';
 import { useRef, MutableRefObject } from 'react';
 import useInputFile from '../../../hooks/useInputFile';
+import { v4 as uuid } from 'uuid';
+import { uploadFileToS3 } from '../../../s3/index';
+import { postClub } from '../../../api/club';
 
 export default function SignUpClubPage() {
 	const id = useUniqueId();
-	const { value, onChange } = useInput();
+	const [clubName, onChangeClubName] = useInput();
 	const { file, onChangeFile } = useInputFile();
-	const { isActive, onActivate, onDeactivate } = useActive();
+	const [isShowModal, onShowModal, onHideModal] = useActive();
 	const labelRef = useRef() as MutableRefObject<HTMLLabelElement>;
 
 	const onClickLabel = () => labelRef.current.click();
+
+	const onSubmit = async () => {
+		try {
+			let fileKey = '';
+			if (file) {
+				fileKey = clubName + '_' + uuid().slice(0, 6);
+				const upload = await uploadFileToS3(fileKey, file);
+			}
+			const post = await postClub({
+				name: clubName,
+				profileImgUrl: fileKey,
+			});
+			console.log(post);
+		} catch (e) {
+			console.log(e);
+		}
+	};
 
 	return (
 		<S.Container>
@@ -35,7 +55,12 @@ export default function SignUpClubPage() {
 				<label htmlFor={id} ref={labelRef} />
 				<input type='file' id={id} onChange={onChangeFile} />
 			</div>
-			<ReplyTextInput value={value} onChange={onChange} label={'동아리 이름'} errorMessage={''} />
+			<ReplyTextInput
+				value={clubName}
+				onChange={onChangeClubName}
+				label={'동아리 이름'}
+				errorMessage={''}
+			/>
 			<p>
 				동아리 로고와 동아리 이름은 추후에 수정하실 수 없으니
 				<br />
@@ -43,17 +68,17 @@ export default function SignUpClubPage() {
 			</p>
 			<CustomButton
 				label={'확인'}
-				onClick={onActivate}
+				onClick={onShowModal}
 				buttonType={ButtonTypes.primary}
 				buttonSize={ButtonSizes.large}
-				disabled={value === ''}
+				disabled={clubName === ''}
 			/>
 			<SignUpModal
-				title={value}
+				title={clubName}
 				description={'동아리 이름은 수정이 불가능해요.'}
-				onCancel={onDeactivate}
-				onConfirm={console.log}
-				isHidden={!isActive}
+				onCancel={onHideModal}
+				onConfirm={onSubmit}
+				isHidden={!isShowModal}
 			/>
 		</S.Container>
 	);
