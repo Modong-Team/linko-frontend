@@ -9,8 +9,8 @@ import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 import { svgStar16 } from '../../../styles/svgs';
 
 export default function ViewRateEditTab({ onSelectRateTab }: ViewRateEditTabProps) {
-	const { value, onChange } = useInput();
-	const { isActive, onActivate, onDeactivate } = useActive();
+	const [comment, onChangeComment] = useInput();
+	const [isFocus, onFocus, onBlur] = useActive();
 
 	return (
 		<S.Container>
@@ -35,13 +35,13 @@ export default function ViewRateEditTab({ onSelectRateTab }: ViewRateEditTabProp
 			</div>
 			<div>
 				<h2>코멘트</h2>
-				<S.CommentBox isFocus={isActive}>
+				<S.CommentBox isFocus={isFocus}>
 					<AutoResizeTextArea
-						value={value}
-						onChange={onChange}
+						value={comment}
+						onChange={onChangeComment}
 						placeholder={'코멘트를 입력해주세요.'}
-						onFocus={onActivate}
-						onBlur={onDeactivate}
+						onFocus={onFocus}
+						onBlur={onBlur}
 						row={4}
 					/>
 				</S.CommentBox>
