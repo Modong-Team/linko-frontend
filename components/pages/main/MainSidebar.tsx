@@ -17,15 +17,16 @@ import { LoadingWidths } from '../../../constants/loadingWidths';
 import { SC } from '../../../styles/styled';
 import useCustomRouter from '../../../hooks/useCustomRouter';
 import useApplicationId from '../../../hooks/useApplicationId';
+import useScrollExist from '../../../hooks/useScrollExist';
 
 export default function MainSidebar({ applicationId }: MainPageProps) {
-	const scroller = useRef() as MutableRefObject<HTMLUListElement>;
 	const routeToNew = useRouteToPath(Paths.new);
 	const { onRouteToPath } = useCustomRouter();
-	const [isShowScroll, setIsShowScroll] = useState(false);
 	const [applications, setApplications] = useState<ResponseApplications.Get>();
 	const { isLocalLoading, onStartLocalLoading, onFinishLocalLoading } = useLocalLoading();
 	const { applicationId: selectedApplicationId, onRequestSetApplicationId } = useApplicationId();
+	const scroller = useRef() as MutableRefObject<HTMLUListElement>;
+	const isScrollExist = useScrollExist(scroller, applications);
 
 	const onClickTitle = (id: number) => {
 		onRequestSetApplicationId(id);
@@ -39,8 +40,6 @@ export default function MainSidebar({ applicationId }: MainPageProps) {
 			if (!applicationId) onClickTitle(applications.data[0].id);
 			else onClickTitle(applicationId);
 		}
-		if (scroller.current.scrollHeight > scroller.current.clientHeight) setIsShowScroll(true);
-		else setIsShowScroll(false);
 	}, [applications]);
 
 	useEffect(() => {
@@ -58,7 +57,7 @@ export default function MainSidebar({ applicationId }: MainPageProps) {
 				<h3>동아리 ID</h3>
 				<S.ProfilePopulation>{svgUser24} 3</S.ProfilePopulation>
 			</S.SidebarProfile>
-			<S.SidebarApplications isShowScroll={isShowScroll}>
+			<S.SidebarApplications isScrollExist={isScrollExist}>
 				<h3>
 					지원서 목록
 					<CustomButton
@@ -152,7 +151,7 @@ namespace S {
 		gap: 0.35em;
 	`;
 
-	export const SidebarApplications = styled.section<IsShowScrollType>`
+	export const SidebarApplications = styled.section<IsScrollExistType>`
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
@@ -172,18 +171,7 @@ namespace S {
 			white-space: nowrap;
 			overflow-y: auto;
 			padding: 1.2rem;
-			padding-right: ${(props) => props.isShowScroll && '0rem'};
-
-			::-webkit-scrollbar {
-				width: 1.2rem;
-			}
-
-			::-webkit-scrollbar-thumb {
-				background: ${Colors.gray400};
-				background-clip: padding-box;
-				border: 0.3rem solid transparent;
-				border-radius: 1rem;
-			}
+			${SC.CustomizedScrollbar}
 		}
 	`;
 
