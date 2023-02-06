@@ -14,13 +14,16 @@ import useInputFile from '../../../hooks/useInputFile';
 import { v4 as uuid } from 'uuid';
 import { uploadFileToS3 } from '../../../s3/index';
 import { postClub } from '../../../api/club';
+import useCustomRouter from '../../../hooks/useCustomRouter';
+import { Paths } from '../../../constants/paths';
 
-export default function SignUpClubPage() {
+export default function RegisterClubPage() {
 	const id = useUniqueId();
 	const [clubName, onChangeClubName] = useInput();
 	const { file, onChangeFile } = useInputFile();
 	const [isShowModal, onShowModal, onHideModal] = useActive();
 	const labelRef = useRef() as MutableRefObject<HTMLLabelElement>;
+	const { onRouteToPath } = useCustomRouter();
 
 	const onClickLabel = () => labelRef.current.click();
 
@@ -35,7 +38,7 @@ export default function SignUpClubPage() {
 				name: clubName,
 				profileImgUrl: fileKey,
 			});
-			console.log(post);
+			onRouteToPath(Paths.registerClubComplete + '/' + post.data.code);
 		} catch (e) {
 			console.log(e);
 		}

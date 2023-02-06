@@ -5,4 +5,7 @@ type HeaderProps = {
 
 type SnackBarProps = {
 	label: string;
+	isShown: boolean;
+	width?: string;
+	bottom?: string;
 };

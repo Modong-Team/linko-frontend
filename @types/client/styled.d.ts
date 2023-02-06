@@ -53,3 +53,15 @@ type IsWhiteType = {
 type IsExceptionType = {
 	isException?: boolean;
 };
+
+type WidthType = {
+	width?: string;
+};
+
+type IsShownType = {
+	isShown?: boolean;
+};
+
+type BottomType = {
+	bottom?: string;
+};

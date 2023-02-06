@@ -4,8 +4,8 @@ import { svgNewClub, svgExistClub } from '../../../styles/svgs';
 import useRouteToPath from '../../../hooks/useRouteToPath';
 import { Paths } from '../../../constants/paths';
 
-export default function SignUpPage() {
-	const onRouteToSignUpClub = useRouteToPath(Paths.signUpClub);
+export default function RegisterPage() {
+	const onRouteToSignUpClub = useRouteToPath(Paths.registerClub);
 	return (
 		<S.Container>
 			<SignUpOptionButton //

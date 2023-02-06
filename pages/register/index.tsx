@@ -1,14 +1,14 @@
 import { ReactElement } from 'react';
 import SignLayout from '../../components/layouts/SignLayout';
-import SignUpPage from '../../components/pages/signUp/SignUpPage';
+import RegisterPage from '../../components/pages/register/RegisterPage';
 import { CustomHead } from '../../components/seo';
 import { Seo } from '../../constants/seo';
 
 export default function index() {
 	return (
 		<>
-			<SignUpPage />
-			<CustomHead title={Seo.Title.signUp} />
+			<RegisterPage />
+			<CustomHead title={Seo.Title.register} />
 		</>
 	);
 }
