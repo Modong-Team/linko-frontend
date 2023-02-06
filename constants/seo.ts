@@ -11,5 +11,6 @@ export const Seo = {
 		registerClubComplete: '신규 동아리 등록 완료',
 		registerMemberCode: '동아리 코드 입력',
 		registerMember: '동아리 운영진 가입',
+		login: '로그인',
 	},
 } as const;

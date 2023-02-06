@@ -5,6 +5,7 @@ export const Paths = {
 	reply: '/reply',
 	replyComplete: '/reply/complete',
 	view: '/view',
+	register: '/register',
 	registerClub: '/register/club',
 	registerClubComplete: '/register/club/complete',
 	registerMember: '/register/member',
