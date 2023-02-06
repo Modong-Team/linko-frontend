@@ -71,6 +71,7 @@ namespace S {
 		}
 
 		&:disabled {
+			cursor: default;
 			${(props) => props.buttonType === ButtonTypes.primary && PrimaryButtonColors.disabled}
 			${(props) => props.buttonType === ButtonTypes.secondary && SecondaryButtonColors.disabled}
       ${(props) => props.buttonType === ButtonTypes.red && RedButtonColors.disabled}
