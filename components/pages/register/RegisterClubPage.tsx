@@ -17,7 +17,7 @@ import { postClub } from '../../../api/club';
 import useCustomRouter from '../../../hooks/useCustomRouter';
 import { Paths } from '../../../constants/paths';
 
-export default function SignUpClubPage() {
+export default function RegisterClubPage() {
 	const id = useUniqueId();
 	const [clubName, onChangeClubName] = useInput();
 	const { file, onChangeFile } = useInputFile();
@@ -38,7 +38,7 @@ export default function SignUpClubPage() {
 				name: clubName,
 				profileImgUrl: fileKey,
 			});
-			onRouteToPath(Paths.signUpClubComplete + '/' + post.data.code);
+			onRouteToPath(Paths.registerClubComplete + '/' + post.data.code);
 		} catch (e) {
 			console.log(e);
 		}

@@ -9,7 +9,7 @@ import SnackBar from '../../shared/SnackBar';
 import CustomButton from '../../buttons/CustomButton';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 
-export default function SignUpClubCompletePage({ clubId }: SignUpClubCompletePageProps) {
+export default function RegisterClubCompletePage({ clubId }: SignUpClubCompletePageProps) {
 	const { isShowSnackBar, onTriggerSnackBar } = useSnackBar();
 
 	const onClickClipBoard = () => {

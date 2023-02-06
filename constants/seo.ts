@@ -6,7 +6,8 @@ export const Seo = {
 		reply: '지원서 작성',
 		replyComplete: '지원서 작성 완료',
 		view: '지원서 조회',
-		signUp: '회원가입',
-		signUpClub: '신규 동아리 등록',
+		register: '회원가입',
+		registerClub: '신규 동아리 등록',
+		registerClubComplete: '신규 동아리 등록 완료',
 	},
 } as const;
