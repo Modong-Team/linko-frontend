@@ -28,6 +28,11 @@ type QuestionTitleInputProps = CommonInputProps & {
 type ReplyTextInputProps = CommonInputProps & {
 	label: string;
 	errorMessage: string;
+	isSingleLine?: boolean;
+	maxLength?: number;
+	minLength?: number;
+	pattern?: string;
+	type?: string;
 };
 
 type ReplyCheckInputProps = Omit<ReplyTextInputProps, 'value'> & {

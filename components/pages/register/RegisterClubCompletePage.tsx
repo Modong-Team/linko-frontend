@@ -8,9 +8,12 @@ import useSnackBar from '../../../hooks/useSnackBar';
 import SnackBar from '../../shared/SnackBar';
 import CustomButton from '../../buttons/CustomButton';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
+import useRouteToPath from '../../../hooks/useRouteToPath';
+import { Paths } from '../../../constants/paths';
 
-export default function RegisterClubCompletePage({ clubId }: SignUpClubCompletePageProps) {
+export default function RegisterClubCompletePage({ clubId }: RegisterClubCompletePageProps) {
 	const { isShowSnackBar, onTriggerSnackBar } = useSnackBar();
+	const onRouteToRegisterMember = useRouteToPath(Paths.registerMember + '/' + clubId);
 
 	const onClickClipBoard = () => {
 		copyToClipBoard(clubId);
@@ -44,7 +47,7 @@ export default function RegisterClubCompletePage({ clubId }: SignUpClubCompleteP
 			</div>
 			<CustomButton
 				label={'운영진 회원가입'}
-				onClick={console.log}
+				onClick={onRouteToRegisterMember}
 				buttonType={ButtonTypes.primary}
 				buttonSize={ButtonSizes.large}
 			/>

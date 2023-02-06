@@ -6,6 +6,7 @@ import { Paths } from '../../../constants/paths';
 
 export default function RegisterPage() {
 	const onRouteToSignUpClub = useRouteToPath(Paths.registerClub);
+	const onRouteToSignUpMember = useRouteToPath(Paths.registerMember);
 	return (
 		<S.Container>
 			<SignUpOptionButton //
@@ -16,7 +17,7 @@ export default function RegisterPage() {
 			<SignUpOptionButton
 				svgIcon={svgExistClub}
 				label={'기존 동아리 운영진 가입'}
-				onClick={console.log}
+				onClick={onRouteToSignUpMember}
 			/>
 		</S.Container>
 	);
