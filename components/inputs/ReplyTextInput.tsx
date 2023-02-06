@@ -10,10 +10,27 @@ export default function ReplyTextInput({
 	onChange,
 	label,
 	errorMessage,
+	isSingleLine,
+	maxLength,
+	minLength,
+	pattern,
+	type,
 }: ReplyTextInputProps) {
 	return (
 		<S.Container isError={false}>
-			<AutoResizeTextArea value={value} onChange={onChange} placeholder={' '} />
+			{!isSingleLine && <AutoResizeTextArea value={value} onChange={onChange} placeholder={' '} />}
+			{isSingleLine && (
+				<input
+					value={value}
+					onChange={onChange}
+					placeholder={' '}
+					maxLength={maxLength}
+					minLength={minLength}
+					pattern={pattern}
+					type={type}
+					autoComplete={'new-password'}
+				/>
+			)}
 			<label>{label}</label>
 			<p>{errorMessage}</p>
 		</S.Container>
@@ -45,7 +62,8 @@ namespace S {
 			transition: 0.3s ease;
 		}
 
-		> textarea {
+		> textarea,
+		> input {
 			width: 100%;
 			padding: 0.7rem 0.2rem;
 			background-color: transparent;
@@ -81,7 +99,9 @@ namespace S {
 
 		/* Focus OR Filled */
 		> textarea:focus + label,
-		> textarea:not(:placeholder-shown) + label {
+		> textarea:not(:placeholder-shown) + label,
+		> input:focus + label,
+		> input:not(:placeholder-shown) + label {
 			${Fonts.button13medium}
 			color: ${Colors.gray700};
 			bottom: 100%;
@@ -109,7 +129,8 @@ namespace S {
 	const ErrorStyle = css`
 		margin-bottom: calc(3.2rem + 2.2rem);
 
-		> textarea {
+		> textarea,
+		> input {
 			border-color: ${Colors.red500};
 		}
 
