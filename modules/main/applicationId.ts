@@ -36,9 +36,6 @@ function* requestSetApplicationIdSaga({ payload }: ActionType<typeof requestSetA
 	const applicationId = payload.applicationId;
 	yield put(setApplicationId(applicationId));
 
-	const applicants: ResponseApplicants.Get = yield call(() => getApplicants(applicationId));
-	if (applicants) yield put(setApplicants(applicants));
-
 	const application: ResponseApplication.Get = yield call(() => getApplication(applicationId));
 	if (application) yield put(setApplication(application));
 
