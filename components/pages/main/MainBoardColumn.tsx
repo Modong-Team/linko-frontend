@@ -5,7 +5,6 @@ import CustomButton from '../../buttons/CustomButton';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 import { Fonts } from '../../../styles/fonts';
 import MainPageButtons from './MainPageButtons';
-import useApplicants from '../../../hooks/useApplicants';
 import { MainBoardColumnProps } from '../../../@types/client';
 import {
 	ApplicantStatusCodeLabel,
@@ -17,21 +16,23 @@ import useSelectedStatus from '../../../hooks/useSelectedStatus';
 import DropDown from '../../dropdowns/DropDown';
 import { DynamicStyles, Styles } from '../../../styles/styles';
 import useSelectedApplicants from '../../../hooks/useSelectedApplicants';
-import { patchApplicant } from '../../../api/applicant';
+import { patchApplicantStatus } from '../../../api/applicant';
 import useApplicationId from '../../../hooks/useApplicationId';
+import useSort from '../../../hooks/useSort';
+import useFilter from '../../../hooks/useFilter';
+import { getApplicants } from '../../../api/applicants';
+import useLoadingStatus from '../../../hooks/useLoadingStatus';
+import useTriggers from '../../../hooks/useTriggers';
 
 export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumnProps) {
-	const { applicants } = useApplicants();
 	const { selectedStatus, onSelectStatus, onRequestResetStatus } = useSelectedStatus();
 	const { selectedApplicants } = useSelectedApplicants();
-	const { onRefreshApplicantsStatus } = useApplicationId();
-	const [applicantsWithCertainStatusCode, setApplicantsWithCertainStatusCode] =
-		useState<ResponseApplicants.Data[]>();
-
-	const pickApplicantsByStatusCode = () => {
-		const result = applicants?.data.filter((applicant) => applicant.status === applicantStatusCode);
-		setApplicantsWithCertainStatusCode(result);
-	};
+	const [applicants, setApplicants] = useState<ResponseApplicants.Data[]>();
+	const { sort } = useSort();
+	const { filter } = useFilter();
+	const { applicationId } = useApplicationId();
+	const { onStartGlobalLoading, onFinishGlobalLoading } = useLoadingStatus();
+	const { triggers, onTriggerRefreshApplicants } = useTriggers();
 
 	const checkShouldShowButton = () => {
 		if (!selectedStatus) return true;
@@ -51,42 +52,56 @@ export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumn
 	const onMoveToNextStep = async () => {
 		const promises = selectedApplicants.map(async (applicant) => {
 			const nextStatusCode = Math.min(ApplicantStatusCode[applicantStatusCode] + 1, 5);
-			const patch = await patchApplicant(applicant, { applicantStatusCode: nextStatusCode });
+			const patch = await patchApplicantStatus(applicant, { applicantStatusCode: nextStatusCode });
 			console.log(patch);
 		});
 		await Promise.all(promises);
-		onRefreshApplicantsStatus();
+		onTriggerRefreshApplicants();
 	};
 
 	const onMoveToPrevStep = async () => {
 		const promises = selectedApplicants.map(async (applicant) => {
 			const prevStatusCode = Math.max(ApplicantStatusCode[applicantStatusCode] - 1, 2);
-			const patch = await patchApplicant(applicant, { applicantStatusCode: prevStatusCode });
+			const patch = await patchApplicantStatus(applicant, { applicantStatusCode: prevStatusCode });
 			console.log(patch);
 		});
 		await Promise.all(promises);
-		onRefreshApplicantsStatus();
+		onTriggerRefreshApplicants();
 	};
 
 	const onMarkAsFail = async () => {
 		const promises = selectedApplicants.map(async (applicant) => {
 			const failStatusCode = ApplicantStatusCode.FAIL;
-			const patch = await patchApplicant(applicant, { applicantStatusCode: failStatusCode });
+			const patch = await patchApplicantStatus(applicant, { applicantStatusCode: failStatusCode });
 			console.log(patch);
 		});
 		await Promise.all(promises);
-		onRefreshApplicantsStatus();
+		onTriggerRefreshApplicants();
+	};
+
+	const onFetchApplicants = async () => {
+		if (!applicationId) return;
+		onStartGlobalLoading();
+		try {
+			const applicationStatusCode = ApplicantStatusCode[applicantStatusCode];
+			const get = await getApplicants(applicationId, applicationStatusCode, 1, filter, sort);
+			setApplicants(get.data.result.content);
+		} catch {
+			setApplicants([]);
+		} finally {
+			onFinishGlobalLoading();
+		}
 	};
 
 	useEffect(() => {
-		if (applicantStatusCode) pickApplicantsByStatusCode();
-	}, [applicants]);
+		onFetchApplicants();
+	}, [applicationId, sort, filter, triggers.applicants]);
 
 	return (
 		<S.Container isSelected={checkIsSelected()}>
 			<S.Meta>
 				<h2>{ApplicantStatusCodeLabel[applicantStatusCode]}</h2>
-				<div>{applicantsWithCertainStatusCode?.length}</div>
+				<div>{applicants?.length}</div>
 				{checkShouldShowButton() && (
 					<CustomButton
 						label={!checkIsSelected() ? '상태 변경' : '선택 취소'}
@@ -143,13 +158,14 @@ export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumn
 				)}
 			</S.Meta>
 			<S.Applicants>
-				{applicantsWithCertainStatusCode?.slice(0, 6).map((applicant, i) => (
+				{applicants?.map((applicant, i) => (
 					<MainBoardCard
 						id={applicant.id}
 						name={applicant.name}
 						rate={applicant.rate}
 						submitDate={applicant.submitDate}
 						fail={applicant.fail}
+						applicantStatusCode={applicantStatusCode}
 						isSelected={checkIsSelected()}
 						key={i}
 					/>
