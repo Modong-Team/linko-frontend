@@ -15,6 +15,8 @@ declare namespace RequestApplicant {
 	type Patch = {
 		applicantStatusCode: number;
 	};
+
+	type PatchCancelFail = {};
 }
 
 declare namespace ResponseApplicant {
@@ -49,7 +51,16 @@ declare namespace ResponseApplicant {
 		};
 	};
 
-	type Patch = {
+	type PatchStatus = {
 		id: number;
+	};
+
+	type PatchCancelFail = {
+		status: number;
+		message: string;
+		code: string;
+		data: {
+			id: number;
+		};
 	};
 }
