@@ -34,4 +34,5 @@ type FilterButtonProps = MoreButtonProps & {
 	onClick3?: () => void;
 	onClick4?: () => void;
 	onClick5?: () => void;
+	currentLabel: string;
 };
