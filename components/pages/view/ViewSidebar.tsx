@@ -22,6 +22,7 @@ export default function ViewSidebar() {
 						onClick4={() => alert('미구현')}
 						label5={'탈락'}
 						onClick5={() => alert('미구현')}
+						currentLabel={'현재 상태'}
 					/>
 				</h1>
 				<div>

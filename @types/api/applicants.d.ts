@@ -3,7 +3,12 @@ declare namespace ResponseApplicants {
 		status: number;
 		message: string;
 		code: string;
-		data: Data[];
+		data: {
+			result: {
+				content: Data[];
+				totalPages: number;
+			};
+		};
 	};
 
 	type Data = {
@@ -12,6 +17,7 @@ declare namespace ResponseApplicants {
 		rate: number;
 		status: string;
 		submitDate: string;
+		applicationId: number;
 		fail: boolean;
 	};
 }

@@ -1,10 +1,5 @@
-import { put, select, SelectEffect, takeLatest } from 'redux-saga/effects';
 import { ActionType, createAction, createReducer } from 'typesafe-actions';
-import { RootState } from '..';
 import produce from 'immer';
-import { SelectedStatusStateType, selectStatus } from './selectedStatus';
-import { ApplicantsStateType } from './applicants';
-import { ApplicantStatusCodeKeys } from '../../constants/applicantStatusCode';
 
 /**
  * Action
@@ -13,20 +8,14 @@ import { ApplicantStatusCodeKeys } from '../../constants/applicantStatusCode';
 const SELECT_APPLICANT = 'selectedApplicants/SELECT_APPLICANT';
 const DESELECT_APPLICANT = 'selectedApplicants/DESELECT_APPLICANT';
 const RESET_SELECTED_APPLICANTS = 'selectedApplicants/RESET_SELECTED_APPLICANTS';
-const REQUEST_SELECT_APPLICANT = 'selectedApplicants/REQUEST_SELECT_APPLICANT';
 
-const selectApplicant = createAction(
+export const selectApplicant = createAction(
 	SELECT_APPLICANT, //
 	(applicantId: number) => ({
 		applicantId,
 	}),
 )();
-export const requestSelectApplicant = createAction(
-	REQUEST_SELECT_APPLICANT, //
-	(applicantId: number) => ({
-		applicantId,
-	}),
-)();
+
 export const deselectApplicant = createAction(
 	DESELECT_APPLICANT, //
 	(applicantId: number) => ({
@@ -34,34 +23,6 @@ export const deselectApplicant = createAction(
 	}),
 )();
 export const resetSelectedApplicants = createAction(RESET_SELECTED_APPLICANTS)();
-
-/**
- * Saga
- */
-
-function selectState<T>(selector: (state: RootState) => T): SelectEffect {
-	return select(selector);
-}
-
-function* requestSelectApplicantSaga({ payload }: ActionType<typeof requestSelectApplicant>) {
-	const selectedStatus: SelectedStatusStateType = yield selectState<SelectedStatusStateType>(
-		(state) => state.selectedStatus,
-	);
-	if (selectedStatus === null) {
-		const applicants: ApplicantsStateType = yield selectState<ApplicantsStateType>(
-			(state) => state.applicants,
-		);
-		const applicant = applicants?.data.find((applicant) => applicant.id === payload.applicantId);
-		/* prettier-ignore */
-		if (applicant) yield put(selectStatus(applicant.status as ValueOf<typeof ApplicantStatusCodeKeys>));
-	}
-
-	yield put(selectApplicant(payload.applicantId));
-}
-
-export function* selectedApplicantsSaga() {
-	yield takeLatest(REQUEST_SELECT_APPLICANT, requestSelectApplicantSaga);
-}
 
 /**
  * Reducer

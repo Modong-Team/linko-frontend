@@ -7,10 +7,18 @@ import parseSubmitDate from '../../../utils/parseSubmitDate';
 import { Media } from '../../../styles/breakPoints';
 import IconButton from '../../buttons/IconButton';
 import useSelectedApplicants from '../../../hooks/useSelectedApplicants';
-import { MainBoardCardContainerProps, StatusElementProps } from '../../../@types/client';
+import {
+	MainBoardCardContainerProps,
+	MainBoardCardProps,
+	StatusElementProps,
+} from '../../../@types/client';
 import { CardModes } from '../../../styles/cardModes';
 import useSelectedStatus from '../../../hooks/useSelectedStatus';
-import useApplicationId from '../../../hooks/useApplicationId';
+import { patchApplicantCancelFail, patchApplicantStatus } from '../../../api/applicant';
+import { ApplicantStatusCode } from '../../../constants/applicantStatusCode';
+import useTriggers from '../../../hooks/useTriggers';
+import CheckIcon from '../../buttons/CheckIcon';
+import useActive from '../../../hooks/useActive';
 
 export default function MainBoardCard({
 	id,
@@ -19,18 +27,22 @@ export default function MainBoardCard({
 	submitDate,
 	fail,
 	isSelected,
+	applicantStatusCode,
 }: MainBoardCardProps) {
-	const { selectedStatus } = useSelectedStatus();
-	const { selectedApplicants, onRequestSelectApplicant, onDeselectApplicant } =
-		useSelectedApplicants();
-	const { onRefreshApplicantsStatus } = useApplicationId();
+	const { selectedStatus, onSelectStatus } = useSelectedStatus();
+	const { selectedApplicants, onSelectApplicant, onDeselectApplicant } = useSelectedApplicants();
+	const { onTriggerRefreshApplicants } = useTriggers();
+	const [isHover, onMouseOver, onMouseLeave] = useActive();
 
-	const onSelectFirstSingle = () => onRequestSelectApplicant(id);
+	const onSelectFirstSingle = () => {
+		onSelectStatus(applicantStatusCode);
+		onSelectApplicant(id);
+	};
 
 	const onToggleSelect = () => {
 		if (!isSelected || fail) return;
 		if (checkIfSelected()) onDeselectApplicant(id);
-		else onRequestSelectApplicant(id);
+		else onSelectApplicant(id);
 	};
 
 	const checkIfSelected = () => selectedApplicants.includes(id);
@@ -47,13 +59,25 @@ export default function MainBoardCard({
 		return CardModes.basicDefault;
 	};
 
+	const onMarkAsFail = async () => {
+		const failStatusCode = ApplicantStatusCode.FAIL;
+		const patch = await patchApplicantStatus(id, { applicantStatusCode: failStatusCode });
+		console.log(patch);
+		onTriggerRefreshApplicants();
+	};
+
 	const onCancelFail = async () => {
-		/* 탈락 취소 API */
-		onRefreshApplicantsStatus();
+		const patch = await patchApplicantCancelFail(id);
+		console.log(patch);
+		onTriggerRefreshApplicants();
 	};
 
 	return (
-		<S.Container onClick={onToggleSelect} cardMode={checkCardMode()}>
+		<S.Container
+			onClick={onToggleSelect}
+			cardMode={checkCardMode()}
+			onMouseOver={onMouseOver}
+			onMouseLeave={onMouseLeave}>
 			<div>
 				<h3>{name}</h3>
 				{checkShouldShowMoreButton() && !fail && (
@@ -61,16 +85,14 @@ export default function MainBoardCard({
 						label1={'선택하기'}
 						label2={'탈락'}
 						onClick1={onSelectFirstSingle}
-						onClick2={function (): void {
-							throw new Error('Function not implemented.');
-						}}
+						onClick2={onMarkAsFail}
 					/>
 				)}
 				{checkShouldShowMoreButton() && fail && (
 					<MoreButton label1={'탈락 취소'} onClick1={onCancelFail} />
 				)}
 				{checkShouldShowCheckButton() && (
-					<IconButton svgIcon={svgEntireCheckbox} onClick={() => console.log()} />
+					<CheckIcon isHover={isHover} isChecked={checkIfSelected()} />
 				)}
 			</div>
 			<div>

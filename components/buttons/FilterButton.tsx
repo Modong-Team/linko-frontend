@@ -17,6 +17,7 @@ export default function FilterButton({
 	onClick3,
 	onClick4,
 	onClick5,
+	currentLabel,
 }: FilterButtonProps) {
 	const [isFocus, setIsFocus] = useState(false);
 
@@ -25,7 +26,7 @@ export default function FilterButton({
 
 	return (
 		<S.FilterContainer onClick={onFocus} onBlur={onBlur} isFocus={isFocus}>
-			현재 상태
+			{currentLabel}
 			{svgDown8}
 			<DropDown
 				option1={label1}
@@ -54,7 +55,8 @@ namespace S {
 		${Fonts.button14medium}
 		display: flex;
 		gap: 0.6rem;
-		width: fit-content;
+		min-width: 10rem;
+		justify-content: space-between;
 		padding: 0.6rem 1.4rem;
 		align-items: center;
 		background-color: ${(props) => (props.isFocus ? Colors.gray200 : Colors.white)};

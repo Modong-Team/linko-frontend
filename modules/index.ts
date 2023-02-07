@@ -15,8 +15,10 @@ import applicationId, { applicationIdSaga } from './main/applicationId';
 import applicants from './main/applicants';
 import selectedStatus from './main/selectedStatus';
 import selectedApplicants from './main/selectedApplicants';
-import { selectedApplicantsSaga } from './main/selectedApplicants';
 import { selectedStatusSaga } from './main/selectedStatus';
+import filter from './main/filter';
+import sort from './main/sort';
+import triggers from './main/triggers';
 
 const rootReducer = combineReducers({
 	forms,
@@ -32,6 +34,9 @@ const rootReducer = combineReducers({
 	applicants,
 	selectedStatus,
 	selectedApplicants,
+	sort,
+	filter,
+	triggers,
 });
 
 export function* rootSaga() {
@@ -42,7 +47,6 @@ export function* rootSaga() {
 		answersSaga(),
 		applicationIdSaga(),
 		selectedStatusSaga(),
-		selectedApplicantsSaga(),
 	]);
 }
 

@@ -2,8 +2,14 @@ import FilterButton from '../../buttons/FilterButton';
 import MainBoardColumn from './MainBoardColumn';
 import styled from 'styled-components';
 import { ApplicantStatusCodeKeys } from '../../../constants/applicantStatusCode';
+import useSort from '../../../hooks/useSort';
+import useFilter from '../../../hooks/useFilter';
+import { FilterLabels } from '../../../constants/filters';
+import { SortLabels } from '../../../constants/sorts';
 
 export default function MainBoard() {
+	const { filter, onFilterAll, onFilterEvaluating, onFilterFail } = useFilter();
+	const { sort, onSortNameAsc, onSortRateAsc, onSortRateDesc } = useSort();
 	return (
 		<S.Container>
 			<S.FilterButtons>
@@ -11,17 +17,19 @@ export default function MainBoard() {
 					label1={'모든 지원자'}
 					label2={'평가중'}
 					label3={'탈락'}
-					onClick1={() => alert('미구현')}
-					onClick2={() => alert('미구현')}
-					onClick3={() => alert('미구현')}
+					onClick1={onFilterAll}
+					onClick2={onFilterEvaluating}
+					onClick3={onFilterFail}
+					currentLabel={FilterLabels[filter]}
 				/>
 				<FilterButton
 					label1={'가나다 순'}
 					label2={'높은 평점 순'}
 					label3={'낮은 평점 순'}
-					onClick1={() => alert('미구현')}
-					onClick2={() => alert('미구현')}
-					onClick3={() => alert('미구현')}
+					onClick1={onSortNameAsc}
+					onClick2={onSortRateAsc}
+					onClick3={onSortRateDesc}
+					currentLabel={SortLabels[sort]}
 				/>
 			</S.FilterButtons>
 			<S.BoardContainer>
