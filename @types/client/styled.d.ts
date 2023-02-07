@@ -65,3 +65,11 @@ type IsShownType = {
 type BottomType = {
 	bottom?: string;
 };
+
+type IsHoverType = {
+	isHover: boolean;
+};
+
+type IsCheckedType = {
+	isChecked: boolean;
+};

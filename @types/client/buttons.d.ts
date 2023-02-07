@@ -36,3 +36,8 @@ type FilterButtonProps = MoreButtonProps & {
 	onClick5?: () => void;
 	currentLabel: string;
 };
+
+type CheckIconProps = {
+	isHover: boolean;
+	isChecked: boolean;
+};
