@@ -17,6 +17,8 @@ import useSelectedStatus from '../../../hooks/useSelectedStatus';
 import { patchApplicantCancelFail, patchApplicantStatus } from '../../../api/applicant';
 import { ApplicantStatusCode } from '../../../constants/applicantStatusCode';
 import useTriggers from '../../../hooks/useTriggers';
+import CheckIcon from '../../buttons/CheckIcon';
+import useActive from '../../../hooks/useActive';
 
 export default function MainBoardCard({
 	id,
@@ -30,6 +32,7 @@ export default function MainBoardCard({
 	const { selectedStatus, onSelectStatus } = useSelectedStatus();
 	const { selectedApplicants, onSelectApplicant, onDeselectApplicant } = useSelectedApplicants();
 	const { onTriggerRefreshApplicants } = useTriggers();
+	const [isHover, onMouseOver, onMouseLeave] = useActive();
 
 	const onSelectFirstSingle = () => {
 		onSelectStatus(applicantStatusCode);
@@ -70,7 +73,11 @@ export default function MainBoardCard({
 	};
 
 	return (
-		<S.Container onClick={onToggleSelect} cardMode={checkCardMode()}>
+		<S.Container
+			onClick={onToggleSelect}
+			cardMode={checkCardMode()}
+			onMouseOver={onMouseOver}
+			onMouseLeave={onMouseLeave}>
 			<div>
 				<h3>{name}</h3>
 				{checkShouldShowMoreButton() && !fail && (
@@ -85,7 +92,7 @@ export default function MainBoardCard({
 					<MoreButton label1={'탈락 취소'} onClick1={onCancelFail} />
 				)}
 				{checkShouldShowCheckButton() && (
-					<IconButton svgIcon={svgEntireCheckbox} onClick={() => console.log()} />
+					<CheckIcon isHover={isHover} isChecked={checkIfSelected()} />
 				)}
 			</div>
 			<div>
