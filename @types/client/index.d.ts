@@ -34,3 +34,12 @@ type StatusElementProps = MainBoardCardContainerProps & {
 	label: string;
 	isGray: boolean;
 };
+
+type MainBoardCardProps = MainBoardColumnProps & {
+	id: number;
+	name: string;
+	rate: number;
+	submitDate: string;
+	fail: boolean;
+	isSelected: boolean;
+};
