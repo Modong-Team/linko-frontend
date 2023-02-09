@@ -5,6 +5,7 @@ import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer, { rootSaga } from '../modules';
 import { GlobalStyle } from '../styles/global';
+import RouterGuard from '../components/hocs/RouterGuard';
 
 /* Redux */
 const logger = createLogger();
@@ -22,8 +23,10 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 	const getLayout = Component.getLayout ?? ((page: any) => page);
 	return (
 		<Provider store={store}>
-			<GlobalStyle />
-			{getLayout(<Component {...pageProps} />)}
+			<RouterGuard>
+				<GlobalStyle />
+				{getLayout(<Component {...pageProps} />)}
+			</RouterGuard>
 		</Provider>
 	);
 }
