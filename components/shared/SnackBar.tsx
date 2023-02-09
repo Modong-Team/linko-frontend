@@ -29,13 +29,12 @@ namespace S {
 		position: absolute;
 		bottom: ${(props) => props.bottom ?? '4rem'};
 		left: 50%;
-		transform: translate(-50%, 100%);
+		transform: translate(-50%, 150%);
 		z-index: 100;
 		animation-duration: 2s;
 		animation-timing-function: ease;
 		opacity: 0;
-		visibility: ${(props) => !props.isShown && 'hidden'};
-		transition: 5s ease;
+		padding: ${(props) => !props.isShown && 0};
 
 		@keyframes snackBarAnimation {
 			30% {

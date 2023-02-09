@@ -45,12 +45,14 @@ export default function RegisterClubCompletePage({ clubId }: RegisterClubComplet
 					isShown={isShowSnackBar}
 				/>
 			</div>
-			<CustomButton
-				label={'운영진 회원가입'}
-				onClick={onRouteToRegisterMember}
-				buttonType={ButtonTypes.primary}
-				buttonSize={ButtonSizes.large}
-			/>
+			<div>
+				<CustomButton
+					label={'운영진 회원가입'}
+					onClick={onRouteToRegisterMember}
+					buttonType={ButtonTypes.primary}
+					buttonSize={ButtonSizes.large}
+				/>
+			</div>
 		</S.Container>
 	);
 }
@@ -80,10 +82,15 @@ namespace S {
 			}
 		}
 
-		> button {
-			width: 100%;
-			position: relative;
+		> div:last-of-type {
+			background-color: ${Colors.white};
+			border-radius: 1rem 1rem 0 0;
+			padding-bottom: 10rem;
 			z-index: 150;
+
+			> button {
+				width: 100%;
+			}
 		}
 	`;
 

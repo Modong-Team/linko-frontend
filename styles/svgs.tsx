@@ -390,7 +390,7 @@ export const svgLeft16 = (
 	<svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
 		<path
 			d='M10.3337 3.33301L5.66699 7.99967L10.3337 12.6663'
-			stroke='#C0C4CF'
+			stroke='#383C46'
 			strokeWidth='1.4'
 			strokeLinecap='round'
 			strokeLinejoin='round'

@@ -12,14 +12,20 @@ export default function MoreButton({ label1, label2, onClick1, onClick2 }: MoreB
 	const onFocus = () => setIsFocus(true);
 	const onBlur = () => setIsFocus(false);
 
+	const invokeOnBlurAfterOnClick = (onClick: (() => void) | undefined) => {
+		if (!onClick) return;
+		onClick();
+		onBlur();
+	};
+
 	return (
 		<S.Button isFocus={isFocus} onClick={(e) => withoutPropagation(e, onFocus)} onBlur={onBlur}>
 			{svgMore24}
 			<DropDown
 				option1={label1}
 				option2={label2}
-				onClick1={onClick1}
-				onClick2={onClick2}
+				onClick1={() => invokeOnBlurAfterOnClick(onClick1)}
+				onClick2={() => invokeOnBlurAfterOnClick(onClick2)}
 				customCSS={
 					Styles.dropDownTextAlignLeft +
 					DynamicStyles.dropDownNthOptionRed(onClick2 ? 2 : 1) +
