@@ -23,11 +23,14 @@ import useFilter from '../../../hooks/useFilter';
 import { getApplicants } from '../../../api/applicants';
 import useLoadingStatus from '../../../hooks/useLoadingStatus';
 import useTriggers from '../../../hooks/useTriggers';
+import useChange from '../../../hooks/useChange';
 
 export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumnProps) {
+	const [page, onChangePage] = useChange(1);
+	const [totalPages, setTotalPages] = useState(0);
+	const [applicants, setApplicants] = useState<ResponseApplicants.Data[]>();
 	const { selectedStatus, onSelectStatus, onRequestResetStatus } = useSelectedStatus();
 	const { selectedApplicants } = useSelectedApplicants();
-	const [applicants, setApplicants] = useState<ResponseApplicants.Data[]>();
 	const { sort } = useSort();
 	const { filter } = useFilter();
 	const { applicationId } = useApplicationId();
@@ -84,10 +87,12 @@ export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumn
 		onStartGlobalLoading();
 		try {
 			const applicationStatusCode = ApplicantStatusCode[applicantStatusCode];
-			const get = await getApplicants(applicationId, applicationStatusCode, 1, filter, sort);
+			const get = await getApplicants(applicationId, applicationStatusCode, page, filter, sort);
 			setApplicants(get.data.result.content);
+			setTotalPages(get.data.result.totalPages);
 		} catch {
 			setApplicants([]);
+			setTotalPages(0);
 		} finally {
 			onFinishGlobalLoading();
 		}
@@ -95,7 +100,7 @@ export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumn
 
 	useEffect(() => {
 		onFetchApplicants();
-	}, [applicationId, sort, filter, triggers.applicants]);
+	}, [applicationId, sort, filter, triggers.applicants, page]);
 
 	return (
 		<S.Container isSelected={checkIsSelected()}>
@@ -171,7 +176,9 @@ export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumn
 					/>
 				))}
 			</S.Applicants>
-			<MainPageButtons />
+			{!!totalPages && (
+				<MainPageButtons currentPage={page} totalPages={totalPages} onChangePage={onChangePage} />
+			)}
 		</S.Container>
 	);
 }
