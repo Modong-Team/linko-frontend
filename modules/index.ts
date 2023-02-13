@@ -19,6 +19,8 @@ import { selectedStatusSaga } from './main/selectedStatus';
 import filter from './main/filter';
 import sort from './main/sort';
 import triggers from './main/triggers';
+import authData from './auth/authData';
+import { authDataSaga } from './auth/authData';
 
 const rootReducer = combineReducers({
 	forms,
@@ -37,6 +39,7 @@ const rootReducer = combineReducers({
 	sort,
 	filter,
 	triggers,
+	authData,
 });
 
 export function* rootSaga() {
@@ -47,6 +50,7 @@ export function* rootSaga() {
 		answersSaga(),
 		applicationIdSaga(),
 		selectedStatusSaga(),
+		authDataSaga(),
 	]);
 }
 
