@@ -3,21 +3,35 @@ import CustomButton from '../../buttons/CustomButton';
 import ReplyTextInput from '../../inputs/ReplyTextInput';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 import useInput from '../../../hooks/useInput';
-import { Devices } from '../../../styles/devices';
+import { postRegister } from '../../../api/register';
 
 export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) {
-	const [id, onChangeId] = useInput();
+	const [memberId, onChangeMemberId] = useInput();
 	const [password, onChangePassword] = useInput();
 	const [passwordForCheck, onChangePasswordForCheck] = useInput();
 	const [name, onChangeName] = useInput();
 	const [email, onChangeEmail] = useInput();
 	const [phone, onChangePhone] = useInput();
 
+	const onSubmit = async () => {
+		try {
+			const post = await postRegister({
+				memberId,
+				password,
+				name,
+				email,
+				phone,
+				clubCode: clubId,
+			});
+			console.log(post);
+		} catch {}
+	};
+
 	return (
 		<S.Container>
 			<ReplyTextInput
-				value={id}
-				onChange={onChangeId}
+				value={memberId}
+				onChange={onChangeMemberId}
 				label={'아이디 (3~20자)'}
 				errorMessage={'아이디를 제대로 입력하셈'}
 				minLength={3}
@@ -70,10 +84,10 @@ export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) 
 			/>
 			<CustomButton
 				label={'가입 완료'}
-				onClick={() => alert('가입 완료')}
+				onClick={onSubmit}
 				buttonType={ButtonTypes.primary}
 				buttonSize={ButtonSizes.large}
-				disabled={!(id && password && passwordForCheck && name && email && phone)}
+				disabled={!(memberId && password && passwordForCheck && name && email && phone)}
 			/>
 		</S.Container>
 	);
