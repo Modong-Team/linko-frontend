@@ -8,6 +8,8 @@ import { StorageKeys } from '../../constants/keys';
 
 const SET_AUTH_DATA = 'authData/SET_AUTH_DATA';
 const REQUEST_SET_AUTH_DATA = 'authData/REQUEST_SET_AUTH_DATA';
+const REVOKE_AUTH_DATA = 'authData/REVOKE_AUTH_DATA';
+const REQUEST_REVOKE_AUTH_DATA = 'authData/REQUEST_REVOKE_AUTH_DATA';
 
 const setAuthData = createAction(
 	SET_AUTH_DATA, //
@@ -17,6 +19,8 @@ export const requestSetAuthData = createAction(
 	REQUEST_SET_AUTH_DATA,
 	(data: ResponseLogin.Data) => ({ data }),
 )();
+const revokeAuthData = createAction(REVOKE_AUTH_DATA)();
+export const requestRevokeAuthData = createAction(REQUEST_REVOKE_AUTH_DATA)();
 
 /**
  * Saga
@@ -28,8 +32,14 @@ function* requestSetAuthDataSaga({ payload }: ActionType<typeof requestSetAuthDa
 	yield put(setAuthData(authData));
 }
 
+function* requestRevokeAuthDataSaga() {
+	sessionStorage.removeItem(StorageKeys.refreshToken);
+	yield put(revokeAuthData());
+}
+
 export function* authDataSaga() {
 	yield takeLatest(REQUEST_SET_AUTH_DATA, requestSetAuthDataSaga);
+	yield takeLatest(REQUEST_REVOKE_AUTH_DATA, requestRevokeAuthDataSaga);
 }
 
 /**
@@ -38,12 +48,13 @@ export function* authDataSaga() {
 
 type AuthDataStateType = ResponseLogin.Data | null;
 
-type AuthDataActionsType = ActionType<typeof setAuthData>;
+type AuthDataActionsType = ActionType<typeof setAuthData | typeof revokeAuthData>;
 
 const initialState = null;
 
 const authData = createReducer<AuthDataStateType, AuthDataActionsType>(initialState, {
 	[SET_AUTH_DATA]: (state, { payload }) => payload.data,
+	[REVOKE_AUTH_DATA]: (state) => null,
 });
 
 export default authData;
