@@ -7,10 +7,24 @@ import ReplyTextInput from '../../inputs/ReplyTextInput';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 import useInput from '../../../hooks/useInput';
 import { Paths } from '../../../constants/paths';
+import { postLogin } from '../../../api/login';
+import useAuthData from '../../../hooks/useAuthData';
+import useRouteToPath from '../../../hooks/useRouteToPath';
 
 export default function LoginPage() {
-	const [id, onChangeId] = useInput();
+	const [memberId, onChangeMemberId] = useInput();
 	const [password, onChangePassword] = useInput();
+	const { onRequestSetAuthData } = useAuthData();
+	const onRouteToMain = useRouteToPath(Paths.main);
+
+	const onSubmit = async () => {
+		const post = await postLogin({
+			memberId,
+			password,
+		});
+		onRequestSetAuthData(post.data);
+		onRouteToMain();
+	};
 
 	return (
 		<S.Container>
@@ -18,8 +32,8 @@ export default function LoginPage() {
 			<h2>동아리 모집을 쉽고 빠르게</h2>
 			<div>
 				<ReplyTextInput
-					value={id}
-					onChange={onChangeId}
+					value={memberId}
+					onChange={onChangeMemberId}
 					label={'아이디'}
 					errorMessage={''}
 					isSingleLine
@@ -34,10 +48,10 @@ export default function LoginPage() {
 				/>
 				<CustomButton
 					label={'로그인'}
-					onClick={() => alert('로그인')}
+					onClick={onSubmit}
 					buttonType={ButtonTypes.primary}
 					buttonSize={ButtonSizes.large}
-					disabled={!(id && password)}
+					disabled={!(memberId && password)}
 				/>
 			</div>
 			<div>
