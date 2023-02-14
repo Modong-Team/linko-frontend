@@ -12,6 +12,7 @@ export const Fonts = {
 
 	body16regular: 'font-weight:400; font-size:1.6rem; line-height:1.92rem;',
 	body14regular: 'font-weight:400; font-size:1.4rem; line-height:2.1rem;',
+	body13regular: 'font-weight:400; font-size:1.3rem; line-height:1.69rem;',
 	body12medium: 'font-weight:500; font-size:1.2rem; line-height:1.8rem;',
 
 	button16bold: 'font-weight:700; font-size:1.6rem; line-height:2.4rem;',
