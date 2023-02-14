@@ -12,10 +12,14 @@ export namespace SC {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 0 2.4rem;
+		padding: 0 2.8rem;
 	`;
 
-	export const HeaderLogo = styled.h1``;
+	export const HeaderLogo = styled.h1`
+		> svg {
+			width: 8.1rem;
+		}
+	`;
 
 	export const NewMainContainer = styled.div`
 		background-color: ${Colors.white};

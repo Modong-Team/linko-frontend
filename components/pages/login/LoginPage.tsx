@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
-import { svgModong } from '../../../styles/svgs';
+import { svgLogo } from '../../../styles/svgs';
 import CustomButton from '../../buttons/CustomButton';
 import ReplyTextInput from '../../inputs/ReplyTextInput';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
@@ -28,7 +28,7 @@ export default function LoginPage() {
 
 	return (
 		<S.Container>
-			<h1>{svgModong}</h1>
+			<h1>{svgLogo}</h1>
 			<h2>동아리 모집을 쉽고 빠르게</h2>
 			<div>
 				<ReplyTextInput
