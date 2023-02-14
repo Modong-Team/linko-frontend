@@ -73,3 +73,14 @@ type IsHoverType = {
 type IsCheckedType = {
 	isChecked: boolean;
 };
+
+type DateProps = {
+	isStartDate: boolean;
+	isEndDate: boolean;
+	isHoveredDate: boolean;
+};
+
+type DateBackgroundProps = DateProps & {
+	isPeriod: boolean;
+	isPeriodPreview: boolean;
+};
