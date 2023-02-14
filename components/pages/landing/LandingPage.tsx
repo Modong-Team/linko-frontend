@@ -170,6 +170,10 @@ export default function LandingPage() {
 
 namespace S {
 	export const Container = styled.div`
+		* {
+			white-space: nowrap;
+		}
+
 		> header {
 			padding: 2rem 0;
 			border-bottom: 0.1rem solid ${Colors.gray200};
@@ -177,6 +181,7 @@ namespace S {
 			align-items: center;
 			justify-content: center;
 
+			/* Linko */
 			> svg {
 				width: 6.8rem;
 			}
@@ -190,6 +195,7 @@ namespace S {
 			align-items: center;
 			gap: 2.4rem;
 
+			/* 가장 손쉬운 솔루션 */
 			> h1 {
 				font-size: 5.6rem;
 				font-weight: 700;
@@ -197,6 +203,7 @@ namespace S {
 				text-align: center;
 			}
 
+			/* 진행해보세요 */
 			> p {
 				font-size: 2.6rem;
 				font-weight: 600;
@@ -205,6 +212,7 @@ namespace S {
 				margin-bottom: 1.8rem;
 			}
 
+			/* 버튼 래퍼 */
 			> div {
 				display: flex;
 				gap: 1.6rem;
@@ -221,16 +229,18 @@ namespace S {
 				color: ${Colors.white};
 			}
 
+			/* Linko */
 			> div {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
 				gap: 4rem;
 				position: absolute;
-				right: 0;
+				left: 50%;
 				bottom: 7.7rem;
-				transform: translateX(-17vw);
+				transform: translateX(-20%);
 
+				/* 한번에 해결하세요 */
 				> h2 {
 					font-size: 4rem;
 					font-weight: 600;
@@ -239,19 +249,23 @@ namespace S {
 				}
 			}
 
+			/* 번거롭지 않으셨나요? */
 			> p {
 				font-size: 2.6rem;
 				font-weight: 600;
 				line-height: 3.6rem;
 				position: absolute;
 				top: 5.4rem;
-				left: 10vw;
+				left: 50%;
+				transform: translateX(-120%);
 			}
 
+			/* 타원 */
 			> svg {
 				position: absolute;
-				right: 0;
 				bottom: 0;
+				left: 50%;
+				transform: translateX(-35%);
 			}
 		}
 
@@ -266,6 +280,7 @@ namespace S {
 					text-align: center;
 				}
 
+				/* 제목 */
 				> h1 {
 					font-size: 4.8rem;
 					font-weight: 700;
@@ -273,6 +288,7 @@ namespace S {
 					margin-bottom: 1.6rem;
 				}
 
+				/* 소제목 */
 				> h2 {
 					font-size: 2.8rem;
 					font-weight: 600;
@@ -280,6 +296,7 @@ namespace S {
 					color: ${Colors.gray800};
 				}
 
+				/* 이미지 */
 				> div {
 					display: flex;
 					flex-direction: column;
@@ -287,6 +304,7 @@ namespace S {
 					position: relative;
 					top: -2.7rem;
 
+					/* 상세 기능 살펴보기 */
 					> button {
 						width: fit-content;
 						position: relative;
@@ -309,6 +327,7 @@ namespace S {
 				width: 58.8rem;
 			}
 
+			/* 링코는 지금 베타 테스트 중 */
 			> h1 {
 				font-size: 4rem;
 				font-weight: 700;
@@ -316,6 +335,7 @@ namespace S {
 				text-align: center;
 			}
 
+			/* 베타 서비스 기간 및 인터뷰 참여 혜택 */
 			> div {
 				background: ${Colors.white};
 				padding: 2.7rem 4.8rem;
@@ -345,13 +365,15 @@ namespace S {
 				}
 			}
 
+			/* 인터뷰 및 백업 안내 */
 			> ul > li {
 				font-size: 1.4rem;
-				font-weight: 500;
+				font-weight: 600;
 				line-height: 2.1rem;
 				color: ${Colors.white};
 				display: flex;
 				gap: 0.8rem;
+				white-space: normal;
 
 				:before {
 					content: '·';
@@ -365,6 +387,7 @@ namespace S {
 			background-color: #101d35;
 			padding: 5.6rem 4rem;
 
+			/* 버튼 래퍼 */
 			> div:first-of-type {
 				width: fit-content;
 				margin: 0 auto;
@@ -373,6 +396,7 @@ namespace S {
 				margin-bottom: 12.8rem;
 			}
 
+			/* 푸터 */
 			> div:nth-of-type(2) {
 				display: flex;
 				flex-direction: column;
@@ -397,6 +421,7 @@ namespace S {
 		}
 	`;
 
+	/* 남색 라벨 */
 	export const InfoLabel = styled.div`
 		flex-direction: row !important;
 		top: unset !important;
@@ -412,6 +437,11 @@ namespace S {
 		:first-of-type {
 			margin-top: 3rem;
 			margin-bottom: 2.4rem;
+
+			> svg {
+				position: relative;
+				left: 0.5rem;
+			}
 		}
 
 		> div {
@@ -419,6 +449,7 @@ namespace S {
 			font-weight: 700;
 			color: ${Colors.white};
 			line-height: 4.8rem;
+			text-align: left !important;
 
 			> b {
 				font-size: inherit;

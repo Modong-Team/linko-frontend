@@ -865,27 +865,27 @@ export const svgPreview = (
 
 export const svgLandingEllipse = (
 	<svg
-		width='1168'
-		height='424'
-		viewBox='0 0 1168 424'
+		width='1594'
+		height='446'
+		viewBox='0 0 1594 446'
 		fill='none'
 		xmlns='http://www.w3.org/2000/svg'>
 		<ellipse
-			cx='657.722'
-			cy='814.149'
-			rx='657.722'
-			ry='814.149'
-			transform='matrix(0.194234 -0.980955 0.98406 0.177837 -152.719 1161.99)'
-			fill='url(#paint0_radial_1986_84804)'
+			cx='691.849'
+			cy='856.393'
+			rx='691.849'
+			ry='856.393'
+			transform='matrix(0.194234 -0.980955 0.98406 0.177837 -160.644 1222.28)'
+			fill='url(#paint0_radial_1986_84802)'
 		/>
 		<defs>
 			<radialGradient
-				id='paint0_radial_1986_84804'
+				id='paint0_radial_1986_84802'
 				cx='0'
 				cy='0'
 				r='1'
 				gradientUnits='userSpaceOnUse'
-				gradientTransform='translate(479.488 676.061) rotate(12.5044) scale(1100.78 1504.75)'>
+				gradientTransform='translate(504.367 711.139) rotate(12.5044) scale(1157.9 1582.82)'>
 				<stop stopColor='#6F9DFB' />
 				<stop offset='0.612468' stopColor='#7DA9FF' />
 				<stop offset='1' stopColor='#D3FD76' />
