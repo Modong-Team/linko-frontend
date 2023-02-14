@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { SC } from '../../styles/styled';
-import { svgDown16, svgModong } from '../../styles/svgs';
+import { svgLogo } from '../../styles/svgs';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestSave } from '../../modules/new/apiProcedures';
 import { RootState } from '../../modules/index';
@@ -35,7 +35,7 @@ export default function Header({ isNew, isMain }: HeaderProps) {
 
 	return (
 		<S.Container>
-			<SC.HeaderLogo>{svgModong}</SC.HeaderLogo>
+			<SC.HeaderLogo>{svgLogo}</SC.HeaderLogo>
 			{isNew && (
 				<S.NewSubmitButtons>
 					<CustomButton

@@ -10,6 +10,7 @@ export const Paths = {
 	registerClubComplete: '/register/club/complete',
 	registerMember: '/register/member',
 	login: '/login',
+	landing: '/landing',
 } as const;
 
-export const PublicPathsRegex = /register|login|reply/;
+export const PublicPathsRegex = /register|login|reply|landing/;
