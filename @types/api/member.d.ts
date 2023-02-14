@@ -5,6 +5,14 @@ declare namespace RequestMember {
 }
 
 declare namespace ResponseMember {
+	type Get = {
+		id: number;
+		memberId: string;
+		name: string;
+		email: string;
+		phone: string;
+	};
+
 	type PostCheck = {
 		status: number;
 		message: string;
