@@ -6,6 +6,7 @@ import {
 	svgLandingLogo,
 	svgLandingCard1,
 	svgLandingCard2,
+	svgKakao,
 } from '../../../styles/svgs';
 import CustomButton from '../../buttons/CustomButton';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
@@ -199,9 +200,8 @@ export default function LandingPage() {
 				<div>
 					<h1>{svgLandingLogo}</h1>
 					<ul>
-						<li onClick={onRouteToContact}>문의</li>
-						<li onClick={onRouteToContact}>이메일</li>
-						<li onClick={onRouteToContact}>카카오톡 문의</li>
+						<li>이용 문의</li>
+						<div onClick={onRouteToContact}>{svgKakao}</div>
 					</ul>
 					<h2>© 2023. Linko all rights reserved.</h2>
 				</div>
@@ -547,10 +547,11 @@ namespace S {
 		> section:last-of-type {
 			background-color: #101d35;
 			padding: 5.6rem 4rem;
+			padding-bottom: 7.4rem;
 
 			@media ${Devices.mobile} {
 				padding: 5.6rem 1.6rem;
-				padding-bottom: 4.8rem;
+				padding-bottom: 2.6rem;
 			}
 
 			/* 버튼 래퍼 */
@@ -573,7 +574,7 @@ namespace S {
 			> div:nth-of-type(2) {
 				display: flex;
 				flex-direction: column;
-				gap: 2.4rem;
+				gap: 3.2rem;
 
 				> h1 > svg {
 					width: 6.7rem;
@@ -581,9 +582,13 @@ namespace S {
 				}
 
 				> ul > li {
-					font-size: 1.4rem;
+					${Fonts.subtitle14semibold}
 					color: ${Colors.white};
 					line-height: 150%;
+					margin-bottom: 0.8rem;
+				}
+
+				> ul svg {
 					cursor: pointer;
 				}
 
