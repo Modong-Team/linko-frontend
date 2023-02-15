@@ -51,6 +51,8 @@ export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) 
 	});
 
 	const checkIfErrorExist = () => {
+		if (duplicateError) return true;
+		if (formik.values.password !== formik.values.passwordForCheck) return true;
 		for (const error in formik.errors) if (error !== '') return true;
 		return false;
 	};
