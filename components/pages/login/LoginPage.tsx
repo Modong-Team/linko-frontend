@@ -16,6 +16,10 @@ export default function LoginPage() {
 	const [password, onChangePassword] = useInput();
 	const { onRequestSetAuthData } = useAuthData();
 	const onRouteToMain = useRouteToPath(Paths.main);
+	const onRouteToContact = useRouteToPath('https://open.kakao.com/o/sH1xQC4e');
+
+	const onWelcome = () =>
+		alert('링코의 서비스는 2023년 3월 1일부터 사용하실 수 있습니다. 3월 1일에 만나요!');
 
 	const onSubmit = async () => {
 		const post = await postLogin({
@@ -48,7 +52,7 @@ export default function LoginPage() {
 				/>
 				<CustomButton
 					label={'로그인'}
-					onClick={onSubmit}
+					onClick={onWelcome}
 					buttonType={ButtonTypes.primary}
 					buttonSize={ButtonSizes.large}
 					disabled={!(memberId && password)}
@@ -56,7 +60,7 @@ export default function LoginPage() {
 			</div>
 			<div>
 				<a href={Paths.register}>회원 가입</a>
-				<a>이용 문의</a>
+				<a onClick={onRouteToContact}>이용 문의</a>
 			</div>
 		</S.Container>
 	);
@@ -100,6 +104,7 @@ namespace S {
 				${Fonts.button13medium}
 				color: ${Colors.gray900};
 				padding: 0 3.2rem;
+				cursor: pointer;
 
 				:first-of-type {
 					margin-left: auto;
