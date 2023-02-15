@@ -4,6 +4,8 @@ import IconButton from '../buttons/IconButton';
 import { svgCancel12 } from '../../styles/svgs';
 import { Fonts } from '../../styles/fonts';
 import useChange from '../../hooks/useChange';
+import { useEffect } from 'react';
+import withoutPropagation from '../../utils/withoutPropagation';
 
 const days = ['월', '화', '수', '목', '금', '토', '일'];
 const datesInMarch = Array(31)
@@ -56,11 +58,15 @@ export default function Calendar({
 		onChangeHoveredDate(date);
 	};
 
+	useEffect(() => {
+		if (startDate && endDate) onClose();
+	}, [startDate, endDate]);
+
 	return (
 		<S.Container isHidden={isHidden}>
 			<h1>
 				2023. 3
-				<IconButton svgIcon={svgCancel12} onClick={onClose} />
+				<IconButton svgIcon={svgCancel12} onClick={(e) => withoutPropagation(e, onClose)} />
 			</h1>
 			<div>
 				{days.map((day, i) => (
@@ -103,9 +109,9 @@ namespace S {
 		opacity: ${(props) => props.isHidden && 0};
 		transition: 0.3s ease;
 		position: absolute;
-		right: 0;
+		left: 50%;
 		bottom: 0;
-		transform: translate(20%, 30%);
+		transform: translate(-50%, 104%);
 		z-index: 10;
 
 		> h1 {

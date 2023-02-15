@@ -18,3 +18,8 @@ type CalendarProps = {
 	onClose: () => void;
 	isHidden: boolean;
 };
+
+type ToolTipProps = {
+	onClose: (e: any) => void;
+	isHidden: boolean;
+};
