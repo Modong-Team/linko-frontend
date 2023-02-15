@@ -5,8 +5,12 @@ import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 import { postRegister } from '../../../api/register';
 import { useFormik } from 'formik';
 import { object, string } from 'yup';
+import useCustomRouter from '../../../hooks/useCustomRouter';
+import { Paths } from '../../../constants/paths';
 
 export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) {
+	const { onRouteToPath } = useCustomRouter();
+
 	const formik = useFormik({
 		initialValues: {
 			memberId: '',
@@ -31,8 +35,9 @@ export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) 
 				.required(),
 		}),
 		onSubmit: async () => {
-			const post = postRegister({ ...formik.values, clubCode: clubId });
+			const post = await postRegister({ ...formik.values, clubCode: clubId });
 			console.log(post);
+			if (post) onRouteToPath(Paths.registerMemberComplete);
 		},
 		validateOnChange: true,
 		validateOnMount: true,
