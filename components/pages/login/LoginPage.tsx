@@ -35,7 +35,7 @@ export default function LoginPage() {
 		<S.Container>
 			<h1>{svgLogo}</h1>
 			<h2>동아리 모집을 쉽고 빠르게</h2>
-			<div>
+			<form>
 				<ReplyTextInput
 					value={memberId}
 					onChange={onChangeMemberId}
@@ -58,7 +58,7 @@ export default function LoginPage() {
 					buttonSize={ButtonSizes.large}
 					disabled={!(memberId && password)}
 				/>
-			</div>
+			</form>
 			<div>
 				<a href={Paths.register}>회원 가입</a>
 				<a onClick={onRouteToContact}>이용 문의</a>
@@ -83,7 +83,7 @@ namespace S {
 			text-align: center;
 		}
 
-		> div:first-of-type {
+		> form {
 			margin-bottom: 2.6rem;
 
 			> div:first-of-type {
@@ -96,7 +96,7 @@ namespace S {
 			}
 		}
 
-		> div:last-of-type {
+		> div {
 			display: grid;
 			grid-template-columns: 1fr 1fr;
 			position: relative;
