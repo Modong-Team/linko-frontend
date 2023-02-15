@@ -8,10 +8,13 @@ import { Fonts } from '../../../styles/fonts';
 import { Colors } from '../../../styles/colors';
 import useCustomRouter from '../../../hooks/useCustomRouter';
 import { Paths } from '../../../constants/paths';
+import { Urls } from '../../../constants/urls';
+import useRouteToPath from '../../../hooks/useRouteToPath';
 
 export default function RegisterMemberCodePage() {
 	const [code, onChangeCode] = useInput();
 	const { onRouteToPath } = useCustomRouter();
+	const onRouteToContact = useRouteToPath(Urls.kakaoChannel);
 
 	return (
 		<S.Container>
@@ -28,7 +31,7 @@ export default function RegisterMemberCodePage() {
 				buttonSize={ButtonSizes.large}
 				disabled={code === ''}
 			/>
-			<p>이용 문의</p>
+			<p onClick={onRouteToContact}>이용 문의</p>
 		</S.Container>
 	);
 }
@@ -45,6 +48,7 @@ namespace S {
 			color: ${Colors.gray900};
 			text-align: center;
 			margin-top: 2.4rem;
+			cursor: pointer;
 		}
 	`;
 }
