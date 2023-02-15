@@ -7,9 +7,11 @@ import { useFormik } from 'formik';
 import { object, string } from 'yup';
 import useCustomRouter from '../../../hooks/useCustomRouter';
 import { Paths } from '../../../constants/paths';
+import useLoadingStatus from '../../../hooks/useLoadingStatus';
 
 export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) {
 	const { onRouteToPath } = useCustomRouter();
+	const { onStartGlobalLoading, onFinishGlobalLoading } = useLoadingStatus();
 
 	const formik = useFormik({
 		initialValues: {
@@ -35,8 +37,9 @@ export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) 
 				.required(),
 		}),
 		onSubmit: async () => {
+			onStartGlobalLoading();
 			const post = await postRegister({ ...formik.values, clubCode: clubId });
-			console.log(post);
+			onFinishGlobalLoading();
 			if (post) onRouteToPath(Paths.registerMemberComplete);
 		},
 		validateOnChange: true,

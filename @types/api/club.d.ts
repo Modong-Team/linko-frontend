@@ -2,6 +2,8 @@ declare namespace RequestClub {
 	type Post = {
 		name: string;
 		profileImgUrl: string;
+		startDate: string;
+		endDate: string;
 	};
 }
 
