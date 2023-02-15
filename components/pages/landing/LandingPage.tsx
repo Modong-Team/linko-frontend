@@ -13,9 +13,16 @@ import { svgLandingCard3, svgFree, svgSafe } from '../../../styles/svgs';
 import { Devices } from '../../../styles/devices';
 import useMobile from '../../../hooks/useMobile';
 import { Fonts } from '../../../styles/fonts';
+import useRouteToPath from '../../../hooks/useRouteToPath';
+import { Paths } from '../../../constants/paths';
 
 export default function LandingPage() {
 	const isMobile = useMobile();
+	const onRouteToRegister = useRouteToPath(Paths.register);
+	const onRouteToContact = useRouteToPath('https://open.kakao.com/o/sH1xQC4e');
+	const onRouteToDetail = useRouteToPath(
+		'https://tungsten-orangutan-8cd.notion.site/Linko-2715ffc96dcb4032a2d622f8c29cad30',
+	);
 	return (
 		<S.Container>
 			<header>{svgLogo}</header>
@@ -33,13 +40,13 @@ export default function LandingPage() {
 				<div>
 					<CustomButton
 						label={'링코 시작하기'}
-						onClick={console.log}
+						onClick={onRouteToRegister}
 						buttonType={ButtonTypes.primary}
 						buttonSize={ButtonSizes.large}
 					/>
 					<CustomButton
 						label={'이용 문의'}
-						onClick={console.log}
+						onClick={onRouteToContact}
 						buttonType={ButtonTypes.secondary}
 						buttonSize={ButtonSizes.large}
 					/>
@@ -128,7 +135,7 @@ export default function LandingPage() {
 						{svgLandingCard3}
 						<CustomButton
 							label={'상세 기능 살펴보기'}
-							onClick={console.log}
+							onClick={onRouteToDetail}
 							buttonType={ButtonTypes.secondary}
 							buttonSize={ButtonSizes.medium}
 						/>
@@ -178,13 +185,13 @@ export default function LandingPage() {
 				<div>
 					<CustomButton
 						label={'링코 시작하기'}
-						onClick={console.log}
+						onClick={onRouteToRegister}
 						buttonType={ButtonTypes.primary}
 						buttonSize={ButtonSizes.large}
 					/>
 					<CustomButton
 						label={'이용 문의'}
-						onClick={console.log}
+						onClick={onRouteToContact}
 						buttonType={ButtonTypes.secondary}
 						buttonSize={ButtonSizes.large}
 					/>
@@ -192,9 +199,9 @@ export default function LandingPage() {
 				<div>
 					<h1>{svgLandingLogo}</h1>
 					<ul>
-						<li>문의</li>
-						<li>이메일</li>
-						<li>카카오톡 문의</li>
+						<li onClick={onRouteToContact}>문의</li>
+						<li onClick={onRouteToContact}>이메일</li>
+						<li onClick={onRouteToContact}>카카오톡 문의</li>
 					</ul>
 					<h2>© 2023. Linko all rights reserved.</h2>
 				</div>
@@ -577,6 +584,7 @@ namespace S {
 					font-size: 1.4rem;
 					color: ${Colors.white};
 					line-height: 150%;
+					cursor: pointer;
 				}
 
 				> h2 {
