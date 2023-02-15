@@ -16,14 +16,13 @@ import useMobile from '../../../hooks/useMobile';
 import { Fonts } from '../../../styles/fonts';
 import useRouteToPath from '../../../hooks/useRouteToPath';
 import { Paths } from '../../../constants/paths';
+import { Urls } from '../../../constants/urls';
 
 export default function LandingPage() {
 	const isMobile = useMobile();
 	const onRouteToRegister = useRouteToPath(Paths.register);
-	const onRouteToContact = useRouteToPath('https://open.kakao.com/o/sH1xQC4e');
-	const onRouteToDetail = useRouteToPath(
-		'https://tungsten-orangutan-8cd.notion.site/Linko-2715ffc96dcb4032a2d622f8c29cad30',
-	);
+	const onRouteToContact = useRouteToPath(Urls.kakaoChannel);
+	const onRouteToDetail = useRouteToPath(Urls.detailPage);
 	return (
 		<S.Container>
 			<header>{svgLogo}</header>

@@ -10,13 +10,14 @@ import { Paths } from '../../../constants/paths';
 import { postLogin } from '../../../api/login';
 import useAuthData from '../../../hooks/useAuthData';
 import useRouteToPath from '../../../hooks/useRouteToPath';
+import { Urls } from '../../../constants/urls';
 
 export default function LoginPage() {
 	const [memberId, onChangeMemberId] = useInput();
 	const [password, onChangePassword] = useInput();
 	const { onRequestSetAuthData } = useAuthData();
 	const onRouteToMain = useRouteToPath(Paths.main);
-	const onRouteToContact = useRouteToPath('https://open.kakao.com/o/sH1xQC4e');
+	const onRouteToContact = useRouteToPath(Urls.kakaoChannel);
 
 	const onWelcome = () =>
 		alert('링코의 서비스는 2023년 3월 1일부터 사용하실 수 있습니다. 3월 1일에 만나요!');
