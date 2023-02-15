@@ -84,3 +84,7 @@ type DateBackgroundProps = DateProps & {
 	isPeriod: boolean;
 	isPeriodPreview: boolean;
 };
+
+type IsMemberCompletePageType = {
+	isMemberCompletePage: boolean;
+};
