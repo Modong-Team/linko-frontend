@@ -4095,3 +4095,77 @@ export const svgSafe = (
 		/>
 	</svg>
 );
+
+export const svgCalendar = (
+	<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+		<path
+			d='M19 17.5L19 7.5C19 6.94772 18.5523 6.5 18 6.5L6 6.5C5.44772 6.5 5 6.94772 5 7.5L5 17.5C5 18.0523 5.44772 18.5 6 18.5L18 18.5C18.5523 18.5 19 18.0523 19 17.5Z'
+			stroke='#8D95A8'
+			strokeWidth='2'
+			strokeLinecap='round'
+		/>
+		<path d='M9 5V8' stroke='#8D95A8' strokeWidth='2' strokeLinecap='round' />
+		<path d='M19 11L5 11' stroke='#8D95A8' strokeWidth='2' strokeLinecap='round' />
+		<path d='M15 5V8' stroke='#8D95A8' strokeWidth='2' strokeLinecap='round' />
+	</svg>
+);
+
+export const svgQuestionMark = (
+	<svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+		<circle cx='8' cy='8' r='7' fill='#ABC8FF' />
+		<path
+			d='M7.12584 9.44818V9.56662H8.54711V9.44818C8.55249 8.69448 8.82167 8.34455 9.43001 7.98385C10.1353 7.55855 10.5929 6.99865 10.5929 6.11036C10.5929 4.78062 9.5323 4 8.03028 4C6.65209 4 5.52692 4.72678 5.5 6.23957H7.02894C7.05047 5.60969 7.51884 5.27591 8.01952 5.27052C8.54172 5.27591 8.96164 5.62584 8.95626 6.1642C8.96164 6.65949 8.60094 6.99327 8.13795 7.29475C7.49192 7.69852 7.13122 8.10767 7.12584 9.44818ZM6.96433 11.0956C6.95357 11.5962 7.36272 12 7.86878 12C8.34791 12 8.76245 11.5962 8.76245 11.0956C8.76245 10.6003 8.34791 10.1965 7.86878 10.2019C7.36272 10.1965 6.95357 10.6003 6.96433 11.0956Z'
+			fill='white'
+		/>
+	</svg>
+);
+
+export const svgToolTipBox = (
+	<svg
+		width='350'
+		height='139'
+		viewBox='0 0 350 139'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'>
+		<g filter='url(#filter0_d_2024_89128)'>
+			<path
+				fillRule='evenodd'
+				clipRule='evenodd'
+				d='M56 18C51.5817 18 48 21.5817 48 26V34.9412L24 43.4118L48 51.8824V101C48 105.418 51.5817 109 56 109H318C322.418 109 326 105.418 326 101V26C326 21.5817 322.418 18 318 18H56Z'
+				fill='white'
+			/>
+		</g>
+		<defs>
+			<filter
+				id='filter0_d_2024_89128'
+				x='0'
+				y='0'
+				width='350'
+				height='139'
+				filterUnits='userSpaceOnUse'
+				colorInterpolationFilters='sRGB'>
+				<feFlood floodOpacity='0' result='BackgroundImageFix' />
+				<feColorMatrix
+					in='SourceAlpha'
+					type='matrix'
+					values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
+					result='hardAlpha'
+				/>
+				<feOffset dy='6' />
+				<feGaussianBlur stdDeviation='12' />
+				<feComposite in2='hardAlpha' operator='out' />
+				<feColorMatrix
+					type='matrix'
+					values='0 0 0 0 0.110573 0 0 0 0 0.118001 0 0 0 0 0.1375 0 0 0 0.12 0'
+				/>
+				<feBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_2024_89128' />
+				<feBlend
+					mode='normal'
+					in='SourceGraphic'
+					in2='effect1_dropShadow_2024_89128'
+					result='shape'
+				/>
+			</filter>
+		</defs>
+	</svg>
+);
