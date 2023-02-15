@@ -24,7 +24,7 @@ export default function SignLayout({
 namespace S {
 	export const Layout = styled.div<IsExceptionType & IsMemberCompletePageType>`
 		width: ${(props) => (props.isException ? '58.4rem' : '40rem')};
-		margin: 0 auto;
+		margin: 8rem auto;
 		margin-top: 12rem;
 		display: flex;
 		flex-direction: column;

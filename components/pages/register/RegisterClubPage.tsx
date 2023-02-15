@@ -54,6 +54,7 @@ export default function RegisterClubPage() {
 				startDate: '2023. 3. ' + startDate,
 				endDate: '2023. 3. ' + endDate,
 			});
+			onHideModal();
 			onRouteToPath(Paths.registerClubComplete + '/' + post.data.code);
 		} catch (e) {
 			console.log(e);
@@ -138,7 +139,7 @@ export default function RegisterClubPage() {
 
 namespace S {
 	export const Container = styled.div`
-		margin-bottom: 20rem;
+		margin-bottom: 15rem;
 
 		> h2 {
 			${Fonts.subtitle16medium}
