@@ -26,6 +26,7 @@ type QuestionTitleInputProps = CommonInputProps & {
 };
 
 type ReplyTextInputProps = CommonInputProps & {
+	name: string;
 	label: string;
 	errorMessage: string;
 	isSingleLine?: boolean;
@@ -33,6 +34,8 @@ type ReplyTextInputProps = CommonInputProps & {
 	minLength?: number;
 	pattern?: string;
 	type?: string;
+	isError?: boolean;
+	onBlur?: (e: any) => void;
 };
 
 type ReplyCheckInputProps = Omit<ReplyTextInputProps, 'value'> & {

@@ -43,6 +43,7 @@ namespace S {
 			position: absolute;
 			top: 3.3rem;
 			right: 4.2rem;
+			cursor: pointer;
 
 			> svg {
 				width: 0.9rem;

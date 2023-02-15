@@ -6,8 +6,10 @@ import { Devices } from '../../styles/devices';
 import AutoResizeTextArea from './AutoResizeTextArea';
 
 export default function ReplyTextInput({
+	name,
 	value,
 	onChange,
+	onBlur,
 	label,
 	errorMessage,
 	isSingleLine,
@@ -15,20 +17,23 @@ export default function ReplyTextInput({
 	minLength,
 	pattern,
 	type,
+	isError,
 }: ReplyTextInputProps) {
 	return (
-		<S.Container isError={false}>
+		<S.Container isError={isError ?? false}>
 			{!isSingleLine && <AutoResizeTextArea value={value} onChange={onChange} placeholder={' '} />}
 			{isSingleLine && (
 				<input
 					value={value}
 					onChange={onChange}
+					onBlur={onBlur}
 					placeholder={' '}
 					maxLength={maxLength}
 					minLength={minLength}
 					pattern={pattern}
 					type={type}
 					autoComplete={'new-password'}
+					name={name}
 				/>
 			)}
 			<label>{label}</label>
