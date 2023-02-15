@@ -13,7 +13,6 @@ export default function SignUpModal({
 	onConfirm,
 	isHidden,
 }: CommonModalProps) {
-	const { loadingStatus } = useLoadingStatus();
 	usePreventScroll(!isHidden);
 	return (
 		<SC.ModalBackground isHidden={isHidden}>
@@ -32,7 +31,6 @@ export default function SignUpModal({
 						buttonSize={ButtonSizes.large}
 						buttonType={ButtonTypes.primary}
 						onClick={onConfirm}
-						isLoading={loadingStatus.isGlobalLoading}
 					/>
 				</SC.ModalButtonWrapper>
 			</S.Container>

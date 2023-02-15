@@ -21,6 +21,7 @@ import useChange from '../../../hooks/useChange';
 import { svgCalendar, svgQuestionMark } from '../../../styles/svgs';
 import withoutPropagation from '../../../utils/withoutPropagation';
 import ToolTip from '../../shared/ToolTip';
+import useLoadingStatus from '../../../hooks/useLoadingStatus';
 
 export default function RegisterClubPage() {
 	const id = useUniqueId();
@@ -33,12 +34,14 @@ export default function RegisterClubPage() {
 	const [endDate, onChangeEndDate] = useChange(0);
 	const [isCalendarOpened, onOpenCalendar, onCloseCalendar] = useActive();
 	const [isToolTipOpened, onOpenTooltip, onCloseTooltip] = useActive();
+	const { onStartGlobalLoading, onFinishGlobalLoading } = useLoadingStatus();
 
 	const onClickLabel = () => labelRef.current.click();
 
 	const checkIfFulfilled = () => clubName && file && startDate && endDate;
 
 	const onSubmit = async () => {
+		onStartGlobalLoading();
 		try {
 			let fileKey = '';
 			if (file) {
@@ -48,11 +51,14 @@ export default function RegisterClubPage() {
 			const post = await postClub({
 				name: clubName,
 				profileImgUrl: fileKey,
+				startDate: '2023. 3. ' + startDate,
+				endDate: '2023. 3. ' + endDate,
 			});
 			onRouteToPath(Paths.registerClubComplete + '/' + post.data.code);
 		} catch (e) {
 			console.log(e);
 		}
+		onFinishGlobalLoading();
 	};
 
 	return (
