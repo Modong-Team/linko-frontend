@@ -9,7 +9,7 @@ import { Colors } from '../../../styles/colors';
 import SignUpModal from '../../modals/SignUpModal';
 import useActive from '../../../hooks/useActive';
 import useUniqueId from '../../../hooks/useUniqueId';
-import { useRef, MutableRefObject } from 'react';
+import { useRef, MutableRefObject, useEffect } from 'react';
 import useInputFile from '../../../hooks/useInputFile';
 import { v4 as uuid } from 'uuid';
 import { uploadFileToS3 } from '../../../s3/index';
@@ -60,6 +60,10 @@ export default function RegisterClubPage() {
 		}
 		onFinishGlobalLoading();
 	};
+
+	useEffect(() => {
+		return () => onHideModal();
+	}, []);
 
 	return (
 		<S.Container>
