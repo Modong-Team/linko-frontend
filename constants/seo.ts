@@ -13,6 +13,6 @@ export const Seo = {
 		registerMember: '동아리 운영진 가입',
 		registerMemberComplete: '동아리 운영진 가입 완료',
 		login: '로그인',
-		landing: '랜딩',
+		landing: 'About',
 	},
 } as const;
