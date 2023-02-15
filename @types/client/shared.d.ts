@@ -9,3 +9,17 @@ type SnackBarProps = {
 	width?: string;
 	bottom?: string;
 };
+
+type CalendarProps = {
+	startDate: number;
+	endDate: number;
+	onChangeStartDate: (value: number) => void;
+	onChangeEndDate: (value: number) => void;
+	onClose: () => void;
+	isHidden: boolean;
+};
+
+type ToolTipProps = {
+	onClose: (e: any) => void;
+	isHidden: boolean;
+};

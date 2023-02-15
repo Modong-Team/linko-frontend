@@ -16,6 +16,11 @@ import { uploadFileToS3 } from '../../../s3/index';
 import { postClub } from '../../../api/club';
 import useCustomRouter from '../../../hooks/useCustomRouter';
 import { Paths } from '../../../constants/paths';
+import Calendar from '../../shared/Calendar';
+import useChange from '../../../hooks/useChange';
+import { svgCalendar, svgQuestionMark } from '../../../styles/svgs';
+import withoutPropagation from '../../../utils/withoutPropagation';
+import ToolTip from '../../shared/ToolTip';
 
 export default function RegisterClubPage() {
 	const id = useUniqueId();
@@ -24,8 +29,14 @@ export default function RegisterClubPage() {
 	const [isShowModal, onShowModal, onHideModal] = useActive();
 	const labelRef = useRef() as MutableRefObject<HTMLLabelElement>;
 	const { onRouteToPath } = useCustomRouter();
+	const [startDate, onChangeStartDate] = useChange(0);
+	const [endDate, onChangeEndDate] = useChange(0);
+	const [isCalendarOpened, onOpenCalendar, onCloseCalendar] = useActive();
+	const [isToolTipOpened, onOpenTooltip, onCloseTooltip] = useActive();
 
 	const onClickLabel = () => labelRef.current.click();
+
+	const checkIfFulfilled = () => clubName && file && startDate && endDate;
 
 	const onSubmit = async () => {
 		try {
@@ -64,18 +75,46 @@ export default function RegisterClubPage() {
 				label={'동아리 이름'}
 				errorMessage={''}
 			/>
-			<p>
-				동아리 로고와 동아리 이름은 추후에 수정하실 수 없으니
-				<br />
-				신중하게 입력해주세요!
-			</p>
+			<S.PeriodOfUse>
+				<label>
+					동아리 모집 기간 (서비스 이용 기간)
+					<button onBlur={onCloseTooltip}>
+						<div onClick={onOpenTooltip}>{svgQuestionMark}</div>
+						<ToolTip
+							onClose={(e) => withoutPropagation(e, onCloseTooltip)}
+							isHidden={!isToolTipOpened}
+						/>
+					</button>
+				</label>
+				<div onClick={onOpenCalendar}>
+					{svgCalendar}
+					<p>
+						{startDate ? '2023. 3. ' + startDate : <S.Gray>모집 시작</S.Gray>}
+						{startDate && endDate ? ' – ' : <S.Gray> – </S.Gray>}
+						{endDate ? '2023. 3. ' + endDate : <S.Gray>모집 마감</S.Gray>}
+					</p>
+					<Calendar
+						startDate={startDate}
+						endDate={endDate}
+						onChangeStartDate={onChangeStartDate}
+						onChangeEndDate={onChangeEndDate}
+						onClose={onCloseCalendar}
+						isHidden={!isCalendarOpened}
+					/>
+				</div>
+			</S.PeriodOfUse>
 			<CustomButton
 				label={'확인'}
 				onClick={onShowModal}
 				buttonType={ButtonTypes.primary}
 				buttonSize={ButtonSizes.large}
-				disabled={clubName === ''}
+				disabled={!checkIfFulfilled()}
 			/>
+			<p>
+				동아리 로고와 동아리 이름은 수정이 불가하니
+				<br />
+				신중하게 입력해주세요.
+			</p>
 			<SignUpModal
 				title={clubName}
 				description={'동아리 이름은 수정이 불가능해요.'}
@@ -89,6 +128,8 @@ export default function RegisterClubPage() {
 
 namespace S {
 	export const Container = styled.div`
+		margin-bottom: 20rem;
+
 		> h2 {
 			${Fonts.subtitle16medium}
 			color: ${Colors.gray700};
@@ -122,5 +163,53 @@ namespace S {
 		> button {
 			width: 100%;
 		}
+	`;
+
+	export const PeriodOfUse = styled.div`
+		margin: 3.2rem 0;
+		cursor: pointer;
+
+		> label {
+			${Fonts.button13medium}
+			color: ${Colors.gray700};
+			margin-bottom: 1.9rem;
+			display: flex;
+			gap: 0.4rem;
+
+			> button {
+				position: relative;
+
+				> div {
+					display: flex;
+
+					> svg {
+						position: relative;
+						top: 0.1rem;
+					}
+				}
+			}
+		}
+
+		> div {
+			display: flex;
+			align-items: center;
+			padding: 0.8rem 0;
+			border-bottom: 0.1rem solid ${Colors.gray200};
+			gap: 0.8rem;
+			position: relative;
+
+			> svg {
+				position: relative;
+				top: -0.05rem;
+			}
+
+			> p {
+				${Fonts.body16regular}
+			}
+		}
+	`;
+
+	export const Gray = styled.span`
+		color: ${Colors.gray700};
 	`;
 }
