@@ -8,10 +8,14 @@ import { object, string } from 'yup';
 import useCustomRouter from '../../../hooks/useCustomRouter';
 import { Paths } from '../../../constants/paths';
 import useLoadingStatus from '../../../hooks/useLoadingStatus';
+import React from 'react';
+import { postMemberCheck } from '../../../api/member';
+import { useState } from 'react';
 
 export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) {
 	const { onRouteToPath } = useCustomRouter();
 	const { onStartGlobalLoading, onFinishGlobalLoading } = useLoadingStatus();
+	const [duplicateError, setDuplicateError] = useState(false);
 
 	const formik = useFormik({
 		initialValues: {
@@ -47,8 +51,18 @@ export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) 
 	});
 
 	const checkIfErrorExist = () => {
+		if (duplicateError) return true;
+		if (formik.values.password !== formik.values.passwordForCheck) return true;
 		for (const error in formik.errors) if (error !== '') return true;
 		return false;
+	};
+
+	const handleMemberIdBlur = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		formik.handleBlur(e);
+		if (!formik.errors.memberId) {
+			const post = await postMemberCheck({ memberId: formik.values.memberId });
+			if (post) setDuplicateError(post.data.duplicated);
+		} else setDuplicateError(false);
 	};
 
 	return (
@@ -56,11 +70,17 @@ export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) 
 			<ReplyTextInput
 				name={'memberId'}
 				value={formik.values.memberId}
-				isError={formik.touched.memberId && !!formik.errors.memberId}
+				isError={formik.touched.memberId && (!!formik.errors.memberId || duplicateError)}
 				onChange={formik.handleChange}
-				onBlur={formik.handleBlur}
+				onBlur={handleMemberIdBlur}
 				label={'아이디 (3~20자)'}
-				errorMessage={'아이디를 올바르게 입력해주세요.'}
+				errorMessage={
+					duplicateError
+						? '중복된 아이디입니다.'
+						: formik.errors.memberId
+						? '아이디를 올바르게 입력해주세요.'
+						: ''
+				}
 				maxLength={20}
 				isSingleLine
 			/>
