@@ -12,6 +12,7 @@
     "@next/font": "^13.1.1",
     "aws-sdk": "^2.1309.0",
     "axios": "^1.2.2",
+    "formik": "^2.2.9",
     "immer": "^9.0.18",
     "next": "13.1.1",
     "react": "18.2.0",
@@ -24,7 +25,8 @@
     "redux-saga": "^1.2.2",
     "styled-components": "^5.3.6",
     "typesafe-actions": "^5.1.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "yup": "^1.0.0"
   },
   "devDependencies": {
     "@types/aws-sdk": "^2.7.0",
