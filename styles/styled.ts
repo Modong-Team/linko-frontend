@@ -16,6 +16,8 @@ export namespace SC {
 	`;
 
 	export const HeaderLogo = styled.h1`
+		cursor: pointer;
+
 		> svg {
 			width: 8.1rem;
 		}

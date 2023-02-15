@@ -18,6 +18,7 @@ export default function Header({ isNew, isMain }: HeaderProps) {
 	const { isLoading } = useSelector(({ newApi }: RootState) => newApi);
 	const [isWaitingForComplete, setIsWaitingForComplete] = useState(false);
 	const onRouteToComplete = useRouteToPath(Paths.newComplete + '/' + newApplicationId);
+	const onRouteToLanding = useRouteToPath(Paths.landing);
 
 	const onSave = () => {
 		setIsWaitingForComplete(false);
@@ -35,7 +36,7 @@ export default function Header({ isNew, isMain }: HeaderProps) {
 
 	return (
 		<S.Container>
-			<SC.HeaderLogo>{svgLogo}</SC.HeaderLogo>
+			<SC.HeaderLogo onClick={onRouteToLanding}>{svgLogo}</SC.HeaderLogo>
 			{isNew && (
 				<S.NewSubmitButtons>
 					<CustomButton
