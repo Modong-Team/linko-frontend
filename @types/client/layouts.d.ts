@@ -9,4 +9,5 @@ type DefaultLayoutProps = ChildrenType & {
 type SignLayoutProps = ChildrenType & {
 	title?: string;
 	isOptionPage?: boolean;
+	isMemberCompletePage?: boolean;
 };

@@ -9,6 +9,7 @@ export const Paths = {
 	registerClub: '/register/club',
 	registerClubComplete: '/register/club/complete',
 	registerMember: '/register/member',
+	registerMemberComplete: '/register/member/complete',
 	login: '/login',
 	landing: '/landing',
 } as const;

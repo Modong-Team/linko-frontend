@@ -4169,3 +4169,57 @@ export const svgToolTipBox = (
 		</defs>
 	</svg>
 );
+
+export const svgComingSoon = (
+	<svg
+		width='208'
+		height='197'
+		viewBox='0 0 208 197'
+		fill='none'
+		xmlns='http://www.w3.org/2000/svg'>
+		<g filter='url(#filter0_d_2082_87814)'>
+			<rect x='11' y='30' width='176' height='144' rx='24' fill='#D6DAE4' />
+			<rect x='11' y='22' width='176' height='144' rx='24' fill='white' />
+			<path
+				d='M11 46C11 32.7452 21.7452 22 35 22H163C176.255 22 187 32.7452 187 46V62H11V46Z'
+				fill='#7DA9FF'
+			/>
+			<circle cx='51' cy='34' r='8' fill='#383C46' />
+			<path d='M51 34V14' stroke='#8D95A8' strokeWidth='10' strokeLinecap='round' />
+			<circle cx='147' cy='34' r='8' fill='#383C46' />
+			<path d='M147 34V14' stroke='#8D95A8' strokeWidth='10' strokeLinecap='round' />
+		</g>
+		<defs>
+			<filter
+				id='filter0_d_2082_87814'
+				x='0'
+				y='0'
+				width='208'
+				height='197'
+				filterUnits='userSpaceOnUse'
+				colorInterpolationFilters='sRGB'>
+				<feFlood floodOpacity='0' result='BackgroundImageFix' />
+				<feColorMatrix
+					in='SourceAlpha'
+					type='matrix'
+					values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
+					result='hardAlpha'
+				/>
+				<feOffset dx='5' dy='7' />
+				<feGaussianBlur stdDeviation='8' />
+				<feComposite in2='hardAlpha' operator='out' />
+				<feColorMatrix
+					type='matrix'
+					values='0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0 0.416667 0 0 0 0.17 0'
+				/>
+				<feBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_2082_87814' />
+				<feBlend
+					mode='normal'
+					in='SourceGraphic'
+					in2='effect1_dropShadow_2082_87814'
+					result='shape'
+				/>
+			</filter>
+		</defs>
+	</svg>
+);
