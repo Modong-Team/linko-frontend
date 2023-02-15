@@ -30,7 +30,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 				<meta property='og:url' content='https://linko.site' />
 				<meta
 					property='og:image'
-					content='https://user-images.githubusercontent.com/98504939/218971732-4345b07c-5357-4dad-82b0-b712cd678e2d.png'
+					content='https://user-images.githubusercontent.com/98504939/218976203-cd58c07d-3d07-4255-b8e9-7fd12fa4a832.png'
 				/>
 				<meta property='og:description' content='동아리 리크루팅 솔루션 서비스' />
 			</Head>
