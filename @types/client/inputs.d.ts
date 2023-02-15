@@ -26,7 +26,7 @@ type QuestionTitleInputProps = CommonInputProps & {
 };
 
 type ReplyTextInputProps = CommonInputProps & {
-	name: string;
+	name?: string;
 	label: string;
 	errorMessage: string;
 	isSingleLine?: boolean;
