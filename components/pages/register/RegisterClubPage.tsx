@@ -23,12 +23,16 @@ import withoutPropagation from '../../../utils/withoutPropagation';
 import ToolTip from '../../shared/ToolTip';
 import useLoadingStatus from '../../../hooks/useLoadingStatus';
 import { Devices } from '../../../styles/devices';
+import BottomSheet from '../../shared/BottomSheet';
+import useMobile from '../../../hooks/useMobile';
 
 export default function RegisterClubPage() {
 	const id = useUniqueId();
+	const isMobile = useMobile();
 	const [clubName, onChangeClubName] = useInput();
 	const { file, onChangeFile } = useInputFile();
 	const [isShowModal, onShowModal, onHideModal] = useActive();
+	const [isShowBottomSheet, onShowBottomSheet, onHideBottomSheet] = useActive();
 	const labelRef = useRef() as MutableRefObject<HTMLLabelElement>;
 	const { onRouteToPath } = useCustomRouter();
 	const [startDate, onChangeStartDate] = useChange(0);
@@ -56,6 +60,7 @@ export default function RegisterClubPage() {
 				endDate: '2023. 3. ' + endDate,
 			});
 			onHideModal();
+			onHideBottomSheet();
 			onRouteToPath(Paths.registerClubComplete + '/' + post.data.code);
 		} catch (e) {
 			console.log(e);
@@ -64,7 +69,10 @@ export default function RegisterClubPage() {
 	};
 
 	useEffect(() => {
-		return () => onHideModal();
+		return () => {
+			onHideModal();
+			onHideBottomSheet();
+		};
 	}, []);
 
 	return (
@@ -91,11 +99,13 @@ export default function RegisterClubPage() {
 				<label>
 					동아리 모집 기간 (서비스 이용 기간)
 					<button onBlur={onCloseTooltip}>
-						<div onClick={onOpenTooltip}>{svgQuestionMark}</div>
-						<ToolTip
-							onClose={(e) => withoutPropagation(e, onCloseTooltip)}
-							isHidden={!isToolTipOpened}
-						/>
+						<div onClick={isMobile ? onShowBottomSheet : onOpenTooltip}>{svgQuestionMark}</div>
+						{!isMobile && (
+							<ToolTip
+								onClose={(e) => withoutPropagation(e, onCloseTooltip)}
+								isHidden={!isToolTipOpened}
+							/>
+						)}
 					</button>
 				</label>
 				<div onClick={onOpenCalendar}>
@@ -134,6 +144,7 @@ export default function RegisterClubPage() {
 				onConfirm={onSubmit}
 				isHidden={!isShowModal}
 			/>
+			<BottomSheet onClose={onHideBottomSheet} isHidden={!isShowBottomSheet} />
 		</S.Container>
 	);
 }

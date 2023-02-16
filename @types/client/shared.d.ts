@@ -23,3 +23,8 @@ type ToolTipProps = {
 	onClose: (e: any) => void;
 	isHidden: boolean;
 };
+
+type BottomSheetProps = {
+	onClose: () => void;
+	isHidden: boolean;
+};
