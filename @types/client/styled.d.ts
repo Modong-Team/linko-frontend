@@ -88,3 +88,7 @@ type DateBackgroundProps = DateProps & {
 type IsMemberCompletePageType = {
 	isMemberCompletePage: boolean;
 };
+
+type HeightType = {
+	height: string;
+};
