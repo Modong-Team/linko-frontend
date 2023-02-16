@@ -111,10 +111,10 @@ export namespace SC {
 		}
 	`;
 
-	export const ModalBackground = styled.div<IsHiddenType>`
+	export const ModalBackground = styled.div<IsHiddenType & HeightType>`
 		background-color: ${Colors.shade};
 		width: 100vw;
-		height: 100vh;
+		height: ${(props) => props.height};
 		position: fixed;
 		top: 0;
 		left: 0;
