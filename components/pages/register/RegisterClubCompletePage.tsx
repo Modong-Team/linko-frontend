@@ -10,8 +10,10 @@ import CustomButton from '../../buttons/CustomButton';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 import useRouteToPath from '../../../hooks/useRouteToPath';
 import { Paths } from '../../../constants/paths';
+import useMobile from '../../../hooks/useMobile';
 
 export default function RegisterClubCompletePage({ clubId }: RegisterClubCompletePageProps) {
+	const isMobile = useMobile();
 	const { isShowSnackBar, onTriggerSnackBar } = useSnackBar();
 	const onRouteToRegisterMember = useRouteToPath(Paths.registerMember + '/' + clubId);
 
@@ -34,7 +36,8 @@ export default function RegisterClubCompletePage({ clubId }: RegisterClubComplet
 					<div>{svgCopy24}</div>
 				</S.ClipBoard>
 				<p>
-					지금 회원 가입 하지 않으신다면 동아리 코드를 "꼭!" 따로 보관해주세요.
+					지금 회원 가입 하지 않으신다면{isMobile ? <br /> : ' '}동아리 코드를 "꼭!" 따로
+					보관해주세요.
 					<br />
 					<span>동아리 코드가 없으면 회원가입 하실 수 없어요.</span>
 				</p>

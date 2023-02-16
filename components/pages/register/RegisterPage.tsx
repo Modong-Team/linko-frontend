@@ -3,6 +3,7 @@ import SignUpOptionButton from '../../buttons/SignUpOptionButton';
 import { svgNewClub, svgExistClub } from '../../../styles/svgs';
 import useRouteToPath from '../../../hooks/useRouteToPath';
 import { Paths } from '../../../constants/paths';
+import { Devices } from '../../../styles/devices';
 
 export default function RegisterPage() {
 	const onRouteToSignUpClub = useRouteToPath(Paths.registerClub);
@@ -27,5 +28,10 @@ namespace S {
 	export const Container = styled.div`
 		display: flex;
 		gap: 2.4rem;
+
+		@media ${Devices.mobile} {
+			flex-direction: column;
+			align-items: center;
+		}
 	`;
 }

@@ -2,6 +2,7 @@ import { Header } from '../shared';
 import DefaultLayout from './DefaultLayout';
 import styled from 'styled-components';
 import { Fonts } from '../../styles/fonts';
+import { Devices } from '../../styles/devices';
 
 export default function SignLayout({
 	children,
@@ -29,6 +30,13 @@ namespace S {
 		display: flex;
 		flex-direction: column;
 		gap: ${(props) => (props.isMemberCompletePage ? '2rem' : '6rem')};
+
+		@media ${Devices.mobile} {
+			width: 100%;
+			padding: 0 1.6rem;
+			margin-top: 8rem;
+			overflow-x: hidden;
+		}
 
 		> h1,
 		> pre {
