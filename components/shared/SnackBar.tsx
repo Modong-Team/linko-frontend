@@ -2,12 +2,14 @@ import styled from 'styled-components';
 import { Colors } from '../../styles/colors';
 import { Fonts } from '../../styles/fonts';
 import { useRef, MutableRefObject, useEffect } from 'react';
+import useMobile from '../../hooks/useMobile';
 
 export default function SnackBar({ label, isShown, width, bottom }: SnackBarProps) {
+	const isMobile = useMobile();
 	const ref = useRef() as MutableRefObject<HTMLDivElement>;
 
 	useEffect(() => {
-		if (isShown) ref.current.style.animationName = 'snackBarAnimation';
+		if (isShown) ref.current.style.animationName = isMobile ? 'snackBarMobile' : 'snackBarDesktop';
 		else ref.current.style.animationName = '';
 	}, [isShown]);
 
@@ -36,13 +38,24 @@ namespace S {
 		opacity: 0;
 		padding: ${(props) => !props.isShown && 0};
 
-		@keyframes snackBarAnimation {
+		@keyframes snackBarDesktop {
 			30% {
 				transform: translate(-50%, 0%);
 				opacity: 1;
 			}
 			60% {
 				transform: translate(-50%, 0%);
+				opacity: 1;
+			}
+		}
+
+		@keyframes snackBarMobile {
+			30% {
+				transform: translate(-50%, -40%);
+				opacity: 1;
+			}
+			60% {
+				transform: translate(-50%, -40%);
 				opacity: 1;
 			}
 		}
