@@ -15,7 +15,7 @@ export default function SubmitModal({
 	const { loadingStatus } = useLoadingStatus();
 	usePreventScroll(!isHidden);
 	return (
-		<SC.ModalBackground isHidden={isHidden}>
+		<SC.ModalBackground isHidden={isHidden} height={window.innerHeight + 'px'}>
 			<SC.ModalContainer>
 				<SC.ModalIcon>{Icons.pencil}</SC.ModalIcon>
 				<SC.ModalTitle>{title}</SC.ModalTitle>

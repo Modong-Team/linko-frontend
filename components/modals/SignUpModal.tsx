@@ -14,8 +14,9 @@ export default function SignUpModal({
 	isHidden,
 }: CommonModalProps) {
 	usePreventScroll(!isHidden);
+
 	return (
-		<SC.ModalBackground isHidden={isHidden}>
+		<SC.ModalBackground isHidden={isHidden} height={window.innerHeight + 'px'}>
 			<S.Container>
 				<SC.ModalTitle>동아리 이름을 ‘{title}’(으)로 등록할까요?</SC.ModalTitle>
 				<SC.ModalSubtitle>{description}</SC.ModalSubtitle>
