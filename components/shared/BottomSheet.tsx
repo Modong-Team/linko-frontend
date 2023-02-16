@@ -48,9 +48,10 @@ namespace S {
 		animation-name: ${(props) => (props.isHidden ? 'slideDown' : 'slideUp')};
 
 		> div {
-			${Fonts.body14regular}
+			${Fonts.body16regular}
 			word-break: keep-all;
 			padding: 0 1.6rem;
+			line-height: 150%;
 		}
 
 		> button {
