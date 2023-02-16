@@ -11,6 +11,7 @@ import useLoadingStatus from '../../../hooks/useLoadingStatus';
 import React from 'react';
 import { postMemberCheck } from '../../../api/member';
 import { useState } from 'react';
+import { Devices } from '../../../styles/devices';
 
 export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) {
 	const { onRouteToPath } = useCustomRouter();
@@ -155,6 +156,10 @@ export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) 
 
 namespace S {
 	export const Container = styled.form`
+		@media ${Devices.mobile} {
+			margin-bottom: 2rem;
+		}
+
 		> div {
 			margin: 5.5rem 0;
 

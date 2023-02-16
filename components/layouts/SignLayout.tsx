@@ -34,7 +34,7 @@ namespace S {
 		@media ${Devices.mobile} {
 			width: 100%;
 			padding: 0 1.6rem;
-			margin-top: 8rem;
+			margin: 8rem auto;
 			overflow-x: hidden;
 		}
 

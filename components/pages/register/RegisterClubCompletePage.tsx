@@ -11,6 +11,7 @@ import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 import useRouteToPath from '../../../hooks/useRouteToPath';
 import { Paths } from '../../../constants/paths';
 import useMobile from '../../../hooks/useMobile';
+import { Devices } from '../../../styles/devices';
 
 export default function RegisterClubCompletePage({ clubId }: RegisterClubCompletePageProps) {
 	const isMobile = useMobile();
@@ -103,6 +104,7 @@ namespace S {
 		border-radius: 0.8rem;
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
+		column-gap: 1.6rem;
 		align-items: center;
 		cursor: pointer;
 
@@ -110,6 +112,10 @@ namespace S {
 			:first-of-type {
 				${Fonts.button14bold}
 				color: ${Colors.gray800};
+
+				@media ${Devices.mobile} {
+					word-break: keep-all;
+				}
 			}
 
 			:nth-of-type(2) {
