@@ -8,8 +8,10 @@ import { Fonts } from '../../../styles/fonts';
 import { Colors } from '../../../styles/colors';
 import Lottie from 'react-lottie';
 import RegisterCompleteLottie from '../../../public/assets/registerComplete.json';
+import useMobile from '../../../hooks/useMobile';
 
 export default function RegisterMemberCompletePage() {
+	const isMobile = useMobile();
 	const onRouteToLanding = useRouteToPath(Paths.landing);
 	const date = new Date().getDate();
 
@@ -28,7 +30,7 @@ export default function RegisterMemberCompletePage() {
 					<Lottie options={options} width={'492px'} isClickToPauseDisabled={true} />
 				</div>
 			</div>
-			<p>서비스 오픈을 놓치지 않도록, 문자와 메일로 알려드릴게요!</p>
+			<p>서비스 오픈을 놓치지 않도록,{isMobile ? <br /> : ' '}문자와 메일로 알려드릴게요!</p>
 			<CustomButton
 				label={'링코 홈으로'}
 				onClick={onRouteToLanding}
