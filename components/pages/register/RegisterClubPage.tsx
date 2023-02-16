@@ -22,6 +22,7 @@ import { svgCalendar, svgQuestionMark } from '../../../styles/svgs';
 import withoutPropagation from '../../../utils/withoutPropagation';
 import ToolTip from '../../shared/ToolTip';
 import useLoadingStatus from '../../../hooks/useLoadingStatus';
+import { Devices } from '../../../styles/devices';
 
 export default function RegisterClubPage() {
 	const id = useUniqueId();
@@ -140,6 +141,10 @@ export default function RegisterClubPage() {
 namespace S {
 	export const Container = styled.div`
 		margin-bottom: 15rem;
+
+		@media ${Devices.mobile} {
+			margin-bottom: 20rem;
+		}
 
 		> h2 {
 			${Fonts.subtitle16medium}
