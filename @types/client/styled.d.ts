@@ -92,3 +92,7 @@ type IsMemberCompletePageType = {
 type HeightType = {
 	height: string;
 };
+
+type IsEmptyType = {
+	isEmpty: boolean;
+};
