@@ -1,6 +1,7 @@
 import { createAction, ActionType, createReducer } from 'typesafe-actions';
 import { put, takeLatest } from 'redux-saga/effects';
 import { StorageKeys } from '../../constants/keys';
+import { requestSetClubData, revokeClubData } from './clubData';
 
 /**
  * Action
@@ -30,11 +31,13 @@ function* requestSetAuthDataSaga({ payload }: ActionType<typeof requestSetAuthDa
 	const authData = payload.data;
 	sessionStorage.setItem(StorageKeys.refreshToken, authData.refreshToken);
 	yield put(setAuthData(authData));
+	yield put(requestSetClubData());
 }
 
 function* requestRevokeAuthDataSaga() {
 	sessionStorage.removeItem(StorageKeys.refreshToken);
 	yield put(revokeAuthData());
+	yield put(revokeClubData());
 }
 
 export function* authDataSaga() {
