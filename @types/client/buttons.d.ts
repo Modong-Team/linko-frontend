@@ -6,6 +6,7 @@ type CommonButtonProps = {
 type IconButtonProps = {
 	svgIcon: JSX;
 	onClick: (e: any) => void;
+	type?: 'button';
 };
 
 type NewPageButtonProps = CommonButtonProps & {

@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 
-export default function IconButton({ svgIcon, onClick }: IconButtonProps) {
-	return <S.Button onClick={onClick}>{svgIcon}</S.Button>;
+export default function IconButton({ svgIcon, onClick, type }: IconButtonProps) {
+	return (
+		<S.Button onClick={onClick} type={type}>
+			{svgIcon}
+		</S.Button>
+	);
 }
 
 namespace S {
