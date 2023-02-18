@@ -14,7 +14,6 @@ export default function SignUpModal({
 	isHidden,
 }: CommonModalProps) {
 	usePreventScroll(!isHidden);
-
 	return (
 		<SC.ModalBackground isHidden={isHidden} height={window.innerHeight + 'px'}>
 			<S.Container>

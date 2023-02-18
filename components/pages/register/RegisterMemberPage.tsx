@@ -10,13 +10,23 @@ import { Paths } from '../../../constants/paths';
 import useLoadingStatus from '../../../hooks/useLoadingStatus';
 import React from 'react';
 import { postMemberCheck } from '../../../api/member';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Devices } from '../../../styles/devices';
+import CheckIcon from '../../buttons/CheckIcon';
+import IconButton from '../../buttons/IconButton';
+import { svgRight16 } from '../../../styles/svgs';
+import { Fonts } from '../../../styles/fonts';
+import { Colors } from '../../../styles/colors';
+import useActive from '../../../hooks/useActive';
+import withoutPropagation from '../../../utils/withoutPropagation';
+import AgreementModal from '../../modals/AgreementModal';
 
 export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) {
 	const { onRouteToPath } = useCustomRouter();
 	const { onStartGlobalLoading, onFinishGlobalLoading } = useLoadingStatus();
 	const [duplicateError, setDuplicateError] = useState(false);
+	const [isAgree, onAgree, onDisagree] = useActive();
+	const [isShowAgreementModal, onShowAgreementModal, onHideAgreementModal] = useActive();
 
 	const formik = useFormik({
 		initialValues: {
@@ -52,6 +62,7 @@ export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) 
 	});
 
 	const checkIfErrorExist = () => {
+		if (!isAgree) return true;
 		if (duplicateError) return true;
 		if (formik.values.password !== formik.values.passwordForCheck) return true;
 		for (const error in formik.errors) if (error !== '') return true;
@@ -65,6 +76,10 @@ export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) 
 			if (post) setDuplicateError(post.data.duplicated);
 		} else setDuplicateError(false);
 	};
+
+	useEffect(() => {
+		return () => onHideAgreementModal();
+	}, []);
 
 	return (
 		<S.Container>
@@ -143,6 +158,15 @@ export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) 
 				maxLength={11}
 				isSingleLine
 			/>
+			<S.AgreeMent onClick={isAgree ? onDisagree : onAgree}>
+				<CheckIcon isHover={false} isChecked={isAgree} />
+				<h2>개인정보 수집 및 이용 동의 (필수)</h2>
+				<IconButton
+					svgIcon={svgRight16}
+					onClick={(e) => withoutPropagation(e, onShowAgreementModal)}
+					type={'button'}
+				/>
+			</S.AgreeMent>
 			<CustomButton
 				label={'가입 완료'}
 				onClick={formik.handleSubmit}
@@ -150,6 +174,7 @@ export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) 
 				buttonSize={ButtonSizes.large}
 				disabled={checkIfErrorExist()}
 			/>
+			<AgreementModal onClose={onHideAgreementModal} isHidden={!isShowAgreementModal} />
 		</S.Container>
 	);
 }
@@ -175,6 +200,24 @@ namespace S {
 		> button {
 			width: 100%;
 			margin-top: 3.2rem;
+		}
+	`;
+
+	export const AgreeMent = styled.div`
+		width: fit-content;
+		margin: 0 !important;
+		display: flex;
+		align-items: center;
+		gap: 0.9rem;
+		cursor: pointer;
+
+		> h2 {
+			${Fonts.button13medium}
+			color: ${Colors.gray700};
+		}
+
+		> button path {
+			stroke: ${Colors.gray700};
 		}
 	`;
 }
