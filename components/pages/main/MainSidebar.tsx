@@ -18,11 +18,14 @@ import { SC } from '../../../styles/styled';
 import useCustomRouter from '../../../hooks/useCustomRouter';
 import useApplicationId from '../../../hooks/useApplicationId';
 import useScrollExist from '../../../hooks/useScrollExist';
+import useClubData from '../../../hooks/useClubData';
+import { getDownloadLinkFromS3 } from '../../../s3/index';
 
 export default function MainSidebar({ applicationId }: MainPageProps) {
 	const routeToNew = useRouteToPath(Paths.new);
 	const { onRouteToPath } = useCustomRouter();
 	const [applications, setApplications] = useState<ResponseApplications.Get>();
+	const { clubData } = useClubData();
 	const { isLocalLoading, onStartLocalLoading, onFinishLocalLoading } = useLocalLoading();
 	const { applicationId: selectedApplicationId, onRequestSetApplicationId } = useApplicationId();
 	const scroller = useRef() as MutableRefObject<HTMLUListElement>;
@@ -37,24 +40,24 @@ export default function MainSidebar({ applicationId }: MainPageProps) {
 
 	useEffect(() => {
 		if (applications?.data.length) {
-			if (!applicationId) onClickTitle(applications.data[0].id);
+			if (!applicationId && applications.data.length) onClickTitle(applications.data[0].id);
 			else onClickTitle(applicationId);
 		}
 	}, [applications]);
 
 	useEffect(() => {
 		onStartLocalLoading();
-		useGet(() => getApplications(1), setApplications, onFinishLocalLoading);
-	}, []);
+		if (clubData) useGet(() => getApplications(clubData.id), setApplications, onFinishLocalLoading);
+	}, [clubData]);
 
 	return (
 		<S.SidebarContainer>
 			<S.SidebarProfile>
 				<S.ProfileImage>
-					<img src='https://user-images.githubusercontent.com/98504939/204071204-d8965b7f-8a6f-4c8f-904a-63bd16447081.jpg' />
+					<img src={getDownloadLinkFromS3(clubData?.profileImgUrl || '')} />
 				</S.ProfileImage>
-				<h2>동아리 이름</h2>
-				<h3>동아리 ID</h3>
+				<h2>{clubData?.name}</h2>
+				<h3>{clubData?.clubCode}</h3>
 				<S.ProfilePopulation>{svgUser24} 3</S.ProfilePopulation>
 			</S.SidebarProfile>
 			<S.SidebarApplications isScrollExist={isScrollExist}>
@@ -138,6 +141,7 @@ namespace S {
 		> img {
 			width: 100%;
 			height: 100%;
+			object-fit: cover;
 		}
 	`;
 
@@ -155,6 +159,7 @@ namespace S {
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
+		height: 100%;
 
 		> h3 {
 			${Fonts.subtitle16semibold}
