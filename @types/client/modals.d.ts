@@ -5,3 +5,8 @@ type CommonModalProps = {
 	onConfirm: () => void;
 	isHidden: boolean;
 };
+
+type AgreementModalProps = {
+	onClose: () => void;
+	isHidden: boolean;
+};
