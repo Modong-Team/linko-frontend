@@ -4,20 +4,39 @@ import { Fonts } from '../../styles/fonts';
 import { svgDown16 } from '../../styles/svgs';
 import useActive from '../../hooks/useActive';
 import useAuthData from '../../hooks/useAuthData';
+import { useState, useEffect } from 'react';
+import useGet from '../../hooks/useGet';
+import { getMember } from '../../api/member';
+import useLocalLoading from '../../hooks/useLocalLoading';
+import LoadingDots from '../shared/LoadingDots';
+import { LoadingWidths } from '../../constants/loadingWidths';
 
 export default function ProfileDropDown() {
 	const [isShowDropDown, onClick, onBlur] = useActive();
 	const { authData, onRequestRevokeAuthData } = useAuthData();
+	const [member, setMember] = useState<ResponseMember.Get>();
+	const { isLocalLoading, onStartLocalLoading, onFinishLocalLoading } = useLocalLoading();
+
+	const getInitial = (id: string = '') => id[0];
+
+	useEffect(() => {
+		if (!authData) return;
+		onStartLocalLoading();
+		useGet(getMember, setMember, onFinishLocalLoading);
+	}, [authData]);
 
 	return (
 		<S.HeaderProfile onClick={onClick} onBlur={onBlur}>
-			<S.ProfileInitial>h</S.ProfileInitial>
+			<S.ProfileInitial>
+				{getInitial(member?.data.memberId)}
+				<LoadingDots width={LoadingWidths.button} isHidden={!isLocalLoading} isWhite />
+			</S.ProfileInitial>
 			<S.ProfileArrow>{svgDown16}</S.ProfileArrow>
 			{isShowDropDown && (
 				<S.DropDown>
 					<h1>
-						<S.DropDownInitial>h</S.DropDownInitial>
-						{authData?.memberId}
+						<S.DropDownInitial>{getInitial(member?.data.memberId)}</S.DropDownInitial>
+						{member?.data.memberId}
 					</h1>
 					<div>
 						<p onClick={onRequestRevokeAuthData}>로그아웃</p>
@@ -46,6 +65,7 @@ namespace S {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		position: relative;
 	`;
 
 	export const ProfileArrow = styled.div`
