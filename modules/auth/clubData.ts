@@ -32,11 +32,11 @@ export function* clubDataSaga() {
  * Reducer
  */
 
-type clubDataStateType = ResponseClub.ClubData | null;
+export type ClubDataStateType = ResponseClub.ClubData | null;
 
 const initialState = null;
 
-const clubData = createReducer<clubDataStateType>(initialState, {
+const clubData = createReducer<ClubDataStateType>(initialState, {
 	[SET_CLUB_DATA]: (state, { payload }) => payload,
 	[REVOKE_CLUB_DATA]: (state) => null,
 });

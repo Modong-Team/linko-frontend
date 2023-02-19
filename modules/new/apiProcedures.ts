@@ -17,6 +17,7 @@ import { setApplicationTitleInputError } from './applicationTitleInputError';
 import { postForm, putForm, deleteForm } from '../../api/form';
 import { updateFormApplicationId, FormsStateType, saveFormDataId } from './forms';
 import { NewApplicationIdStateType, requestSetNewApplicationId } from './newApplicationId';
+import { ClubDataStateType } from '../auth/clubData';
 
 const REQUEST_SAVE = 'new/REQUEST_SAVE';
 const GO_THROUGH_PREPROCESS = 'new/START_PREPROCESS';
@@ -53,9 +54,13 @@ function* goThroughPreprocessSaga() {
 		return;
 	}
 
+	const clubData: ClubDataStateType = yield selectState<ClubDataStateType>(
+		(state) => state.clubData,
+	);
+
 	/* Set clubId & urlId */
-	if (!newApplication.clubId) {
-		yield put(setNewApplicationClubId(1));
+	if (clubData && !newApplication.clubId) {
+		yield put(setNewApplicationClubId(clubData?.id));
 		console.log('set');
 	}
 	if (!newApplication.urlId) {
