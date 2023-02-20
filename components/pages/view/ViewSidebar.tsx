@@ -4,13 +4,24 @@ import { Fonts } from '../../../styles/fonts';
 import FilterButton from '../../buttons/FilterButton';
 import { svgMail, svgPhone, svgGender, svgBirth, svgAcademic } from '../../../styles/svgs';
 import { AlphaToHex } from '../../../styles/alphaToHex';
+import useApplicant from '../../../hooks/useApplicant';
+import { ApplicantStatusCodeLabel } from '../../../constants/applicantStatusCode';
+import useApplication from '../../../hooks/useApplication';
 
-export default function ViewSidebar() {
+export default function ViewSidebar({ page, onChangePage }: ViewSidebarProps) {
+	const { applicant } = useApplicant();
+	const { application } = useApplication();
+
+	const getCurrentLabel = () => {
+		const statusCode: keyof typeof ApplicantStatusCodeLabel = applicant?.data.status as any;
+		if (statusCode) return ApplicantStatusCodeLabel[statusCode];
+	};
+
 	return (
 		<S.Container>
 			<S.Meta>
 				<h1>
-					이링코
+					{applicant?.data.name}
 					<FilterButton
 						label1={'지원 접수'}
 						onClick1={() => alert('미구현')}
@@ -22,7 +33,7 @@ export default function ViewSidebar() {
 						onClick4={() => alert('미구현')}
 						label5={'탈락'}
 						onClick5={() => alert('미구현')}
-						currentLabel={'현재 상태'}
+						currentLabel={getCurrentLabel() + ''}
 					/>
 				</h1>
 				<div>
@@ -42,9 +53,11 @@ export default function ViewSidebar() {
 			<S.FormTitles>
 				<h1>지원 서류</h1>
 				<div>
-					<S.FormTitle isFocus={false}>질문 페이지(1)</S.FormTitle>
-					<S.FormTitle isFocus={true}>질문 페이지(2)</S.FormTitle>
-					<S.FormTitle isFocus={false}>질문 페이지(3)</S.FormTitle>
+					{application.data.forms.map((form, i) => (
+						<S.FormTitle isFocus={page === i + 1} onClick={() => onChangePage(i + 1)} key={i}>
+							{form.title}
+						</S.FormTitle>
+					))}
 				</div>
 			</S.FormTitles>
 		</S.Container>
@@ -115,5 +128,6 @@ namespace S {
 		background-color: ${(props) =>
 			props.isFocus ? Colors.blue500 + AlphaToHex[0.2] : Colors.white};
 		color: ${(props) => (props.isFocus ? Colors.gray990 : Colors.gray700)};
+		transition: 0.3s ease;
 	`;
 }

@@ -23,6 +23,7 @@ export default function CustomButton({
 	justify,
 	children,
 	disabled,
+	isHidden,
 }: CustomButtonProps & Partial<ChildrenType>) {
 	return (
 		<S.Button
@@ -32,7 +33,8 @@ export default function CustomButton({
 			isLoading={isLoading}
 			width={width}
 			justify={justify}
-			disabled={disabled}>
+			disabled={disabled}
+			isHidden={isHidden}>
 			<span>
 				{!isSvgIconAtRight && svgIcon}
 				{label}
@@ -85,5 +87,8 @@ namespace S {
 			gap: 0.4rem;
 			visibility: ${(props) => props.isLoading && 'hidden'};
 		}
+
+		visibility: ${(props) => props.isHidden && 'hidden'};
+		transition: ${(props) => props.isHidden && 'none'};
 	`;
 }

@@ -40,14 +40,17 @@ declare namespace ResponseApplicant {
 			status: string;
 			submitDate: string;
 			essentialAnswers: {
+				id: number;
 				essentialQuestion: string;
 				essentialAnswer: string;
 			}[];
 			questionAnswers: {
-				essentialQuestion: string;
-				essentialAnswer: string;
+				id: string;
+				question: string;
+				answer: string;
 			}[];
 			fail: boolean;
+			applicationId: number;
 		};
 	};
 

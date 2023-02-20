@@ -23,6 +23,9 @@ import authData from './auth/authData';
 import { authDataSaga } from './auth/authData';
 import clubData from './auth/clubData';
 import { clubDataSaga } from './auth/clubData';
+import applicant from './view/applicant';
+import applicantId from './view/applicantId';
+import { applicantIdSaga } from './view/applicantId';
 
 const rootReducer = combineReducers({
 	forms,
@@ -43,6 +46,8 @@ const rootReducer = combineReducers({
 	triggers,
 	authData,
 	clubData,
+	applicant,
+	applicantId,
 });
 
 export function* rootSaga() {
@@ -55,6 +60,7 @@ export function* rootSaga() {
 		selectedStatusSaga(),
 		authDataSaga(),
 		clubDataSaga(),
+		applicantIdSaga(),
 	]);
 }
 

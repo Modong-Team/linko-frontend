@@ -2,7 +2,13 @@ type ViewPageProps = {
 	applicantId: number;
 };
 
-type ViewReplyProps = {
+type ViewMainProps = {
+	page: number;
+	onPrevPage: () => void;
+	onNextPage: () => void;
+};
+
+type ViewReplyProps = ViewMainProps & {
 	isDrawerOpen: boolean;
 	onOpenDrawer: () => void;
 };
@@ -30,4 +36,13 @@ type ViewRateTabProps = {
 
 type ViewRateEditTabProps = {
 	onSelectRateTab: () => void;
+};
+
+type ViewSidebarProps = {
+	page: number;
+	onChangePage: (page: number) => void;
+};
+
+type ViewFormsProps = {
+	page: number;
 };

@@ -2,10 +2,9 @@ import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
 import MoreButton from '../../buttons/MoreButton';
-import { svgStar16, svgUser16, svgEntireCheckbox } from '../../../styles/svgs';
+import { svgStar16, svgUser16 } from '../../../styles/svgs';
 import parseSubmitDate from '../../../utils/parseSubmitDate';
 import { Media } from '../../../styles/breakPoints';
-import IconButton from '../../buttons/IconButton';
 import useSelectedApplicants from '../../../hooks/useSelectedApplicants';
 import {
 	MainBoardCardContainerProps,
@@ -19,6 +18,8 @@ import { ApplicantStatusCode } from '../../../constants/applicantStatusCode';
 import useTriggers from '../../../hooks/useTriggers';
 import CheckIcon from '../../buttons/CheckIcon';
 import useActive from '../../../hooks/useActive';
+import useRouteToPath from '../../../hooks/useRouteToPath';
+import { Paths } from '../../../constants/paths';
 
 export default function MainBoardCard({
 	id,
@@ -29,20 +30,26 @@ export default function MainBoardCard({
 	isSelected,
 	applicantStatusCode,
 }: MainBoardCardProps) {
+	const onRouteToView = useRouteToPath(Paths.view + '/' + id);
 	const { selectedStatus, onSelectStatus } = useSelectedStatus();
 	const { selectedApplicants, onSelectApplicant, onDeselectApplicant } = useSelectedApplicants();
 	const { onTriggerRefreshApplicants } = useTriggers();
 	const [isHover, onMouseOver, onMouseLeave] = useActive();
 
-	const onSelectFirstSingle = () => {
-		onSelectStatus(applicantStatusCode);
-		onSelectApplicant(id);
+	const onClickCard = () => {
+		if (!selectedStatus) onRouteToView();
+		else onToggleSelect();
 	};
 
 	const onToggleSelect = () => {
 		if (!isSelected || fail) return;
 		if (checkIfSelected()) onDeselectApplicant(id);
 		else onSelectApplicant(id);
+	};
+
+	const onSelectFirstSingle = () => {
+		onSelectStatus(applicantStatusCode);
+		onSelectApplicant(id);
 	};
 
 	const checkIfSelected = () => selectedApplicants.includes(id);
@@ -74,7 +81,7 @@ export default function MainBoardCard({
 
 	return (
 		<S.Container
-			onClick={onToggleSelect}
+			onClick={onClickCard}
 			cardMode={checkCardMode()}
 			onMouseOver={onMouseOver}
 			onMouseLeave={onMouseLeave}>

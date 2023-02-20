@@ -1,13 +1,29 @@
 import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import IconButton from '../../buttons/IconButton';
-import { svgOpen, svgTime, svgLeft16, svgPrev, svgPrevS, svgNextS } from '../../../styles/svgs';
+import { svgOpen, svgTime, svgPrevS, svgNextS } from '../../../styles/svgs';
 import { Fonts } from '../../../styles/fonts';
 import ViewForms from './ViewForms';
 import CustomButton from '../../buttons/CustomButton';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
+import useApplication from '../../../hooks/useApplication';
+import useApplicant from '../../../hooks/useApplicant';
+import parseSubmitDate from '../../../utils/parseSubmitDate';
 
-export default function ViewReply({ isDrawerOpen, onOpenDrawer }: ViewReplyProps) {
+export default function ViewReply({
+	isDrawerOpen,
+	onOpenDrawer,
+	page,
+	onPrevPage,
+	onNextPage,
+}: ViewReplyProps) {
+	const { applicant } = useApplicant();
+	const { application } = useApplication();
+
+	const isFirstPage = () => page === 1;
+	const isLastPage = () => page === getTotalPages();
+	const getTotalPages = () => application.data.forms.length;
+
 	return (
 		<S.Container isOpen={!isDrawerOpen}>
 			<S.Taskbar>
@@ -15,18 +31,22 @@ export default function ViewReply({ isDrawerOpen, onOpenDrawer }: ViewReplyProps
 					<CustomButton
 						svgIcon={svgPrevS}
 						label={'이전 페이지'}
-						onClick={() => alert('이전')}
+						onClick={onPrevPage}
 						buttonType={ButtonTypes.line}
 						buttonSize={ButtonSizes.medium}
+						isHidden={isFirstPage()}
 					/>
-					<S.Page>1/3</S.Page>
+					<S.Page>
+						{page}/{getTotalPages()}
+					</S.Page>
 					<CustomButton
 						svgIcon={svgNextS}
 						label={'다음 페이지'}
-						onClick={() => alert('다음')}
+						onClick={onNextPage}
 						buttonType={ButtonTypes.line}
 						buttonSize={ButtonSizes.medium}
 						isSvgIconAtRight
+						isHidden={isLastPage()}
 					/>
 				</div>
 				{!isDrawerOpen && (
@@ -38,10 +58,13 @@ export default function ViewReply({ isDrawerOpen, onOpenDrawer }: ViewReplyProps
 			<S.ReplyBox>
 				<S.ReplyPaper>
 					<S.Title>
-						<h1>개발동아리 22기 모집 지원서</h1>
-						<p>{svgTime}2022. 11. 2</p>
+						<h1>{application.data.title}</h1>
+						<p>
+							{svgTime}
+							{parseSubmitDate(applicant?.data.submitDate + '')}
+						</p>
 					</S.Title>
-					<ViewForms />
+					<ViewForms page={page} />
 				</S.ReplyPaper>
 			</S.ReplyBox>
 		</S.Container>

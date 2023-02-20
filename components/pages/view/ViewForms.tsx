@@ -1,43 +1,29 @@
 import styled from 'styled-components';
 import { Fonts } from '../../../styles/fonts';
 import { SC } from '../../../styles/styled';
+import useApplication from '../../../hooks/useApplication';
+import useApplicant from '../../../hooks/useApplicant';
 
-export default function ViewForms() {
+export default function ViewForms({ page }: ViewFormsProps) {
+	const { applicant } = useApplicant();
+	const { application } = useApplication();
+
+	const getAnswerByQuestionId = (questionId: number) => {
+		if (!applicant?.data.questionAnswers.length) return;
+		for (const questionAnswer of applicant?.data.questionAnswers) {
+			if (+questionAnswer.id === questionId) return questionAnswer.answer;
+		}
+	};
+
 	return (
 		<S.Container>
-			<h2>개발 동아리</h2>
-			<div>
-				<h3>지원 분야를 알려주세요.</h3>
-				<p>프론트엔드</p>
-			</div>
-			<div>
-				<h3>지원 분야를 알려주세요.</h3>
-				<p>프론트엔드</p>
-			</div>
-			<div>
-				<h3>지원 분야를 알려주세요.</h3>
-				<p>프론트엔드</p>
-			</div>
-			<div>
-				<h3>지원 분야를 알려주세요.</h3>
-				<p>프론트엔드</p>
-			</div>
-			<div>
-				<h3>지원 분야를 알려주세요.</h3>
-				<p>프론트엔드</p>
-			</div>
-			<div>
-				<h3>지원 분야를 알려주세요.</h3>
-				<p>프론트엔드</p>
-			</div>
-			<div>
-				<h3>지원 분야를 알려주세요.</h3>
-				<p>프론트엔드</p>
-			</div>
-			<div>
-				<h3>지원 분야를 알려주세요.</h3>
-				<p>프론트엔드</p>
-			</div>
+			<h2>{application.data.forms[page - 1]?.title}</h2>
+			{application.data.forms[page - 1]?.questions.map((question, i) => (
+				<div key={i}>
+					<h3>{question.content}</h3>
+					<p>{getAnswerByQuestionId(question.id)}</p>
+				</div>
+			))}
 		</S.Container>
 	);
 }

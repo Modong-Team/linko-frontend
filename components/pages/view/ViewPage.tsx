@@ -1,16 +1,28 @@
 import styled from 'styled-components';
-import ViewDrawer from './ViewDrawer';
 import ViewHeader from './ViewHeader';
 import ViewMain from './ViewMain';
 import ViewSidebar from './ViewSidebar';
 import { Styles } from '../../../styles/styles';
+import useApplicantId from '../../../hooks/useApplicantId';
+import { useEffect, useState } from 'react';
 
 export default function ViewPage({ applicantId }: ViewPageProps) {
+	const [page, setPage] = useState(1);
+	const { onSetApplicantId } = useApplicantId();
+
+	const onChangePage = (page: number) => setPage(page);
+	const onPrevPage = () => setPage(page - 1);
+	const onNextPage = () => setPage(page + 1);
+
+	useEffect(() => {
+		if (applicantId) onSetApplicantId(applicantId);
+	}, [applicantId]);
+
 	return (
 		<S.Container>
 			<ViewHeader />
-			<ViewSidebar />
-			<ViewMain />
+			<ViewSidebar page={page} onChangePage={onChangePage} />
+			<ViewMain page={page} onPrevPage={onPrevPage} onNextPage={onNextPage} />
 		</S.Container>
 	);
 }

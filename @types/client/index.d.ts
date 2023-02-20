@@ -12,6 +12,7 @@ type CustomButtonProps = CommonButtonProps & {
 	width?: string;
 	justify?: string;
 	disabled?: boolean;
+	isHidden?: boolean;
 };
 
 type CustomButtonType = Omit<CustomButtonProps, 'label'>;
