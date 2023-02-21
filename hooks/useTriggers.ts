@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../modules';
-import { refreshApplicants } from '../modules/main/triggers';
+import { refreshApplicants, refreshMemos } from '../modules/main/triggers';
 import { requestResetStatus } from '../modules/main/selectedStatus';
 
 export default function useTriggers() {
@@ -12,8 +12,13 @@ export default function useTriggers() {
 		dispatch(requestResetStatus());
 	};
 
+	const onTriggerRefreshMemos = () => {
+		dispatch(refreshMemos(new Date()));
+	};
+
 	return {
 		triggers,
 		onTriggerRefreshApplicants,
+		onTriggerRefreshMemos,
 	};
 }

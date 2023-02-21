@@ -3,36 +3,57 @@ import ViewComment from './ViewComment';
 import ViewCommentBox from './ViewCommentBox';
 import styled from 'styled-components';
 import useInput from '../../../hooks/useInput';
+import { useState, useEffect } from 'react';
+import useApplicantId from '../../../hooks/useApplicantId';
+import useGet from '../../../hooks/useGet';
+import { getMemos, postMemo } from '../../../api/memo';
+import useLocalLoading from '../../../hooks/useLocalLoading';
+import useAuthData from '../../../hooks/useAuthData';
+import useTriggers from '../../../hooks/useTriggers';
 
 export default function ViewMemoTab() {
-	const [memo, onChangeMemo] = useInput();
+	const [memo, onChangeMemo, onResetMemo] = useInput();
+	const [memos, setMemos] = useState<ResponseMemo.Get>();
+	const { applicantId } = useApplicantId();
+	const { authData } = useAuthData();
+	const { isLocalLoading, onStartLocalLoading, onFinishLocalLoading } = useLocalLoading();
+	const { triggers, onTriggerRefreshMemos } = useTriggers();
+
+	const checkIfMemoExist = () => !!memos?.data.length;
+
+	const onSubmit = async () => {
+		if (applicantId) {
+			const post = await postMemo({ applicantId, content: memo });
+			onResetMemo();
+			onTriggerRefreshMemos();
+		}
+	};
+
+	useEffect(() => {
+		if (applicantId) {
+			onStartLocalLoading();
+			useGet(() => getMemos(applicantId), setMemos, onFinishLocalLoading);
+		}
+	}, [applicantId, triggers.memos]);
 
 	return (
 		<S.Container>
 			<ViewCommentBox>
-				<ViewComment
-					name={'linko'}
-					content={
-						'좋은 거 같아요! 아무말 아면접 관련 내용 여기다가 적을 거에요! 면접 질문, 의사 소통, 등'
-					}
-					isMine={false}
-				/>
-				<ViewComment name={'nyang'} content={'면접 질문 : 나이가 어떻게 되시나요?'} isMine={true} />
-				<ViewComment
-					name={'ruby'}
-					content={'면접 질문 : 지원 동기를 말씀해주세요.'}
-					isMine={false}
-				/>
-				<ViewComment name={'ruby'} content={'나름 괜찮은데요?'} isMine={false} />
-				<ViewComment name={'ruby'} content={'나름 괜찮은데요?'} isMine={false} />
-				<ViewComment name={'ruby'} content={'나름 괜찮은데요?'} isMine={false} />
-				<ViewComment name={'ruby'} content={'나름 괜찮은데요?'} isMine={false} />
-				<ViewComment name={'ruby'} content={'나름 괜찮은데요?'} isMine={false} />
-				<ViewComment name={'ruby'} content={'나름 괜찮은데요?'} isMine={false} />
-				<ViewComment name={'ruby'} content={'나름 괜찮은데요?'} isMine={false} />
-				<ViewComment name={'ruby'} content={'나름 괜찮은데요?'} isMine={false} />
+				{checkIfMemoExist() ? (
+					memos?.data.map((memo, i) => (
+						<ViewComment
+							id={memo.id}
+							name={memo.writerName}
+							content={memo.content}
+							isMine={memo.creatorId === authData?.memberId}
+							key={i}
+						/>
+					))
+				) : (
+					<p>아무도 메모를 남기지 않았어요.</p>
+				)}
 			</ViewCommentBox>
-			<ViewMemoInput value={memo} onChange={onChangeMemo} onSubmit={() => alert('메모등록')} />
+			<ViewMemoInput value={memo} onChange={onChangeMemo} onSubmit={onSubmit} />
 		</S.Container>
 	);
 }
