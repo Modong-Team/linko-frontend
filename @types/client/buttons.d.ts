@@ -26,6 +26,9 @@ type MoreButtonProps = {
 	label2?: string;
 	onClick1: () => void;
 	onClick2?: () => void;
+	translateX?: number;
+	translateY?: number;
+	isHidden?: boolean;
 };
 
 type FilterButtonProps = MoreButtonProps & {
