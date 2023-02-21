@@ -1,4 +1,5 @@
 import request from './core/index';
+
 const baseUrl = '/memo';
 
 export const getMemos = (applicantId: number) => {
@@ -12,7 +13,7 @@ export const postMemo = (data: RequestMemo.Post) => {
 	return request.post<ResponseMemo.Post, RequestMemo.Post>(url, data);
 };
 
-export const deleteMemo = (data: RequestMemo.Delete) => {
-	const url = `${baseUrl}`;
-	return request.delete<ResponseMemo.Delete, RequestMemo.Delete>(url, data);
+export const deleteMemo = (memoId: number) => {
+	const url = `${baseUrl}/${memoId}`;
+	return request.delete<ResponseMemo.Delete>(url);
 };
