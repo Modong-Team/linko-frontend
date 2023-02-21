@@ -7,10 +7,38 @@ import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 import { svgStar16 } from '../../../styles/svgs';
+import useApplicantId from '../../../hooks/useApplicantId';
+import { ChangeEvent } from 'react';
+import { postEvaluation } from '../../../api/evaluation';
 
 export default function ViewRateEditTab({ onSelectRateTab }: ViewRateEditTabProps) {
+	const { applicantId } = useApplicantId();
 	const [comment, onChangeComment] = useInput();
+	const [scoreInteger, onChangeScoreInteger, _, onManuallyChangeScoreInteger] = useInput();
+	const [scoreDecimal, onChangeScoreDecimal, __, onManuallyChangeScoreDecimal] = useInput();
 	const [isFocus, onFocus, onBlur] = useActive();
+
+	const onValidateScoreInteger = (e: ChangeEvent<HTMLInputElement>) => {
+		if (+e.target.value >= 10) {
+			onManuallyChangeScoreInteger(10 + '');
+			onManuallyChangeScoreDecimal(0 + '');
+		} else onChangeScoreInteger(e);
+	};
+
+	const onValidateScoreDecimal = (e: ChangeEvent<HTMLInputElement>) => {
+		if (+scoreInteger === 10) {
+			onManuallyChangeScoreDecimal(0 + '');
+		} else onChangeScoreDecimal(e);
+	};
+
+	const onSubmit = async () => {
+		if (applicantId) {
+			const score = +(scoreInteger + '.' + scoreDecimal);
+			const post = await postEvaluation({ applicantId, score, comment });
+			console.log(post);
+			onSelectRateTab();
+		}
+	};
 
 	return (
 		<S.Container>
@@ -24,11 +52,23 @@ export default function ViewRateEditTab({ onSelectRateTab }: ViewRateEditTabProp
 				<h2>{svgStar16} 점수</h2>
 				<S.ScoreBox>
 					<S.Digit>
-						<input placeholder='0' maxLength={2} />
+						<input
+							placeholder='0'
+							maxLength={2}
+							value={scoreInteger}
+							onChange={onValidateScoreInteger}
+							type={'tel'}
+						/>
 					</S.Digit>
 					<span>.</span>
 					<S.Digit>
-						<input placeholder='0' maxLength={1} />
+						<input
+							placeholder='0'
+							maxLength={1}
+							value={scoreDecimal}
+							onChange={onValidateScoreDecimal}
+							type={'tel'}
+						/>
 					</S.Digit>
 					<span>&nbsp;/ 10점</span>
 				</S.ScoreBox>
@@ -47,7 +87,7 @@ export default function ViewRateEditTab({ onSelectRateTab }: ViewRateEditTabProp
 				</S.CommentBox>
 				<CustomButton
 					label={'평가 등록하기'}
-					onClick={() => alert('평가 등록')}
+					onClick={onSubmit}
 					buttonType={ButtonTypes.primary}
 					buttonSize={ButtonSizes.large}
 				/>
