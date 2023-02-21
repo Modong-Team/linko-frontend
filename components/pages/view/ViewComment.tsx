@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
-import { svgStar, svgMore24 } from '../../../styles/svgs';
+import { svgStar } from '../../../styles/svgs';
 import MoreButton from '../../buttons/MoreButton';
 import useActive from '../../../hooks/useActive';
 import { deleteMemo } from '../../../api/memo';
 import useTriggers from '../../../hooks/useTriggers';
+import { deleteEvaluation } from '../../../api/evaluation';
 
 export default function ViewComment({
 	id,
@@ -16,11 +17,27 @@ export default function ViewComment({
 	rate,
 }: ViewCommentProps) {
 	const [isHover, onHover, onBlur] = useActive();
-	const { onTriggerRefreshMemos } = useTriggers();
+	const { onTriggerRefreshMemos, onTriggerRefreshEvaluations } = useTriggers();
 
-	const onDelete = async () => {
-		const deleted = await deleteMemo({ memoId: id });
+	const onClickDelete = async () => {
+		if (isRateComment) onDeleteEvaluation();
+		else onDeleteMemo();
+	};
+
+	const onDeleteMemo = async () => {
+		const deleted = await deleteMemo(id);
 		onTriggerRefreshMemos();
+	};
+
+	const onDeleteEvaluation = async () => {
+		const deleted = await deleteEvaluation(id);
+		onTriggerRefreshEvaluations();
+	};
+
+	const onCheckIfMoreButtonShouldBeHidden = () => {
+		if (isRateComment) return true;
+		if (!isHover) return true;
+		if (!isMine) return true;
 	};
 
 	return (
@@ -35,7 +52,12 @@ export default function ViewComment({
 				)}
 			</h1>
 			<p>{content}</p>
-			<MoreButton label1={'삭제하기'} onClick1={onDelete} translateX={0} isHidden={!isHover} />
+			<MoreButton
+				label1={'삭제하기'}
+				onClick1={onClickDelete}
+				translateX={0}
+				isHidden={onCheckIfMoreButtonShouldBeHidden()}
+			/>
 		</S.Container>
 	);
 }
@@ -64,7 +86,11 @@ namespace S {
 				justify-content: flex-start;
 				gap: 0.4rem;
 				align-items: center;
-				width: 4.2rem;
+				width: 4.5rem;
+
+				> * {
+					flex-shrink: 0;
+				}
 			}
 		}
 
