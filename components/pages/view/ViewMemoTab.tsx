@@ -42,6 +42,7 @@ export default function ViewMemoTab() {
 				{checkIfMemoExist() ? (
 					memos?.data.map((memo, i) => (
 						<ViewComment
+							id={memo.id}
 							name={memo.writerName}
 							content={memo.content}
 							isMine={memo.creatorId === authData?.memberId}

@@ -19,6 +19,7 @@ type ViewDrawerProps = {
 };
 
 type ViewCommentProps = {
+	id: number;
 	name: string;
 	content: string;
 	isMine: boolean;

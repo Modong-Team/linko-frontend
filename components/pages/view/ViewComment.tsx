@@ -1,17 +1,30 @@
 import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
-import { svgStar } from '../../../styles/svgs';
+import { svgStar, svgMore24 } from '../../../styles/svgs';
+import MoreButton from '../../buttons/MoreButton';
+import useActive from '../../../hooks/useActive';
+import { deleteMemo } from '../../../api/memo';
+import useTriggers from '../../../hooks/useTriggers';
 
 export default function ViewComment({
+	id,
 	name,
 	content,
 	isMine,
 	isRateComment,
 	rate,
 }: ViewCommentProps) {
+	const [isHover, onHover, onBlur] = useActive();
+	const { onTriggerRefreshMemos } = useTriggers();
+
+	const onDelete = async () => {
+		const deleted = await deleteMemo({ memoId: id });
+		onTriggerRefreshMemos();
+	};
+
 	return (
-		<S.Container isFocus={isMine}>
+		<S.Container isFocus={isMine} onMouseOver={onHover} onMouseLeave={onBlur}>
 			<h1>
 				{name}
 				{isRateComment && (
@@ -22,6 +35,7 @@ export default function ViewComment({
 				)}
 			</h1>
 			<p>{content}</p>
+			<MoreButton label1={'삭제하기'} onClick1={onDelete} translateX={0} isHidden={!isHover} />
 		</S.Container>
 	);
 }
@@ -36,6 +50,7 @@ namespace S {
 		display: flex;
 		flex-direction: column;
 		gap: 0.7rem;
+		position: relative;
 
 		> h1 {
 			${Fonts.subtitle14semibold}
@@ -55,6 +70,12 @@ namespace S {
 
 		> p {
 			${Fonts.body14regular}
+		}
+
+		> button {
+			position: absolute;
+			top: 1.2rem;
+			right: 1.6rem;
 		}
 	`;
 }
