@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-export default function useActive(): [boolean, () => void, () => void] {
-	const [isActive, setIsActive] = useState(false);
+export default function useActive(initialState = false): [boolean, () => void, () => void] {
+	const [isActive, setIsActive] = useState(initialState);
 
 	const onActivate = () => setIsActive(true);
 	const onDeactivate = () => setIsActive(false);
