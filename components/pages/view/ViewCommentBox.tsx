@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
+import { Fonts } from '../../../styles/fonts';
 
 export default function ViewCommentBox({ children }: ChildrenType) {
 	return <S.Container>{children}</S.Container>;
@@ -14,5 +15,11 @@ namespace S {
 		flex-direction: column;
 		gap: 0.8rem;
 		overflow: scroll;
+
+		> p {
+			${Fonts.subtitle14medium}
+			color: ${Colors.gray700};
+			margin: 4.4rem auto;
+		}
 	`;
 }
