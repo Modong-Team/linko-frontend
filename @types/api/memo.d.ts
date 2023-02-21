@@ -3,6 +3,10 @@ declare namespace RequestMemo {
 		applicantId: number;
 		content: string;
 	};
+
+	type Delete = {
+		memoId: number;
+	};
 }
 
 declare namespace ResponseMemo {
@@ -28,5 +32,11 @@ declare namespace ResponseMemo {
 		data: {
 			id: number;
 		};
+	};
+
+	type Delete = {
+		status: number;
+		message: string;
+		code: string;
 	};
 }

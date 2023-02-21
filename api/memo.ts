@@ -11,3 +11,8 @@ export const postMemo = (data: RequestMemo.Post) => {
 	const url = `${baseUrl}`;
 	return request.post<ResponseMemo.Post, RequestMemo.Post>(url, data);
 };
+
+export const deleteMemo = (data: RequestMemo.Delete) => {
+	const url = `${baseUrl}`;
+	return request.delete<ResponseMemo.Delete, RequestMemo.Delete>(url, data);
+};
