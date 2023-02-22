@@ -6,12 +6,13 @@ import useActive from '../../../hooks/useActive';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
-import { svgStar16 } from '../../../styles/svgs';
+import { svgArrowPrev, svgStar } from '../../../styles/svgs';
 import useApplicantId from '../../../hooks/useApplicantId';
 import { ChangeEvent } from 'react';
 import { postEvaluation } from '../../../api/evaluation';
 import { useEffect } from 'react';
 import useTriggers from '../../../hooks/useTriggers';
+import IconButton from '../../buttons/IconButton';
 
 export default function ViewRateEditTab({
 	onSelectRateTab,
@@ -65,14 +66,19 @@ export default function ViewRateEditTab({
 
 	return (
 		<S.Container>
-			<CustomButton
-				label={'평가 취소'}
-				onClick={onSelectRateTab}
-				buttonType={'line'}
-				buttonSize={'small'}
-			/>
+			<S.Buttons>
+				<IconButton svgIcon={svgArrowPrev} onClick={onSelectRateTab} />
+				{isPrevRateExist && (
+					<CustomButton
+						label={'평가 삭제'}
+						onClick={() => alert('평가 삭제')}
+						buttonType={'line'}
+						buttonSize={'small'}
+					/>
+				)}
+			</S.Buttons>
 			<div>
-				<h2>{svgStar16} 점수</h2>
+				<h2>{svgStar} 점수</h2>
 				<S.ScoreBox>
 					<S.Digit>
 						<input
@@ -128,13 +134,7 @@ namespace S {
 		flex-direction: column;
 		overflow: hidden;
 
-		> button {
-			width: fit-content;
-			margin-left: auto;
-			margin-bottom: 0.3rem;
-		}
-
-		> div {
+		> div:not(:first-of-type) {
 			:last-of-type {
 				display: flex;
 				flex-direction: column;
@@ -145,7 +145,7 @@ namespace S {
 				${Fonts.subtitle16semibold}
 				display: flex;
 				align-items: center;
-				gap: 0.5rem;
+				gap: 0.4rem;
 				margin-bottom: 0.8rem;
 			}
 
@@ -153,6 +153,16 @@ namespace S {
 				width: 100%;
 				margin-top: 2.4rem;
 			}
+		}
+	`;
+
+	export const Buttons = styled.div`
+		display: flex;
+
+		> button:nth-of-type(2) {
+			position: absolute;
+			right: 2.4rem;
+			transform: translateY(-0.4rem);
 		}
 	`;
 
@@ -167,6 +177,11 @@ namespace S {
 		> span {
 			display: inline-block;
 			margin-top: 0.5rem;
+
+			:last-of-type {
+				${Fonts.subtitle20medium}
+				color: ${Colors.gray600};
+			}
 		}
 	`;
 

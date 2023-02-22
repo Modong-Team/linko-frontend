@@ -12,9 +12,11 @@ import useGet from '../../../hooks/useGet';
 import { getEvaluations } from '../../../api/evaluation';
 import useAuthData from '../../../hooks/useAuthData';
 import useLocalLoading from '../../../hooks/useLocalLoading';
+import useApplicant from '../../../hooks/useApplicant';
 
 export default function ViewRateTab({ onSelectRateEditTab, isPrevRateExist }: ViewRateTabProps) {
 	const { authData } = useAuthData();
+	const { applicant } = useApplicant();
 	const { applicantId } = useApplicantId();
 	const [rates, setRates] = useState<ResponseEvaluation.GetAll>();
 	const { isLocalLoading, onStartLocalLoading, onFinishLocalLoading } = useLocalLoading();
@@ -33,11 +35,21 @@ export default function ViewRateTab({ onSelectRateEditTab, isPrevRateExist }: Vi
 			<S.RateInfo>
 				<div>
 					<h3>평점</h3>
-					<p>{svgStar}8.5/10</p>
+					<div>
+						{svgStar}
+						<div>
+							{applicant?.data.rate}
+							<span>/10</span>
+						</div>
+					</div>
 				</div>
 				<div>
 					<h3>평가 인원</h3>
-					<p>3/8</p>
+					<div>
+						<div>
+							3<span>/8</span>
+						</div>
+					</div>
 				</div>
 				<S.Divider>{svgDivider}</S.Divider>
 			</S.RateInfo>
@@ -100,11 +112,19 @@ namespace S {
 				color:${Colors.gray700}
 			}
 
-			> p {
-				${Fonts.heading20bold}
+			> div {
 				display: flex;
 				align-items: center;
-				gap: 0.57rem;
+				gap: 0.4rem;
+
+				> div {
+					${Fonts.heading20bold}
+
+					> span {
+						${Fonts.subtitle20medium}
+						color: ${Colors.gray600};
+					}
+				}
 			}
 		}
 	`;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
-import { svgStar } from '../../../styles/svgs';
+import { svgStar16 } from '../../../styles/svgs';
 import MoreButton from '../../buttons/MoreButton';
 import useActive from '../../../hooks/useActive';
 import { deleteMemo } from '../../../api/memo';
@@ -46,7 +46,7 @@ export default function ViewComment({
 				{name}
 				{isRateComment && (
 					<div>
-						{svgStar}
+						{svgStar16}
 						{rate}
 					</div>
 				)}
