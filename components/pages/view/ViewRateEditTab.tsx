@@ -17,6 +17,7 @@ import {
 } from '../../../api/evaluation';
 import useTriggers from '../../../hooks/useTriggers';
 import IconButton from '../../buttons/IconButton';
+import SectionModal from '../../modals/SectionModal';
 
 export default function ViewRateEditTab({
 	onSelectRateTab,
@@ -29,6 +30,7 @@ export default function ViewRateEditTab({
 	const [scoreDecimal, onChangeScoreDecimal, ___, onManuallyChangeScoreDecimal] = useInput();
 	const [evaluationId, setEvaluationId] = useState<number>();
 	const { onTriggerRefreshEvaluations } = useTriggers();
+	const [isShowDeleteModal, onShowDeleteModal, onHideDeleteModal] = useActive();
 
 	const onValidateScoreInteger = (e: ChangeEvent<HTMLInputElement>) => {
 		if (isNaN(+e.target.value)) return;
@@ -60,6 +62,7 @@ export default function ViewRateEditTab({
 	const onDelete = async () => {
 		if (!applicantId || !evaluationId) return;
 		await deleteEvaluation(applicantId, evaluationId);
+		onHideDeleteModal();
 		onTriggerRefreshEvaluations();
 		onSelectRateTab();
 	};
@@ -81,6 +84,7 @@ export default function ViewRateEditTab({
 
 	useEffect(() => {
 		if (isPrevRateExist) setPrevRateData();
+		return () => onHideDeleteModal();
 	}, [applicantId, isPrevRateExist]);
 
 	return (
@@ -90,7 +94,7 @@ export default function ViewRateEditTab({
 				{isPrevRateExist && (
 					<CustomButton
 						label={'평가 삭제'}
-						onClick={onDelete}
+						onClick={onShowDeleteModal}
 						buttonType={'line'}
 						buttonSize={'small'}
 					/>
@@ -130,7 +134,7 @@ export default function ViewRateEditTab({
 						placeholder={'코멘트를 입력해주세요.'}
 						onFocus={onFocus}
 						onBlur={onBlur}
-						row={4}
+						row={3}
 					/>
 				</S.CommentBox>
 				<CustomButton
@@ -140,6 +144,13 @@ export default function ViewRateEditTab({
 					buttonSize={ButtonSizes.large}
 				/>
 			</div>
+			<SectionModal
+				title={'평가를 삭제할까요?'}
+				description={'삭제된 평가는 복구가 불가능해요.'}
+				onCancel={onHideDeleteModal}
+				onConfirm={onDelete}
+				isHidden={!isShowDeleteModal}
+			/>
 		</S.Container>
 	);
 }
