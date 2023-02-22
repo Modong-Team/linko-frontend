@@ -10,13 +10,19 @@ import { svgStar16 } from '../../../styles/svgs';
 import useApplicantId from '../../../hooks/useApplicantId';
 import { ChangeEvent } from 'react';
 import { postEvaluation } from '../../../api/evaluation';
+import { useEffect } from 'react';
+import useLocalLoading from '../../../hooks/useLocalLoading';
 
-export default function ViewRateEditTab({ onSelectRateTab }: ViewRateEditTabProps) {
+export default function ViewRateEditTab({
+	onSelectRateTab,
+	isPrevRateExist,
+}: ViewRateEditTabProps) {
 	const { applicantId } = useApplicantId();
-	const [comment, onChangeComment] = useInput();
-	const [scoreInteger, onChangeScoreInteger, _, onManuallyChangeScoreInteger] = useInput();
-	const [scoreDecimal, onChangeScoreDecimal, __, onManuallyChangeScoreDecimal] = useInput();
 	const [isFocus, onFocus, onBlur] = useActive();
+	const [comment, onChangeComment, _, onManuallyChangeComment] = useInput();
+	const [scoreInteger, onChangeScoreInteger, __, onManuallyChangeScoreInteger] = useInput();
+	const [scoreDecimal, onChangeScoreDecimal, ___, onManuallyChangeScoreDecimal] = useInput();
+	const { isLocalLoading, onStartLocalLoading, onFinishLocalLoading } = useLocalLoading();
 
 	const onValidateScoreInteger = (e: ChangeEvent<HTMLInputElement>) => {
 		if (+e.target.value >= 10) {
@@ -32,13 +38,27 @@ export default function ViewRateEditTab({ onSelectRateTab }: ViewRateEditTabProp
 	};
 
 	const onSubmit = async () => {
-		if (applicantId) {
+		if (!applicantId) return;
+
+		if (!isPrevRateExist) {
 			const score = +(scoreInteger + '.' + scoreDecimal);
 			const post = await postEvaluation({ applicantId, score, comment });
-			console.log(post);
-			onSelectRateTab();
 		}
+
+		if (isPrevRateExist) {
+			/* PUT */
+		}
+
+		onSelectRateTab();
 	};
+
+	const setPrevRateData = async () => {
+		/* 이전 데이터 세팅 */
+	};
+
+	useEffect(() => {
+		if (isPrevRateExist) setPrevRateData();
+	}, [applicantId, isPrevRateExist]);
 
 	return (
 		<S.Container>
