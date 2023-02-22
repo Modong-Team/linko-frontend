@@ -8,9 +8,13 @@ import { Fonts } from '../../../styles/fonts';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 import { svgArrowPrev, svgStar } from '../../../styles/svgs';
 import useApplicantId from '../../../hooks/useApplicantId';
-import { ChangeEvent } from 'react';
-import { postEvaluation } from '../../../api/evaluation';
-import { useEffect } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
+import {
+	postEvaluation,
+	getEvaluation,
+	putEvaluation,
+	deleteEvaluation,
+} from '../../../api/evaluation';
 import useTriggers from '../../../hooks/useTriggers';
 import IconButton from '../../buttons/IconButton';
 
@@ -23,6 +27,7 @@ export default function ViewRateEditTab({
 	const [comment, onChangeComment, _, onManuallyChangeComment] = useInput();
 	const [scoreInteger, onChangeScoreInteger, __, onManuallyChangeScoreInteger] = useInput();
 	const [scoreDecimal, onChangeScoreDecimal, ___, onManuallyChangeScoreDecimal] = useInput();
+	const [evaluationId, setEvaluationId] = useState<number>();
 	const { onTriggerRefreshEvaluations } = useTriggers();
 
 	const onValidateScoreInteger = (e: ChangeEvent<HTMLInputElement>) => {
@@ -42,22 +47,36 @@ export default function ViewRateEditTab({
 
 	const onSubmit = async () => {
 		if (!applicantId) return;
+		const score = +(scoreInteger + '.' + scoreDecimal);
+		/* POST */
+		if (!isPrevRateExist) await postEvaluation(applicantId, { score, comment });
+		/* PUT */
+		if (isPrevRateExist && evaluationId)
+			await putEvaluation(applicantId, evaluationId, { newScore: score, newComment: comment });
+		onTriggerRefreshEvaluations();
+		onSelectRateTab();
+	};
 
-		if (!isPrevRateExist) {
-			const score = +(scoreInteger + '.' + scoreDecimal);
-			const post = await postEvaluation({ applicantId, score, comment });
-		}
-
-		if (isPrevRateExist) {
-			/* PUT */
-		}
-
+	const onDelete = async () => {
+		if (!applicantId || !evaluationId) return;
+		await deleteEvaluation(applicantId, evaluationId);
 		onTriggerRefreshEvaluations();
 		onSelectRateTab();
 	};
 
 	const setPrevRateData = async () => {
-		/* 이전 데이터 세팅 */
+		if (!applicantId) return;
+		const get = await getEvaluation(applicantId);
+		setEvaluationId(get.data.id);
+		onManuallyChangeComment(get.data.comment);
+		const score = get.data.score + '';
+		if (/\./.test(score)) {
+			onManuallyChangeScoreInteger(score.split('.')[0]);
+			onManuallyChangeScoreDecimal(score.split('.')[1]);
+			return;
+		}
+		onManuallyChangeScoreInteger(score);
+		onManuallyChangeScoreDecimal('0');
 	};
 
 	useEffect(() => {
@@ -71,7 +90,7 @@ export default function ViewRateEditTab({
 				{isPrevRateExist && (
 					<CustomButton
 						label={'평가 삭제'}
-						onClick={() => alert('평가 삭제')}
+						onClick={onDelete}
 						buttonType={'line'}
 						buttonSize={'small'}
 					/>
