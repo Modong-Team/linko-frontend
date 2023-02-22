@@ -33,10 +33,12 @@ type ViewCommentBoxProps = ChildrenType & {
 
 type ViewRateTabProps = {
 	onSelectRateEditTab: () => void;
+	isPrevRateExist: boolean;
 };
 
 type ViewRateEditTabProps = {
 	onSelectRateTab: () => void;
+	isPrevRateExist: boolean;
 };
 
 type ViewSidebarProps = {

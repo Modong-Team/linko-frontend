@@ -13,10 +13,10 @@ import { getEvaluations } from '../../../api/evaluation';
 import useAuthData from '../../../hooks/useAuthData';
 import useLocalLoading from '../../../hooks/useLocalLoading';
 
-export default function ViewRateTab({ onSelectRateEditTab }: ViewRateTabProps) {
+export default function ViewRateTab({ onSelectRateEditTab, isPrevRateExist }: ViewRateTabProps) {
 	const { authData } = useAuthData();
 	const { applicantId } = useApplicantId();
-	const [rates, setRates] = useState<ResponseEvaluation.Get>();
+	const [rates, setRates] = useState<ResponseEvaluation.GetAll>();
 	const { isLocalLoading, onStartLocalLoading, onFinishLocalLoading } = useLocalLoading();
 
 	const checkIfEvaluationExist = () => !!rates?.data.length;
@@ -42,7 +42,7 @@ export default function ViewRateTab({ onSelectRateEditTab }: ViewRateTabProps) {
 				<S.Divider>{svgDivider}</S.Divider>
 			</S.RateInfo>
 			<CustomButton
-				label={'평가하기'}
+				label={isPrevRateExist ? '평가 수정하기' : '평가하기'}
 				onClick={onSelectRateEditTab}
 				buttonType={ButtonTypes.primary}
 				buttonSize={ButtonSizes.large}

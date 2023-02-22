@@ -2,18 +2,32 @@ import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import IconButton from '../../buttons/IconButton';
 import { svgClose } from '../../../styles/svgs';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Fonts } from '../../../styles/fonts';
 import ViewRateTab from './ViewRateTab';
 import ViewMemoTab from './ViewMemoTab';
 import ViewRateEditTab from './ViewRateEditTab';
+import { postEvaluationCheck } from '../../../api/evaluation';
+import useGet from '../../../hooks/useGet';
+import useApplicantId from '../../../hooks/useApplicantId';
+import useLocalLoading from '../../../hooks/useLocalLoading';
 
 export default function ViewDrawer({ isDrawerOpen, onCloseDrawer }: ViewDrawerProps) {
 	const [tab, setTab] = useState(1);
+	const { applicantId } = useApplicantId();
+	const [prevRate, setPrevRate] = useState<ResponseEvaluation.PostCheck>();
+	const { isLocalLoading, onStartLocalLoading, onFinishLocalLoading } = useLocalLoading();
 
 	const onSelectRateTab = () => setTab(1);
 	const onSelectMemoTab = () => setTab(2);
 	const onSelectRateEditTab = () => setTab(3);
+
+	useEffect(() => {
+		if (applicantId) {
+			onStartLocalLoading();
+			useGet(() => postEvaluationCheck({ applicantId }), setPrevRate, onFinishLocalLoading);
+		}
+	}, [applicantId]);
 
 	return (
 		<S.Container isOpen={isDrawerOpen}>
@@ -30,9 +44,19 @@ export default function ViewDrawer({ isDrawerOpen, onCloseDrawer }: ViewDrawerPr
 					</S.TabNavigator>
 				</>
 			)}
-			{tab === 1 && <ViewRateTab onSelectRateEditTab={onSelectRateEditTab} />}
+			{tab === 1 && (
+				<ViewRateTab
+					onSelectRateEditTab={onSelectRateEditTab}
+					isPrevRateExist={prevRate?.data.exists ?? false}
+				/>
+			)}
 			{tab === 2 && <ViewMemoTab />}
-			{tab === 3 && <ViewRateEditTab onSelectRateTab={onSelectRateTab} />}
+			{tab === 3 && (
+				<ViewRateEditTab
+					onSelectRateTab={onSelectRateTab}
+					isPrevRateExist={prevRate?.data.exists ?? false}
+				/>
+			)}
 		</S.Container>
 	);
 }
