@@ -1,7 +1,6 @@
 import { ButtonSizes, ButtonTypes } from '../../constants/buttons';
 import CustomButton from '../buttons/CustomButton';
 import usePreventScroll from '../../hooks/usePreventScroll';
-import useLoadingStatus from '../../hooks/useLoadingStatus';
 import { SC } from '../../styles/styled';
 import styled from 'styled-components';
 import { Devices } from '../../styles/devices';
