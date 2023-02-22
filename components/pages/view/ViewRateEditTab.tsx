@@ -11,6 +11,7 @@ import useApplicantId from '../../../hooks/useApplicantId';
 import { ChangeEvent } from 'react';
 import { postEvaluation } from '../../../api/evaluation';
 import { useEffect } from 'react';
+import useTriggers from '../../../hooks/useTriggers';
 
 export default function ViewRateEditTab({
 	onSelectRateTab,
@@ -21,6 +22,7 @@ export default function ViewRateEditTab({
 	const [comment, onChangeComment, _, onManuallyChangeComment] = useInput();
 	const [scoreInteger, onChangeScoreInteger, __, onManuallyChangeScoreInteger] = useInput();
 	const [scoreDecimal, onChangeScoreDecimal, ___, onManuallyChangeScoreDecimal] = useInput();
+	const { onTriggerRefreshEvaluations } = useTriggers();
 
 	const onValidateScoreInteger = (e: ChangeEvent<HTMLInputElement>) => {
 		if (isNaN(+e.target.value)) return;
@@ -49,6 +51,7 @@ export default function ViewRateEditTab({
 			/* PUT */
 		}
 
+		onTriggerRefreshEvaluations();
 		onSelectRateTab();
 	};
 

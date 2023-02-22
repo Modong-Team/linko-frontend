@@ -11,9 +11,11 @@ import { postEvaluationCheck } from '../../../api/evaluation';
 import useGet from '../../../hooks/useGet';
 import useApplicantId from '../../../hooks/useApplicantId';
 import useLocalLoading from '../../../hooks/useLocalLoading';
+import useTriggers from '../../../hooks/useTriggers';
 
 export default function ViewDrawer({ isDrawerOpen, onCloseDrawer }: ViewDrawerProps) {
 	const [tab, setTab] = useState(1);
+	const { triggers } = useTriggers();
 	const { applicantId } = useApplicantId();
 	const [prevRate, setPrevRate] = useState<ResponseEvaluation.PostCheck>();
 	const { isLocalLoading, onStartLocalLoading, onFinishLocalLoading } = useLocalLoading();
@@ -27,7 +29,7 @@ export default function ViewDrawer({ isDrawerOpen, onCloseDrawer }: ViewDrawerPr
 			onStartLocalLoading();
 			useGet(() => postEvaluationCheck({ applicantId }), setPrevRate, onFinishLocalLoading);
 		}
-	}, [applicantId]);
+	}, [applicantId, triggers.evaluations]);
 
 	return (
 		<S.Container isOpen={isDrawerOpen}>

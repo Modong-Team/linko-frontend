@@ -19,6 +19,7 @@ export const refreshEvaluations = createAction(REFRESH_EVALUATIONS, (date: Date)
 type TriggersStateType = {
 	applicants: Date | null;
 	memos: Date | null;
+	evaluations: Date | null;
 };
 
 type TriggersActionsType = ActionType<
