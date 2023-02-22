@@ -6,29 +6,98 @@ import useActive from '../../../hooks/useActive';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
-import { svgStar16 } from '../../../styles/svgs';
+import { svgArrowPrev, svgStar } from '../../../styles/svgs';
+import useApplicantId from '../../../hooks/useApplicantId';
+import { ChangeEvent } from 'react';
+import { postEvaluation } from '../../../api/evaluation';
+import { useEffect } from 'react';
+import useTriggers from '../../../hooks/useTriggers';
+import IconButton from '../../buttons/IconButton';
 
-export default function ViewRateEditTab({ onSelectRateTab }: ViewRateEditTabProps) {
-	const [comment, onChangeComment] = useInput();
+export default function ViewRateEditTab({
+	onSelectRateTab,
+	isPrevRateExist,
+}: ViewRateEditTabProps) {
+	const { applicantId } = useApplicantId();
 	const [isFocus, onFocus, onBlur] = useActive();
+	const [comment, onChangeComment, _, onManuallyChangeComment] = useInput();
+	const [scoreInteger, onChangeScoreInteger, __, onManuallyChangeScoreInteger] = useInput();
+	const [scoreDecimal, onChangeScoreDecimal, ___, onManuallyChangeScoreDecimal] = useInput();
+	const { onTriggerRefreshEvaluations } = useTriggers();
+
+	const onValidateScoreInteger = (e: ChangeEvent<HTMLInputElement>) => {
+		if (isNaN(+e.target.value)) return;
+		if (+e.target.value >= 10) {
+			onManuallyChangeScoreInteger(10 + '');
+			onManuallyChangeScoreDecimal(0 + '');
+		} else onChangeScoreInteger(e);
+	};
+
+	const onValidateScoreDecimal = (e: ChangeEvent<HTMLInputElement>) => {
+		if (isNaN(+e.target.value)) return;
+		if (+scoreInteger === 10) {
+			onManuallyChangeScoreDecimal(0 + '');
+		} else onChangeScoreDecimal(e);
+	};
+
+	const onSubmit = async () => {
+		if (!applicantId) return;
+
+		if (!isPrevRateExist) {
+			const score = +(scoreInteger + '.' + scoreDecimal);
+			const post = await postEvaluation({ applicantId, score, comment });
+		}
+
+		if (isPrevRateExist) {
+			/* PUT */
+		}
+
+		onTriggerRefreshEvaluations();
+		onSelectRateTab();
+	};
+
+	const setPrevRateData = async () => {
+		/* 이전 데이터 세팅 */
+	};
+
+	useEffect(() => {
+		if (isPrevRateExist) setPrevRateData();
+	}, [applicantId, isPrevRateExist]);
 
 	return (
 		<S.Container>
-			<CustomButton
-				label={'평가 취소'}
-				onClick={onSelectRateTab}
-				buttonType={'line'}
-				buttonSize={'small'}
-			/>
+			<S.Buttons>
+				<IconButton svgIcon={svgArrowPrev} onClick={onSelectRateTab} />
+				{isPrevRateExist && (
+					<CustomButton
+						label={'평가 삭제'}
+						onClick={() => alert('평가 삭제')}
+						buttonType={'line'}
+						buttonSize={'small'}
+					/>
+				)}
+			</S.Buttons>
 			<div>
-				<h2>{svgStar16} 점수</h2>
+				<h2>{svgStar} 점수</h2>
 				<S.ScoreBox>
 					<S.Digit>
-						<input placeholder='0' maxLength={2} />
+						<input
+							placeholder='0'
+							maxLength={2}
+							value={scoreInteger}
+							onChange={onValidateScoreInteger}
+							type={'tel'}
+						/>
 					</S.Digit>
 					<span>.</span>
 					<S.Digit>
-						<input placeholder='0' maxLength={1} />
+						<input
+							placeholder='0'
+							maxLength={1}
+							value={scoreDecimal}
+							onChange={onValidateScoreDecimal}
+							type={'tel'}
+						/>
 					</S.Digit>
 					<span>&nbsp;/ 10점</span>
 				</S.ScoreBox>
@@ -47,7 +116,7 @@ export default function ViewRateEditTab({ onSelectRateTab }: ViewRateEditTabProp
 				</S.CommentBox>
 				<CustomButton
 					label={'평가 등록하기'}
-					onClick={() => alert('평가 등록')}
+					onClick={onSubmit}
 					buttonType={ButtonTypes.primary}
 					buttonSize={ButtonSizes.large}
 				/>
@@ -65,13 +134,7 @@ namespace S {
 		flex-direction: column;
 		overflow: hidden;
 
-		> button {
-			width: fit-content;
-			margin-left: auto;
-			margin-bottom: 0.3rem;
-		}
-
-		> div {
+		> div:not(:first-of-type) {
 			:last-of-type {
 				display: flex;
 				flex-direction: column;
@@ -82,7 +145,7 @@ namespace S {
 				${Fonts.subtitle16semibold}
 				display: flex;
 				align-items: center;
-				gap: 0.5rem;
+				gap: 0.4rem;
 				margin-bottom: 0.8rem;
 			}
 
@@ -90,6 +153,16 @@ namespace S {
 				width: 100%;
 				margin-top: 2.4rem;
 			}
+		}
+	`;
+
+	export const Buttons = styled.div`
+		display: flex;
+
+		> button:nth-of-type(2) {
+			position: absolute;
+			right: 2.4rem;
+			transform: translateY(-0.4rem);
 		}
 	`;
 
@@ -104,6 +177,11 @@ namespace S {
 		> span {
 			display: inline-block;
 			margin-top: 0.5rem;
+
+			:last-of-type {
+				${Fonts.subtitle20medium}
+				color: ${Colors.gray600};
+			}
 		}
 	`;
 

@@ -3958,3 +3958,16 @@ export const svgKakao = (
 		</defs>
 	</svg>
 );
+
+export const svgArrowPrev = (
+	<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+		<path
+			d='M12 5L5 12L12 19'
+			stroke='#383C46'
+			strokeWidth='2'
+			strokeLinecap='round'
+			strokeLinejoin='round'
+		/>
+		<path d='M6 12L19 12' stroke='#383C46' strokeWidth='2' strokeLinecap='round' />
+	</svg>
+);
