@@ -7,6 +7,8 @@ import { AlphaToHex } from '../../../styles/alphaToHex';
 import useApplicant from '../../../hooks/useApplicant';
 import { ApplicantStatusCodeLabel } from '../../../constants/applicantStatusCode';
 import useApplication from '../../../hooks/useApplication';
+import { EssentialCategories, EssentialIds } from '../../../constants/essentials';
+import parsePhoneNumber from '../../../utils/parsePhoneNumber';
 
 export default function ViewSidebar({ page, onChangePage }: ViewSidebarProps) {
 	const { applicant } = useApplicant();
@@ -15,6 +17,47 @@ export default function ViewSidebar({ page, onChangePage }: ViewSidebarProps) {
 	const getCurrentLabel = () => {
 		const statusCode: keyof typeof ApplicantStatusCodeLabel = applicant?.data.status as any;
 		if (statusCode) return ApplicantStatusCodeLabel[statusCode];
+	};
+
+	const getEssentialId = (essential: ResponseApplicant.EssentialAnswer) => {
+		const essentialQuestion = essential.essentialQuestion as keyof typeof EssentialIds;
+		const essentialId = EssentialIds[essentialQuestion];
+		return essentialId;
+	};
+
+	const getEmail = () => {
+		return applicant?.data.essentialAnswers.find((essential) => {
+			const essentialId = getEssentialId(essential);
+			return EssentialCategories.email.includes(essentialId);
+		});
+	};
+
+	const getPhone = () => {
+		return applicant?.data.essentialAnswers.find((essential) => {
+			const essentialId = getEssentialId(essential);
+			return EssentialCategories.phone.includes(essentialId);
+		});
+	};
+
+	const getGender = () => {
+		return applicant?.data.essentialAnswers.find((essential) => {
+			const essentialId = getEssentialId(essential);
+			return EssentialCategories.gender.includes(essentialId);
+		});
+	};
+
+	const getBirth = () => {
+		return applicant?.data.essentialAnswers.find((essential) => {
+			const essentialId = getEssentialId(essential);
+			return EssentialCategories.birth.includes(essentialId);
+		});
+	};
+
+	const getAcademic = () => {
+		return applicant?.data.essentialAnswers.filter((essential) => {
+			const essentialId = getEssentialId(essential);
+			return EssentialCategories.academic.includes(essentialId);
+		});
 	};
 
 	return (
@@ -37,17 +80,36 @@ export default function ViewSidebar({ page, onChangePage }: ViewSidebarProps) {
 					/>
 				</h1>
 				<div>
-					<p>{svgMail}linko@ac.kr</p>
-					<p>{svgPhone}010-1111-2222</p>
-					<p>{svgGender}여자</p>
-					<p>{svgBirth}1998. 02. 20</p>
-					<p>
-						{svgAcademic}연세대학교
-						<br />
-						경영학과
-						<br />
-						2017123077
-					</p>
+					{getEmail() && (
+						<p>
+							{svgMail}
+							{getEmail()?.essentialAnswer}
+						</p>
+					)}
+					{getPhone() && (
+						<p>
+							{svgPhone}
+							{parsePhoneNumber(getPhone()?.essentialAnswer + '')}
+						</p>
+					)}
+					{getGender() && (
+						<p>
+							{svgGender}
+							{getGender()?.essentialAnswer}
+						</p>
+					)}
+					{getBirth() && (
+						<p>
+							{svgBirth}
+							{getBirth()?.essentialAnswer}
+						</p>
+					)}
+					{!!getAcademic()?.length && (
+						<p>
+							{svgAcademic}
+							{getAcademic()?.reduce((acc, cur) => acc + cur.essentialAnswer + '\n', '')}
+						</p>
+					)}
 				</div>
 			</S.Meta>
 			<S.FormTitles>
@@ -93,6 +155,7 @@ namespace S {
 				display: flex;
 				align-items: flex-start;
 				gap: 1.1rem;
+				white-space: pre-wrap;
 
 				> svg {
 					position: relative;

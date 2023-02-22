@@ -39,11 +39,7 @@ declare namespace ResponseApplicant {
 			rate: number;
 			status: string;
 			submitDate: string;
-			essentialAnswers: {
-				id: number;
-				essentialQuestion: string;
-				essentialAnswer: string;
-			}[];
+			essentialAnswers: EssentialAnswer[];
 			questionAnswers: {
 				id: string;
 				question: string;
@@ -52,6 +48,12 @@ declare namespace ResponseApplicant {
 			fail: boolean;
 			applicationId: number;
 		};
+	};
+
+	type EssentialAnswer = {
+		id: number;
+		essentialQuestion: string;
+		essentialAnswer: string;
 	};
 
 	type PatchStatus = {
