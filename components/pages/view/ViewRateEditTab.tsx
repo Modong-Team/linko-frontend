@@ -11,7 +11,6 @@ import useApplicantId from '../../../hooks/useApplicantId';
 import { ChangeEvent } from 'react';
 import { postEvaluation } from '../../../api/evaluation';
 import { useEffect } from 'react';
-import useLocalLoading from '../../../hooks/useLocalLoading';
 
 export default function ViewRateEditTab({
 	onSelectRateTab,
@@ -22,9 +21,9 @@ export default function ViewRateEditTab({
 	const [comment, onChangeComment, _, onManuallyChangeComment] = useInput();
 	const [scoreInteger, onChangeScoreInteger, __, onManuallyChangeScoreInteger] = useInput();
 	const [scoreDecimal, onChangeScoreDecimal, ___, onManuallyChangeScoreDecimal] = useInput();
-	const { isLocalLoading, onStartLocalLoading, onFinishLocalLoading } = useLocalLoading();
 
 	const onValidateScoreInteger = (e: ChangeEvent<HTMLInputElement>) => {
+		if (isNaN(+e.target.value)) return;
 		if (+e.target.value >= 10) {
 			onManuallyChangeScoreInteger(10 + '');
 			onManuallyChangeScoreDecimal(0 + '');
@@ -32,6 +31,7 @@ export default function ViewRateEditTab({
 	};
 
 	const onValidateScoreDecimal = (e: ChangeEvent<HTMLInputElement>) => {
+		if (isNaN(+e.target.value)) return;
 		if (+scoreInteger === 10) {
 			onManuallyChangeScoreDecimal(0 + '');
 		} else onChangeScoreDecimal(e);
