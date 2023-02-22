@@ -7,17 +7,17 @@ import { Fonts } from '../../../styles/fonts';
 import ViewRateTab from './ViewRateTab';
 import ViewMemoTab from './ViewMemoTab';
 import ViewRateEditTab from './ViewRateEditTab';
-import { postEvaluationCheck } from '../../../api/evaluation';
 import useGet from '../../../hooks/useGet';
 import useApplicantId from '../../../hooks/useApplicantId';
 import useLocalLoading from '../../../hooks/useLocalLoading';
 import useTriggers from '../../../hooks/useTriggers';
+import { getEvaluationExist } from '../../../api/evaluation';
 
 export default function ViewDrawer({ isDrawerOpen, onCloseDrawer }: ViewDrawerProps) {
 	const [tab, setTab] = useState(1);
 	const { triggers } = useTriggers();
 	const { applicantId } = useApplicantId();
-	const [prevRate, setPrevRate] = useState<ResponseEvaluation.PostCheck>();
+	const [prevRate, setPrevRate] = useState<ResponseEvaluation.GetExist>();
 	const { isLocalLoading, onStartLocalLoading, onFinishLocalLoading } = useLocalLoading();
 
 	const onSelectRateTab = () => setTab(1);
@@ -27,7 +27,7 @@ export default function ViewDrawer({ isDrawerOpen, onCloseDrawer }: ViewDrawerPr
 	useEffect(() => {
 		if (applicantId) {
 			onStartLocalLoading();
-			useGet(() => postEvaluationCheck({ applicantId }), setPrevRate, onFinishLocalLoading);
+			useGet(() => getEvaluationExist(applicantId), setPrevRate, onFinishLocalLoading);
 		}
 	}, [applicantId, triggers.evaluations]);
 

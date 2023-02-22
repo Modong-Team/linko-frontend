@@ -37,10 +37,14 @@ export default function ViewRateTab({ onSelectRateEditTab, isPrevRateExist }: Vi
 					<h3>평점</h3>
 					<div>
 						{svgStar}
-						<div>
-							{applicant?.data.rate}
-							<span>/10</span>
-						</div>
+						{checkIfEvaluationExist() ? (
+							<div>
+								{applicant?.data.rate}
+								<span>/10</span>
+							</div>
+						) : (
+							<div>평가 없음</div>
+						)}
 					</div>
 				</div>
 				<div>
@@ -74,7 +78,7 @@ export default function ViewRateTab({ onSelectRateEditTab, isPrevRateExist }: Vi
 						/>
 					))
 				) : (
-					<p>아무도 메모를 남기지 않았어요.</p>
+					<p>평가를 남겨주세요.</p>
 				)}
 			</ViewCommentBox>
 		</S.Container>

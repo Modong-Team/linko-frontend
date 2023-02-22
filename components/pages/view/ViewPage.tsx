@@ -5,10 +5,12 @@ import ViewSidebar from './ViewSidebar';
 import { Styles } from '../../../styles/styles';
 import useApplicantId from '../../../hooks/useApplicantId';
 import { useEffect, useState } from 'react';
+import useTriggers from '../../../hooks/useTriggers';
 
 export default function ViewPage({ applicantId }: ViewPageProps) {
 	const [page, setPage] = useState(1);
 	const { onSetApplicantId } = useApplicantId();
+	const { triggers } = useTriggers();
 
 	const onChangePage = (page: number) => setPage(page);
 	const onPrevPage = () => setPage(page - 1);
@@ -16,7 +18,7 @@ export default function ViewPage({ applicantId }: ViewPageProps) {
 
 	useEffect(() => {
 		if (applicantId) onSetApplicantId(applicantId);
-	}, [applicantId]);
+	}, [applicantId, triggers.evaluations]);
 
 	return (
 		<S.Container>

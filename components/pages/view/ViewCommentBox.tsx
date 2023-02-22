@@ -19,7 +19,7 @@ namespace S {
 		> p {
 			${Fonts.subtitle14medium}
 			color: ${Colors.gray700};
-			margin: 4.4rem auto;
+			margin: 3.2rem auto;
 		}
 	`;
 }

@@ -6,7 +6,6 @@ import MoreButton from '../../buttons/MoreButton';
 import useActive from '../../../hooks/useActive';
 import { deleteMemo } from '../../../api/memo';
 import useTriggers from '../../../hooks/useTriggers';
-import { deleteEvaluation } from '../../../api/evaluation';
 
 export default function ViewComment({
 	id,
@@ -17,21 +16,11 @@ export default function ViewComment({
 	rate,
 }: ViewCommentProps) {
 	const [isHover, onHover, onBlur] = useActive();
-	const { onTriggerRefreshMemos, onTriggerRefreshEvaluations } = useTriggers();
-
-	const onClickDelete = async () => {
-		if (isRateComment) onDeleteEvaluation();
-		else onDeleteMemo();
-	};
+	const { onTriggerRefreshMemos } = useTriggers();
 
 	const onDeleteMemo = async () => {
-		const deleted = await deleteMemo(id);
+		await deleteMemo(id);
 		onTriggerRefreshMemos();
-	};
-
-	const onDeleteEvaluation = async () => {
-		const deleted = await deleteEvaluation(id);
-		onTriggerRefreshEvaluations();
 	};
 
 	const onCheckIfMoreButtonShouldBeHidden = () => {
@@ -54,7 +43,7 @@ export default function ViewComment({
 			<p>{content}</p>
 			<MoreButton
 				label1={'삭제하기'}
-				onClick1={onClickDelete}
+				onClick1={onDeleteMemo}
 				translateX={0}
 				isHidden={onCheckIfMoreButtonShouldBeHidden()}
 			/>

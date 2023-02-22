@@ -1,17 +1,10 @@
 declare namespace RequestEvaluation {
 	type Post = {
-		applicantId: number;
 		score: number;
 		comment: string;
 	};
 
-	type PostCheck = {
-		applicantId: number;
-	};
-
 	type Put = {
-		evaluationId: number;
-		applicantId: number;
 		newScore: number;
 		newComment: string;
 	};
@@ -35,17 +28,22 @@ declare namespace ResponseEvaluation {
 	};
 
 	type Get = {
-		id: number;
-		applicationId: number;
-		applicantId: number;
-		writerId: number;
-		writerMemberId: string;
-		writerName: string;
-		comment: string;
-		score: number;
+		status: number;
+		message: string;
+		code: string;
+		data: {
+			id: number;
+			applicationId: number;
+			applicantId: number;
+			writerId: number;
+			writerMemberId: string;
+			writerName: string;
+			comment: string;
+			score: number;
+		};
 	};
 
-	type PostCheck = {
+	type GetExist = {
 		status: number;
 		message: string;
 		code: string;
