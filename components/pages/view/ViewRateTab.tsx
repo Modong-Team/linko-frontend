@@ -51,7 +51,8 @@ export default function ViewRateTab({ onSelectRateEditTab, isPrevRateExist }: Vi
 					<h3>평가 인원</h3>
 					<div>
 						<div>
-							3<span>/8</span>
+							{applicant?.data.numOfEvaluator}
+							<span>/3</span>
 						</div>
 					</div>
 				</div>
