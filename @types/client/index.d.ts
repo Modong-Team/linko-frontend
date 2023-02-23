@@ -41,6 +41,7 @@ type MainBoardCardProps = MainBoardColumnProps & {
 	name: string;
 	rate: number;
 	submitDate: string;
+	numOfEvaluator: number;
 	fail: boolean;
 	isSelected: boolean;
 };

@@ -26,6 +26,7 @@ export default function MainBoardCard({
 	name,
 	rate,
 	submitDate,
+	numOfEvaluator,
 	fail,
 	isSelected,
 	applicantStatusCode,
@@ -106,7 +107,7 @@ export default function MainBoardCard({
 				<h4>{parseSubmitDate(submitDate)}</h4>
 				<S.StatusElements>
 					<StatusElement label={rate + ''} isGray={false} cardMode={checkCardMode()} />
-					<StatusElement label={rate + '/3'} isGray={true} cardMode={checkCardMode()} />
+					<StatusElement label={numOfEvaluator + '/3'} isGray={true} cardMode={checkCardMode()} />
 				</S.StatusElements>
 			</div>
 		</S.Container>

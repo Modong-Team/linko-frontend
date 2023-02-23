@@ -169,6 +169,7 @@ export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumn
 						name={applicant.name}
 						rate={applicant.rate}
 						submitDate={applicant.submitDate}
+						numOfEvaluator={applicant.numOfEvaluator}
 						fail={applicant.fail}
 						applicantStatusCode={applicantStatusCode}
 						isSelected={checkIsSelected()}
