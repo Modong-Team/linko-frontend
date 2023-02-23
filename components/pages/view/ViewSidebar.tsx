@@ -5,16 +5,25 @@ import FilterButton from '../../buttons/FilterButton';
 import { svgMail, svgPhone, svgGender, svgBirth, svgAcademic } from '../../../styles/svgs';
 import { AlphaToHex } from '../../../styles/alphaToHex';
 import useApplicant from '../../../hooks/useApplicant';
-import { ApplicantStatusCodeLabel } from '../../../constants/applicantStatusCode';
+import {
+	ApplicantStatusCode,
+	ApplicantStatusCodeLabel,
+} from '../../../constants/applicantStatusCode';
 import useApplication from '../../../hooks/useApplication';
 import { EssentialCategories, EssentialIds } from '../../../constants/essentials';
 import parsePhoneNumber from '../../../utils/parsePhoneNumber';
+import { patchApplicantCancelFail, patchApplicantStatus } from '../../../api/applicant';
+import useApplicantId from '../../../hooks/useApplicantId';
+import useTriggers from '../../../hooks/useTriggers';
 
 export default function ViewSidebar({ page, onChangePage }: ViewSidebarProps) {
 	const { applicant } = useApplicant();
+	const { applicantId } = useApplicantId();
 	const { application } = useApplication();
+	const { onTriggerRefreshApplicant } = useTriggers();
 
 	const getCurrentLabel = () => {
+		if (applicant?.data.fail) return ApplicantStatusCodeLabel.FAIL;
 		const statusCode: keyof typeof ApplicantStatusCodeLabel = applicant?.data.status as any;
 		if (statusCode) return ApplicantStatusCodeLabel[statusCode];
 	};
@@ -60,6 +69,15 @@ export default function ViewSidebar({ page, onChangePage }: ViewSidebarProps) {
 		});
 	};
 
+	const onChangeApplicantStatus = async (
+		applicantStatusCode: ValueOf<typeof ApplicantStatusCode>,
+	) => {
+		if (!applicantId) return;
+		if (applicant?.data.fail) await patchApplicantCancelFail(applicantId);
+		await patchApplicantStatus(applicantId, { applicantStatusCode });
+		onTriggerRefreshApplicant();
+	};
+
 	return (
 		<S.Container>
 			<S.Meta>
@@ -67,15 +85,15 @@ export default function ViewSidebar({ page, onChangePage }: ViewSidebarProps) {
 					{applicant?.data.name}
 					<FilterButton
 						label1={'지원 접수'}
-						onClick1={() => alert('미구현')}
+						onClick1={() => onChangeApplicantStatus(ApplicantStatusCode.ACCEPT)}
 						label2={'서류 전형'}
-						onClick2={() => alert('미구현')}
+						onClick2={() => onChangeApplicantStatus(ApplicantStatusCode.APPLICATION)}
 						label3={'면접 전형'}
-						onClick3={() => alert('미구현')}
+						onClick3={() => onChangeApplicantStatus(ApplicantStatusCode.INTERVIEW)}
 						label4={'최종 합격'}
-						onClick4={() => alert('미구현')}
+						onClick4={() => onChangeApplicantStatus(ApplicantStatusCode.SUCCESS)}
 						label5={'탈락'}
-						onClick5={() => alert('미구현')}
+						onClick5={() => onChangeApplicantStatus(ApplicantStatusCode.FAIL)}
 						currentLabel={getCurrentLabel() + ''}
 					/>
 				</h1>
