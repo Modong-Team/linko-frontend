@@ -85,6 +85,7 @@ namespace S {
 
 		> p {
 			${Fonts.body14regular}
+			white-space: pre-wrap;
 		}
 
 		> button {
