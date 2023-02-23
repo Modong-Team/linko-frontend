@@ -58,7 +58,9 @@ export default function MainSidebar({ applicationId }: MainPageProps) {
 				</S.ProfileImage>
 				<h2>{clubData?.name}</h2>
 				<h3>{clubData?.clubCode}</h3>
-				<S.ProfilePopulation>{svgUser24} 3</S.ProfilePopulation>
+				<S.ProfilePopulation>
+					{svgUser24} {clubData?.numOfMember}
+				</S.ProfilePopulation>
 			</S.SidebarProfile>
 			<S.SidebarApplications isScrollExist={isScrollExist}>
 				<h3>

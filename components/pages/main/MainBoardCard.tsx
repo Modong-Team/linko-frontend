@@ -20,6 +20,7 @@ import CheckIcon from '../../buttons/CheckIcon';
 import useActive from '../../../hooks/useActive';
 import useRouteToPath from '../../../hooks/useRouteToPath';
 import { Paths } from '../../../constants/paths';
+import useClubData from '../../../hooks/useClubData';
 
 export default function MainBoardCard({
 	id,
@@ -32,6 +33,7 @@ export default function MainBoardCard({
 	applicantStatusCode,
 }: MainBoardCardProps) {
 	const onRouteToView = useRouteToPath(Paths.view + '/' + id);
+	const { clubData } = useClubData();
 	const { selectedStatus, onSelectStatus } = useSelectedStatus();
 	const { selectedApplicants, onSelectApplicant, onDeselectApplicant } = useSelectedApplicants();
 	const { onTriggerRefreshApplicants } = useTriggers();
@@ -107,7 +109,11 @@ export default function MainBoardCard({
 				<h4>{parseSubmitDate(submitDate)}</h4>
 				<S.StatusElements>
 					<StatusElement label={rate + ''} isGray={false} cardMode={checkCardMode()} />
-					<StatusElement label={numOfEvaluator + '/3'} isGray={true} cardMode={checkCardMode()} />
+					<StatusElement
+						label={numOfEvaluator + '/' + clubData?.numOfMember}
+						isGray={true}
+						cardMode={checkCardMode()}
+					/>
 				</S.StatusElements>
 			</div>
 		</S.Container>

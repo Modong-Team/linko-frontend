@@ -22,6 +22,7 @@ declare namespace ResponseClub {
 		clubCode: string;
 		startDate: string;
 		endDate: string;
+		numOfMember: number;
 	};
 
 	type Post = {

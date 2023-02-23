@@ -13,9 +13,11 @@ import { getEvaluations } from '../../../api/evaluation';
 import useAuthData from '../../../hooks/useAuthData';
 import useLocalLoading from '../../../hooks/useLocalLoading';
 import useApplicant from '../../../hooks/useApplicant';
+import useClubData from '../../../hooks/useClubData';
 
 export default function ViewRateTab({ onSelectRateEditTab, isPrevRateExist }: ViewRateTabProps) {
 	const { authData } = useAuthData();
+	const { clubData } = useClubData();
 	const { applicant } = useApplicant();
 	const { applicantId } = useApplicantId();
 	const [rates, setRates] = useState<ResponseEvaluation.GetAll>();
@@ -52,7 +54,7 @@ export default function ViewRateTab({ onSelectRateEditTab, isPrevRateExist }: Vi
 					<div>
 						<div>
 							{applicant?.data.numOfEvaluator}
-							<span>/3</span>
+							<span>/{clubData?.numOfMember}</span>
 						</div>
 					</div>
 				</div>
