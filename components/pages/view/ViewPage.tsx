@@ -18,7 +18,7 @@ export default function ViewPage({ applicantId }: ViewPageProps) {
 
 	useEffect(() => {
 		if (applicantId) onSetApplicantId(applicantId);
-	}, [applicantId, triggers.evaluations]);
+	}, [applicantId, triggers.evaluations, triggers.applicant]);
 
 	return (
 		<S.Container>
