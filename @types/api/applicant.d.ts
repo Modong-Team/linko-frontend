@@ -39,6 +39,7 @@ declare namespace ResponseApplicant {
 			rate: number;
 			status: string;
 			submitDate: string;
+			numOfEvaluator: number;
 			essentialAnswers: EssentialAnswer[];
 			questionAnswers: {
 				id: string;

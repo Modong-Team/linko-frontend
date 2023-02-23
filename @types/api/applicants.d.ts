@@ -17,6 +17,7 @@ declare namespace ResponseApplicants {
 		rate: number;
 		status: string;
 		submitDate: string;
+		numOfEvaluator: number;
 		applicationId: number;
 		fail: boolean;
 	};
