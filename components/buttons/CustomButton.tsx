@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { CustomButtonProps, CustomButtonType } from '../../@types/client';
-import { ButtonTypes } from '../../constants/buttons';
+import { ButtonSizes, ButtonTypes } from '../../constants/buttons';
 import {
 	ButtonStyles,
 	LineButtonColors,
+	MediumLineButtonColors,
 	PrimaryButtonColors,
 	RedButtonColors,
 	SecondaryButtonColors,
@@ -24,6 +25,7 @@ export default function CustomButton({
 	children,
 	disabled,
 	isHidden,
+	gap,
 }: CustomButtonProps & Partial<ChildrenType>) {
 	return (
 		<S.Button
@@ -34,7 +36,8 @@ export default function CustomButton({
 			width={width}
 			justify={justify}
 			disabled={disabled}
-			isHidden={isHidden}>
+			isHidden={isHidden}
+			gap={gap}>
 			<span>
 				{!isSvgIconAtRight && svgIcon}
 				{label}
@@ -57,12 +60,20 @@ namespace S {
 		${(props) => props.buttonType === ButtonTypes.secondary && SecondaryButtonColors.active}
 		${(props) => props.buttonType === ButtonTypes.red && RedButtonColors.active}
 		${(props) => props.buttonType === ButtonTypes.line && LineButtonColors.active}
+		${(props) =>
+			props.buttonType === ButtonTypes.line &&
+			props.buttonSize === ButtonSizes.medium &&
+			MediumLineButtonColors.active}
 
     &:hover {
 			${(props) => props.buttonType === ButtonTypes.primary && PrimaryButtonColors.hover}
 			${(props) => props.buttonType === ButtonTypes.secondary && SecondaryButtonColors.hover}
       ${(props) => props.buttonType === ButtonTypes.red && RedButtonColors.hover}
       ${(props) => props.buttonType === ButtonTypes.line && LineButtonColors.hover}
+			${(props) =>
+				props.buttonType === ButtonTypes.line &&
+				props.buttonSize === ButtonSizes.medium &&
+				MediumLineButtonColors.hover}
 		}
 
 		&:active {
@@ -70,6 +81,10 @@ namespace S {
 			${(props) => props.buttonType === ButtonTypes.secondary && SecondaryButtonColors.pressed}
       ${(props) => props.buttonType === ButtonTypes.red && RedButtonColors.pressed}
       ${(props) => props.buttonType === ButtonTypes.line && LineButtonColors.pressed}
+			${(props) =>
+				props.buttonType === ButtonTypes.line &&
+				props.buttonSize === ButtonSizes.medium &&
+				MediumLineButtonColors.pressed}
 		}
 
 		&:disabled {
@@ -78,14 +93,22 @@ namespace S {
 			${(props) => props.buttonType === ButtonTypes.secondary && SecondaryButtonColors.disabled}
       ${(props) => props.buttonType === ButtonTypes.red && RedButtonColors.disabled}
       ${(props) => props.buttonType === ButtonTypes.line && LineButtonColors.disabled}
+			${(props) =>
+				props.buttonType === ButtonTypes.line &&
+				props.buttonSize === ButtonSizes.medium &&
+				MediumLineButtonColors.disabled}
 		}
 
 		> span {
 			display: flex;
 			align-items: center;
-			justify-content: ${(props) => (props.justify ? props.justify : 'center')};
-			gap: 0.4rem;
+			justify-content: ${(props) => props.justify ?? 'center'};
+			gap: ${(props) => props.gap ?? '0.4rem'};
 			visibility: ${(props) => props.isLoading && 'hidden'};
+
+			> svg {
+				flex-shrink: 0;
+			}
 		}
 
 		visibility: ${(props) => props.isHidden && 'hidden'};
