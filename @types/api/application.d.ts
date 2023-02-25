@@ -23,6 +23,7 @@ declare namespace ResponseApplication {
 			id: number;
 			title: string;
 			urlId: string;
+			status: 'prepare' | 'open' | 'close';
 			essentialQuestions: {
 				id: number;
 				content: string;
