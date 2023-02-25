@@ -9,13 +9,37 @@ import useAnswers from '../../../hooks/useAnswers';
 import toggleMultiAnswer from '../../../utils/toggleMultiAnswer';
 import isMultiChecked from '../../../utils/isMultiChecked';
 import { Devices } from '../../../styles/devices';
+import { useEffect } from 'react';
 
-export default function ReplyForms({ formIdx }: NewFormsProps) {
+export default function ReplyForms({
+	formIdx,
+	onAddError,
+	onRemoveError,
+	onSetErrors,
+}: NewFormsProps & ReplyErrorProps) {
 	const { answers, onUpdateQuestionAnswer } = useAnswers();
 	const { application } = useApplication();
 
 	const getQuestionAnswer = (questionId: number) =>
 		answers.questionAnswers.find((essential) => essential.questionId === questionId)?.answer || '';
+
+	const onRequestUpdateQuestionAnswer = (id: number, value: string) => {
+		if (value === '') onAddError(id);
+		else onRemoveError(id);
+		onUpdateQuestionAnswer(id, value);
+	};
+
+	useEffect(() => {
+		const errors: number[] = [];
+		application?.data.forms[formIdx].questions.forEach((question) => {
+			if (
+				question.questionType !== QuestionTypes.multiSelectQuestion &&
+				answers.questionAnswers[formIdx].answer === ''
+			)
+				errors.push(question.id);
+		});
+		onSetErrors([...errors]);
+	}, [formIdx]);
 
 	return (
 		<S.Container>
@@ -26,9 +50,9 @@ export default function ReplyForms({ formIdx }: NewFormsProps) {
 					{question.questionType === QuestionTypes.question && (
 						<ReplyTextInput
 							label={'답변'}
-							errorMessage={''}
+							isError={getQuestionAnswer(question.id) === ''}
 							value={getQuestionAnswer(question.id)}
-							onChange={(e) => onUpdateQuestionAnswer(question.id, e.target.value)}
+							onChange={(e) => onRequestUpdateQuestionAnswer(question.id, e.target.value)}
 							key={i}
 						/>
 					)}
@@ -36,10 +60,9 @@ export default function ReplyForms({ formIdx }: NewFormsProps) {
 						question.options.map((option, i) => (
 							<ReplyRadioInput
 								label={option}
-								errorMessage={''}
 								name={question.id + ''}
 								isChecked={getQuestionAnswer(question.id) === option}
-								onChange={() => onUpdateQuestionAnswer(question.id, option)}
+								onChange={() => onRequestUpdateQuestionAnswer(question.id, option)}
 								key={i}
 							/>
 						))}
@@ -47,7 +70,6 @@ export default function ReplyForms({ formIdx }: NewFormsProps) {
 						question.options.map((option, i) => (
 							<ReplyCheckInput
 								label={option}
-								errorMessage={''}
 								isChecked={isMultiChecked(getQuestionAnswer(question.id), option)}
 								onChange={(e) =>
 									onUpdateQuestionAnswer(
@@ -88,6 +110,10 @@ namespace S {
 
 		> div:not(:last-of-type) {
 			margin-bottom: 4rem;
+		}
+
+		> div:last-of-type > div:last-of-type {
+			margin-bottom: 0 !important;
 		}
 	`;
 }

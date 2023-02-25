@@ -4,6 +4,7 @@ import { Fonts } from '../../styles/fonts';
 import { css } from 'styled-components';
 import { Devices } from '../../styles/devices';
 import AutoResizeTextArea from './AutoResizeTextArea';
+import { useState } from 'react';
 
 export default function ReplyTextInput({
 	name,
@@ -19,14 +20,21 @@ export default function ReplyTextInput({
 	type,
 	isError,
 }: ReplyTextInputProps) {
+	const [isTouched, setIsTouched] = useState(false);
+	const onFocus = () => setIsTouched(true);
+	const checkIfEmpty = () => value === '';
+	const checkIfError = () => isError || checkIfEmpty();
 	return (
-		<S.Container isError={isError ?? false}>
-			{!isSingleLine && <AutoResizeTextArea value={value} onChange={onChange} placeholder={' '} />}
+		<S.Container isError={(isTouched && checkIfError()) ?? false}>
+			{!isSingleLine && (
+				<AutoResizeTextArea value={value} onChange={onChange} onFocus={onFocus} placeholder={' '} />
+			)}
 			{isSingleLine && (
 				<input
 					value={value}
 					onChange={onChange}
 					onBlur={onBlur}
+					onFocus={onFocus}
 					placeholder={' '}
 					maxLength={maxLength}
 					minLength={minLength}
@@ -37,7 +45,7 @@ export default function ReplyTextInput({
 				/>
 			)}
 			<label>{label}</label>
-			<p>{errorMessage}</p>
+			<p>{errorMessage || '답변을 입력하세요.'}</p>
 		</S.Container>
 	);
 }
@@ -132,7 +140,7 @@ namespace S {
 	`;
 
 	const ErrorStyle = css`
-		margin-bottom: calc(3.2rem + 2.2rem);
+		margin-bottom: calc(3.2rem + 2.2rem) !important;
 
 		> textarea,
 		> input {

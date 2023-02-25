@@ -16,9 +16,14 @@ export default function ReplyPage({ urlId }: ReplyPageProps) {
 	const { onSetApplication } = useApplication();
 	const [page, setPage] = useState(-1);
 	const { onStartGlobalLoading, onFinishGlobalLoading } = useLoadingStatus();
+	const [errors, setErrors] = useState<number[]>([]);
 
 	const onPrevPage = () => setPage(page - 1);
 	const onNextPage = () => setPage(page + 1);
+
+	const onAddError = (id: number) => setErrors([...errors, id]);
+	const onRemoveError = (id: number) => setErrors(errors.filter((error) => error !== id));
+	const onSetErrors = (errors: number[]) => setErrors([...errors]);
 
 	useEffect(() => {
 		if (urlId) useGet(() => getApplicationByUrlId(urlId), setApplication, onFinishGlobalLoading);
@@ -38,8 +43,18 @@ export default function ReplyPage({ urlId }: ReplyPageProps) {
 	return (
 		<S.Container>
 			<ReplyMeta />
-			<ReplyMain page={page} />
-			<ReplyPageButtons page={page} onPrevPage={onPrevPage} onNextPage={onNextPage} />
+			<ReplyMain
+				page={page}
+				onAddError={onAddError}
+				onRemoveError={onRemoveError}
+				onSetErrors={onSetErrors}
+			/>
+			<ReplyPageButtons
+				page={page}
+				onPrevPage={onPrevPage}
+				onNextPage={onNextPage}
+				isNextButtonDisabled={!!errors.length}
+			/>
 		</S.Container>
 	);
 }

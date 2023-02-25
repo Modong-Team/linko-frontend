@@ -7,9 +7,15 @@ import useAnswers from '../../../hooks/useAnswers';
 import { EssentialCategories, Essentials } from '../../../constants/essentials';
 import useUniqueId from '../../../hooks/useUniqueId';
 import { Devices } from '../../../styles/devices';
+import { useEffect, useRef } from 'react';
 
-export default function ReplyEssentials() {
+export default function ReplyEssentials({
+	onAddError,
+	onRemoveError,
+	onSetErrors,
+}: ReplyErrorProps) {
 	const name = useUniqueId();
+	const isMount = useRef(true);
 	const { application } = useApplication();
 	const { answers, onUpdateName, onUpdateEssentialAnswer } = useAnswers();
 
@@ -38,6 +44,30 @@ export default function ReplyEssentials() {
 			(essential) => essential.essentialQuestionId === essentialQuestionId,
 		)?.answer;
 
+	const onRequestUpdateName = (value: string) => {
+		if (value === '') onAddError(Essentials.name);
+		else onRemoveError(Essentials.name);
+		onUpdateName(value);
+		return true;
+	};
+
+	const onRequestUpdateEssentialAnswer = (id: number, value: string) => {
+		if (value === '') onAddError(id);
+		else onRemoveError(id);
+		onUpdateEssentialAnswer(id, value);
+	};
+
+	useEffect(() => {
+		if (!answers.essentialAnswers.length) return;
+		if (!isMount.current) return;
+		const errors: number[] = [];
+		answers.essentialAnswers.forEach((answer) => {
+			if (answer.answer === '') errors.push(answer.essentialQuestionId);
+		});
+		onSetErrors([...errors]);
+		isMount.current = false;
+	}, [answers]);
+
 	return (
 		<S.Container>
 			<h1>지원자 정보</h1>
@@ -46,13 +76,12 @@ export default function ReplyEssentials() {
 				{getDefault()?.map((question, i) => (
 					<ReplyTextInput
 						label={question.content}
-						errorMessage={''}
 						value={getEssentialAnswer(question.id) || ''}
 						onChange={(e) =>
 							question.id === Essentials.name
-								? onUpdateName(e.target.value) &&
-								  onUpdateEssentialAnswer(question.id, e.target.value)
-								: onUpdateEssentialAnswer(question.id, e.target.value)
+								? onRequestUpdateName(e.target.value) &&
+								  onRequestUpdateEssentialAnswer(question.id, e.target.value)
+								: onRequestUpdateEssentialAnswer(question.id, e.target.value)
 						}
 						key={i}
 					/>
@@ -63,17 +92,15 @@ export default function ReplyEssentials() {
 					<h2>성별</h2>
 					<ReplyRadioInput
 						label={'남성'}
-						errorMessage={''}
 						name={name}
 						isChecked={getEssentialAnswer(Essentials.gender) === '남성'}
-						onChange={() => onUpdateEssentialAnswer(Essentials.gender, '남성')}
+						onChange={() => onRequestUpdateEssentialAnswer(Essentials.gender, '남성')}
 					/>
 					<ReplyRadioInput
 						label={'여성'}
-						errorMessage={''}
 						name={name}
 						isChecked={getEssentialAnswer(Essentials.gender) === '여성'}
-						onChange={() => onUpdateEssentialAnswer(Essentials.gender, '여성')}
+						onChange={() => onRequestUpdateEssentialAnswer(Essentials.gender, '여성')}
 					/>
 				</div>
 			)}
@@ -83,9 +110,8 @@ export default function ReplyEssentials() {
 					{getBirth()?.map((question, i) => (
 						<ReplyTextInput
 							label={question.content}
-							errorMessage={''}
 							value={getEssentialAnswer(question.id) || ''}
-							onChange={(e) => onUpdateEssentialAnswer(question.id, e.target.value)}
+							onChange={(e) => onRequestUpdateEssentialAnswer(question.id, e.target.value)}
 							key={i}
 						/>
 					))}
@@ -97,9 +123,8 @@ export default function ReplyEssentials() {
 					{getAcademic()?.map((question, i) => (
 						<ReplyTextInput
 							label={question.content}
-							errorMessage={''}
 							value={getEssentialAnswer(question.id) || ''}
-							onChange={(e) => onUpdateEssentialAnswer(question.id, e.target.value)}
+							onChange={(e) => onRequestUpdateEssentialAnswer(question.id, e.target.value)}
 							key={i}
 						/>
 					))}
@@ -133,6 +158,10 @@ namespace S {
 
 		> div:not(:last-of-type) {
 			margin-bottom: 4rem;
+		}
+
+		> div:last-of-type > div {
+			margin-bottom: 0 !important;
 		}
 	`;
 }
