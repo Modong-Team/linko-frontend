@@ -22,7 +22,7 @@ export default function ViewReply({
 
 	const isFirstPage = () => page === 1;
 	const isLastPage = () => page === getTotalPages();
-	const getTotalPages = () => application.data.forms.length;
+	const getTotalPages = () => application?.data.forms.length;
 
 	return (
 		<S.Container isOpen={!isDrawerOpen}>
@@ -58,7 +58,7 @@ export default function ViewReply({
 			<S.ReplyBox>
 				<S.ReplyPaper>
 					<S.Title>
-						<h1>{application.data.title}</h1>
+						<h1>{application?.data.title}</h1>
 						<p>
 							{svgTime}
 							{parseSubmitDate(applicant?.data.submitDate + '')}

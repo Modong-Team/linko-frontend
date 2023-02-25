@@ -19,8 +19,8 @@ export default function ReplyForms({ formIdx }: NewFormsProps) {
 
 	return (
 		<S.Container>
-			<h1>{application.data.forms[formIdx].title}</h1>
-			{application.data.forms[formIdx].questions.map((question, i) => (
+			<h1>{application?.data.forms[formIdx].title}</h1>
+			{application?.data.forms[formIdx].questions.map((question, i) => (
 				<div key={i}>
 					<h2>{question.content}</h2>
 					{question.questionType === QuestionTypes.question && (

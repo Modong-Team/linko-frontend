@@ -16,7 +16,7 @@ export default function ReplyPageButtons({ page, onPrevPage, onNextPage }: NewPa
 	const [isHideModal, setIsHideModal] = useState(true);
 	const { onStartGlobalLoading, onFinishGlobalLoading } = useLoadingStatus();
 
-	const checkIsLastPage = () => application.data.forms.length - 1 === page;
+	const checkIsLastPage = () => application && application.data.forms.length - 1 === page;
 
 	const onSubmit = () => setIsHideModal(false);
 

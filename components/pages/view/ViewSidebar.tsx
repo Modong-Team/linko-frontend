@@ -133,7 +133,7 @@ export default function ViewSidebar({ page, onChangePage }: ViewSidebarProps) {
 			<S.FormTitles>
 				<h1>지원 서류</h1>
 				<div>
-					{application.data.forms.map((form, i) => (
+					{application?.data.forms.map((form, i) => (
 						<S.FormTitle isFocus={page === i + 1} onClick={() => onChangePage(i + 1)} key={i}>
 							{form.title}
 						</S.FormTitle>

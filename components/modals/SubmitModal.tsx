@@ -6,10 +6,12 @@ import useLoadingStatus from '../../hooks/useLoadingStatus';
 import { SC } from '../../styles/styled';
 
 export default function SubmitModal({
+	icon,
 	title,
 	description,
 	onCancel,
 	onConfirm,
+	onConfirmLabel,
 	isHidden,
 }: CommonModalProps) {
 	const { loadingStatus } = useLoadingStatus();
@@ -17,7 +19,7 @@ export default function SubmitModal({
 	return (
 		<SC.ModalBackground isHidden={isHidden} height={window.innerHeight + 'px'}>
 			<SC.ModalContainer>
-				<SC.ModalIcon>{Icons.pencil}</SC.ModalIcon>
+				<SC.ModalIcon>{icon ?? Icons.pencil}</SC.ModalIcon>
 				<SC.ModalTitle>{title}</SC.ModalTitle>
 				<SC.ModalSubtitle>{description}</SC.ModalSubtitle>
 				<SC.ModalButtonWrapper>
@@ -28,7 +30,7 @@ export default function SubmitModal({
 						onClick={onCancel}
 					/>
 					<CustomButton
-						label='제출하기'
+						label={onConfirmLabel ?? '제출하기'}
 						buttonSize={ButtonSizes.large}
 						buttonType={ButtonTypes.primary}
 						onClick={onConfirm}

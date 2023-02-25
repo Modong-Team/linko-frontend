@@ -21,3 +21,8 @@ export const putApplication = (applicationId: number, data: RequestApplication.P
 	const url = `${baseUrl}/${applicationId}`;
 	return request.put<ResponseApplication.Put, RequestApplication.Put>(url, data);
 };
+
+export const deleteApplication = (applicationId: number) => {
+	const url = `${baseUrl}/${applicationId}`;
+	return request.delete(url);
+};

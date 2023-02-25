@@ -14,7 +14,7 @@ export default function ReplyMeta() {
 				</S.Photo>
 				<S.Club>개발동아리</S.Club>
 			</div>
-			<S.Title>{application.data.title}</S.Title>
+			<S.Title>{application?.data.title}</S.Title>
 		</S.Container>
 	);
 }

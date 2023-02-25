@@ -7,22 +7,11 @@ export const setApplication = createAction(
 	(payload: ResponseApplication.Get) => payload,
 )();
 
-export type ApplicationStateType = ResponseApplication.Get;
+export type ApplicationStateType = ResponseApplication.Get | null;
 
 type ApplicationAnswersType = ActionType<typeof setApplication>;
 
-const initialState: ApplicationStateType = {
-	status: 0,
-	message: '',
-	code: '',
-	data: {
-		id: 0,
-		title: '',
-		urlId: '',
-		essentialQuestions: [],
-		forms: [],
-	},
-};
+const initialState: ApplicationStateType = null;
 
 const application = createReducer<ApplicationStateType, ApplicationAnswersType>(initialState, {
 	[SET_APPLICATION]: (state, { payload }) => payload,

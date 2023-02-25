@@ -17,8 +17,8 @@ export default function ViewForms({ page }: ViewFormsProps) {
 
 	return (
 		<S.Container>
-			<h2>{application.data.forms[page - 1]?.title}</h2>
-			{application.data.forms[page - 1]?.questions.map((question, i) => (
+			<h2>{application?.data.forms[page - 1]?.title}</h2>
+			{application?.data.forms[page - 1]?.questions.map((question, i) => (
 				<div key={i}>
 					<h3>{question.content}</h3>
 					<p>{getAnswerByQuestionId(question.id)}</p>

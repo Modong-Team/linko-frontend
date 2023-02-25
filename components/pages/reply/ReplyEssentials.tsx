@@ -14,22 +14,22 @@ export default function ReplyEssentials() {
 	const { answers, onUpdateName, onUpdateEssentialAnswer } = useAnswers();
 
 	const getDefault = () =>
-		application.data.essentialQuestions.filter((essential) =>
+		application?.data.essentialQuestions.filter((essential) =>
 			EssentialCategories.default.includes(essential.id),
 		);
 
 	const getGender = () =>
-		application.data.essentialQuestions.filter((essential) =>
+		application?.data.essentialQuestions.filter((essential) =>
 			EssentialCategories.gender.includes(essential.id),
 		);
 
 	const getBirth = () =>
-		application.data.essentialQuestions.filter((essential) =>
+		application?.data.essentialQuestions.filter((essential) =>
 			EssentialCategories.birth.includes(essential.id),
 		);
 
 	const getAcademic = () =>
-		application.data.essentialQuestions.filter((essential) =>
+		application?.data.essentialQuestions.filter((essential) =>
 			EssentialCategories.academic.includes(essential.id),
 		);
 
@@ -43,7 +43,7 @@ export default function ReplyEssentials() {
 			<h1>지원자 정보</h1>
 			<div>
 				<h2>기본정보</h2>
-				{getDefault().map((question, i) => (
+				{getDefault()?.map((question, i) => (
 					<ReplyTextInput
 						label={question.content}
 						errorMessage={''}
@@ -58,7 +58,7 @@ export default function ReplyEssentials() {
 					/>
 				))}
 			</div>
-			{!!getGender().length && (
+			{!!getGender()?.length && (
 				<div>
 					<h2>성별</h2>
 					<ReplyRadioInput
@@ -77,10 +77,10 @@ export default function ReplyEssentials() {
 					/>
 				</div>
 			)}
-			{!!getBirth().length && (
+			{!!getBirth()?.length && (
 				<div>
 					<h2>생년월일</h2>
-					{getBirth().map((question, i) => (
+					{getBirth()?.map((question, i) => (
 						<ReplyTextInput
 							label={question.content}
 							errorMessage={''}
@@ -91,10 +91,10 @@ export default function ReplyEssentials() {
 					))}
 				</div>
 			)}
-			{!!getAcademic().length && (
+			{!!getAcademic()?.length && (
 				<div>
 					<h2>학적</h2>
-					{getAcademic().map((question, i) => (
+					{getAcademic()?.map((question, i) => (
 						<ReplyTextInput
 							label={question.content}
 							errorMessage={''}
