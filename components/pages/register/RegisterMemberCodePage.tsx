@@ -22,7 +22,7 @@ export default function RegisterMemberCodePage() {
 				value={code}
 				onChange={onChangeCode}
 				label={'동아리 코드'}
-				errorMessage={''}
+				errorMessage={'동아리 코드를 입력하세요.'}
 			/>
 			<CustomButton
 				label={'다음'}
@@ -38,6 +38,10 @@ export default function RegisterMemberCodePage() {
 
 namespace S {
 	export const Container = styled.div`
+		> div {
+			margin-bottom: 0 !important;
+		}
+
 		> button {
 			width: 100%;
 			margin-top: 3.2rem;

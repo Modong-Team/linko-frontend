@@ -39,14 +39,14 @@ export default function LoginPage() {
 					value={memberId}
 					onChange={onChangeMemberId}
 					label={'아이디'}
-					errorMessage={''}
+					errorMessage={'아이디를 입력하세요.'}
 					isSingleLine
 				/>
 				<ReplyTextInput
 					value={password}
 					onChange={onChangePassword}
 					label={'비밀번호'}
-					errorMessage={''}
+					errorMessage={'비밀번호를 입력하세요.'}
 					type={'password'}
 					isSingleLine
 				/>
@@ -87,6 +87,10 @@ namespace S {
 
 			> div:first-of-type {
 				margin: 5rem 0;
+			}
+
+			> div:last-of-type {
+				margin-bottom: 0 !important;
 			}
 
 			> button {
