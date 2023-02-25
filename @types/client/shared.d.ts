@@ -28,3 +28,9 @@ type BottomSheetProps = {
 	onClose: () => void;
 	isHidden: boolean;
 };
+
+type ClipBoardProps = {
+	onTriggerSnackBar: () => void;
+	urlId: string;
+	width?: string;
+};
