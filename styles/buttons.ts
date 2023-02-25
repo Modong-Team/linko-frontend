@@ -35,7 +35,14 @@ export const RedButtonColors = {
 
 export const LineButtonColors = {
 	active: `background-color:${Colors.white}; color:${Colors.gray950}; border-color:${Colors.gray200};`,
-	hover: `background-color:${Colors.gray200}; color:${Colors.gray950}; border-color:${Colors.gray200};`,
-	pressed: `background-color:${Colors.gray300}; color:${Colors.gray950}; border-color:${Colors.gray300};`,
-	disabled: `background-color:${Colors.gray400}; color:${Colors.white}; border-color:${Colors.gray400};`,
+	hover: `background-color:${Colors.gray100}; color:${Colors.gray950}; border-color:${Colors.gray200};`,
+	pressed: `background-color:${Colors.gray200}; color:${Colors.gray950}; border-color:${Colors.gray300};`,
+	disabled: `background-color:${Colors.gray300}; color:${Colors.white}; border-color:${Colors.gray400};`,
+} as const;
+
+export const MediumLineButtonColors = {
+	active: `background-color:${Colors.white}; color:${Colors.gray800}; border-color:${Colors.gray200};`,
+	hover: `background-color:${Colors.gray100}; color:${Colors.gray800}; border-color:${Colors.gray200};`,
+	pressed: `background-color:${Colors.gray200}; color:${Colors.gray800}; border-color:${Colors.gray300};`,
+	disabled: `background-color:${Colors.gray300}; color:${Colors.white}; border-color:${Colors.gray400};`,
 } as const;
