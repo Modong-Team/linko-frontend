@@ -15,19 +15,13 @@ import copyToClipBoard from '../../../utils/copyToClipBoard';
 import SnackBar from '../../shared/SnackBar';
 import useSnackBar from '../../../hooks/useSnackBar';
 import useLoadingStatus from '../../../hooks/useLoadingStatus';
+import ClipBoard from '../../shared/ClipBoard';
 
 export default function NewComplete({ applicationId }: NewCompletePageProps) {
 	const onRouteToMain = useRouteToPath(Paths.main);
 	const [application, setApplication] = useState<ResponseApplication.Get>();
 	const { isShowSnackBar, onTriggerSnackBar } = useSnackBar();
 	const { onStartGlobalLoading, onFinishGlobalLoading } = useLoadingStatus();
-
-	const onClickClipBoard = () => {
-		const urlId = application?.data.urlId;
-		if (!urlId) return;
-		copyToClipBoard(urlId);
-		onTriggerSnackBar();
-	};
 
 	useEffect(() => {
 		if (!isNaN(applicationId))
@@ -43,12 +37,13 @@ export default function NewComplete({ applicationId }: NewCompletePageProps) {
 			<h1>
 				{Icons.hands}
 				<br />
-				공고 생성이 완료되었습니다!
+				모집을 시작했어요!
 			</h1>
-			<div onClick={onClickClipBoard}>
-				{application && application.data.urlId}
-				{svgCopy}
-			</div>
+			<ClipBoard
+				onTriggerSnackBar={onTriggerSnackBar}
+				urlId={application?.data.urlId + ''}
+				width={'34rem'}
+			/>
 			<div>
 				<CustomButton
 					label='수정하기'
@@ -78,18 +73,6 @@ namespace S {
 		> h1 {
 			${Fonts.heading24bold}
 			text-align: center;
-		}
-
-		> div:first-of-type {
-			${Fonts.subtitle16medium}
-			color: ${Colors.gray700};
-			background-color: ${Colors.gray100};
-			padding: 0.3rem 2.4rem;
-			border-radius: 0.4rem;
-			display: flex;
-			align-items: center;
-			gap: 0.9rem;
-			cursor: pointer;
 		}
 
 		> div:nth-of-type(2) {

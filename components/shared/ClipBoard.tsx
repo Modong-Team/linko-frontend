@@ -7,7 +7,7 @@ import createReplyUrl from '../../utils/createReplyUrl';
 
 export default function ClipBoard({ onTriggerSnackBar, urlId, width }: ClipBoardProps) {
 	const onClick = () => {
-		copyToClipBoard(urlId);
+		copyToClipBoard(createReplyUrl(urlId));
 		onTriggerSnackBar();
 	};
 	return (
