@@ -20,7 +20,7 @@ import { Urls } from '../../../constants/urls';
 
 export default function LandingPage() {
 	const isMobile = useMobile();
-	const onRouteToRegister = useRouteToPath(Paths.register);
+	const onRouteToLogin = useRouteToPath(Paths.login);
 	const onRouteToContact = useRouteToPath(Urls.kakaoChannel);
 	const onRouteToDetail = useRouteToPath(Urls.detailPage);
 	return (
@@ -40,7 +40,7 @@ export default function LandingPage() {
 				<div>
 					<CustomButton
 						label={'링코 시작하기'}
-						onClick={onRouteToRegister}
+						onClick={onRouteToLogin}
 						buttonType={ButtonTypes.primary}
 						buttonSize={ButtonSizes.large}
 					/>
@@ -185,7 +185,7 @@ export default function LandingPage() {
 				<div>
 					<CustomButton
 						label={'링코 시작하기'}
-						onClick={onRouteToRegister}
+						onClick={onRouteToLogin}
 						buttonType={ButtonTypes.primary}
 						buttonSize={ButtonSizes.large}
 					/>
