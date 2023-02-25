@@ -13,6 +13,7 @@ type NewPageButtonProps = CommonButtonProps & {
 	isLeft?: boolean;
 	isRight?: boolean;
 	isHidden: boolean;
+	disabled?: boolean;
 };
 
 type NewQuestionButtonProps = {

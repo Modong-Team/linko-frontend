@@ -9,6 +9,7 @@ type NewIndicatorProps = Partial<PageProps> & {
 type NewPageButtonsProps = PageProps & {
 	onPrevPage: () => void;
 	onNextPage: () => void;
+	isNextButtonDisabled?: boolean;
 };
 
 type NewMainProps = PageProps & {};
