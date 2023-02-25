@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
-import { svgLink24, svgCopy24, svgDown16 } from '../../../styles/svgs';
+import { svgLink24, svgDown16 } from '../../../styles/svgs';
 import copyToClipBoard from '../../../utils/copyToClipBoard';
 import useSnackBar from '../../../hooks/useSnackBar';
 import SnackBar from '../../shared/SnackBar';
@@ -9,7 +9,6 @@ import MoreButton from '../../buttons/MoreButton';
 import CustomButton from '../../buttons/CustomButton';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
 import useApplication from '../../../hooks/useApplication';
-import createReplyUrl from '../../../utils/createReplyUrl';
 import DropDown from '../../dropdowns/DropDown';
 import { DynamicStyles } from '../../../styles/styles';
 import { useState, useEffect } from 'react';
@@ -19,6 +18,7 @@ import useActive from '../../../hooks/useActive';
 import SubmitModal from '../../modals/SubmitModal';
 import { Icons } from '../../../styles/icons';
 import { ApplicationStatus } from '../../../constants/applicationStatus';
+import ClipBoard from '../../shared/ClipBoard';
 
 export default function MainMeta() {
 	const { application } = useApplication();
@@ -72,11 +72,7 @@ export default function MainMeta() {
 				{!checkIfPrepare() && (
 					<>
 						<S.BoardLinkLabel>{svgLink24}지원 링크</S.BoardLinkLabel>
-						<S.BoardClipBoard
-							onClick={() => onClickClipBoard(createReplyUrl(application?.data.urlId || ''))}>
-							<div>{createReplyUrl(application?.data.urlId || '')}</div>
-							<div>{svgCopy24}</div>
-						</S.BoardClipBoard>
+						<ClipBoard onTriggerSnackBar={onTriggerSnackBar} urlId={application?.data.urlId + ''} />
 					</>
 				)}
 				<CustomButton
@@ -172,29 +168,6 @@ namespace S {
 		svg {
 			position: relative;
 			top: -0.05rem;
-		}
-	`;
-
-	export const BoardClipBoard = styled.div`
-		padding: 0.8rem 1.6rem;
-		border-radius: 0.8rem;
-		background-color: ${Colors.gray200};
-		display: flex;
-		align-items: center;
-		height: 4rem;
-		cursor: pointer;
-
-		> div:first-of-type {
-			${Fonts.body14regular}
-			color: ${Colors.gray800};
-			width: 16rem;
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
-
-		> div:last-of-type {
-			display: flex;
 		}
 	`;
 
