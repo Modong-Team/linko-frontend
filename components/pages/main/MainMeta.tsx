@@ -12,9 +12,12 @@ import useApplication from '../../../hooks/useApplication';
 import createReplyUrl from '../../../utils/createReplyUrl';
 import DropDown from '../../dropdowns/DropDown';
 import { DynamicStyles } from '../../../styles/styles';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { deleteApplication } from '../../../api/application';
 import useApplicationId from '../../../hooks/useApplicationId';
+import useActive from '../../../hooks/useActive';
+import SubmitModal from '../../modals/SubmitModal';
+import { Icons } from '../../../styles/icons';
 import { ApplicationStatus } from '../../../constants/applicationStatus';
 
 export default function MainMeta() {
@@ -22,6 +25,7 @@ export default function MainMeta() {
 	const { applicationId } = useApplicationId();
 	const { isShowSnackBar, onTriggerSnackBar } = useSnackBar();
 	const [isShowStopRecruitDropDown, setIsShowStopRecruitDropDown] = useState(false);
+	const [isShowOpenModal, onShowOpenModal, onHideOpenModal] = useActive();
 
 	const checkIfOpen = () => application.data.status === ApplicationStatus.open;
 	const checkIfClose = () => application.data.status === ApplicationStatus.close;
@@ -57,6 +61,10 @@ export default function MainMeta() {
 		if (applicationId) await deleteApplication(applicationId);
 	};
 
+	useEffect(() => {
+		() => onHideOpenModal();
+	}, []);
+
 	return (
 		<S.BoardHeader isWhite={!checkIfPrepare()}>
 			<h1>{application.data.title}</h1>
@@ -87,7 +95,7 @@ export default function MainMeta() {
 						option1={getAppropriateOption1() + ''}
 						option2={checkIfPrepare() ? '모집 시작' : undefined}
 						onClick1={getAppropriateOnClick1()}
-						onClick2={() => alert('모집 시작')}
+						onClick2={onShowOpenModal}
 						isHidden={!isShowStopRecruitDropDown}
 						customCSS={
 							checkIfOpen()
@@ -102,6 +110,15 @@ export default function MainMeta() {
 				<MoreButton label1={'지원서 삭제'} onClick1={onDelete} />
 			</div>
 			<SnackBar label={'링크를 복사했어요.'} isShown={isShowSnackBar} />
+			<SubmitModal
+				icon={Icons.dart}
+				title={'지원서를 작성 완료하고 모집을 시작할까요?'}
+				description={'모집이 시작되면 지원서 수정이 불가능해요.'}
+				onCancel={onHideOpenModal}
+				onConfirm={() => alert('모집 시작')}
+				onConfirmLabel={'모집 시작'}
+				isHidden={!isShowOpenModal}
+			/>
 		</S.BoardHeader>
 	);
 }
