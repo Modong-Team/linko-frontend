@@ -10,9 +10,10 @@ export default function NewPageButton({
 	isLeft,
 	isRight,
 	isHidden,
+	disabled,
 }: NewPageButtonProps) {
 	return (
-		<S.Button onClick={onClick} isHidden={isHidden}>
+		<S.Button onClick={onClick} isHidden={isHidden} disabled={disabled}>
 			{isLeft && svgPrev}
 			{label}
 			{isRight && svgNext}
@@ -31,6 +32,18 @@ namespace S {
 		border: 0.1rem solid ${Colors.gray200};
 		background-color: ${Colors.white};
 		visibility: ${(props) => (props.isHidden ? 'hidden' : '')};
+
+		:disabled {
+			background-color: ${Colors.gray300};
+			border-color: ${Colors.gray400};
+			color: ${Colors.white};
+			cursor: default;
+
+			path {
+				fill: ${Colors.white};
+				stroke: ${Colors.white};
+			}
+		}
 
 		> svg {
 			position: relative;

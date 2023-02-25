@@ -9,7 +9,12 @@ import { Paths } from '../../../constants/paths';
 import { useRouter } from 'next/router';
 import useLoadingStatus from '../../../hooks/useLoadingStatus';
 
-export default function ReplyPageButtons({ page, onPrevPage, onNextPage }: NewPageButtonsProps) {
+export default function ReplyPageButtons({
+	page,
+	onPrevPage,
+	onNextPage,
+	isNextButtonDisabled,
+}: NewPageButtonsProps) {
 	const router = useRouter();
 	const { answers } = useAnswers();
 	const { application } = useApplication();
@@ -49,6 +54,7 @@ export default function ReplyPageButtons({ page, onPrevPage, onNextPage }: NewPa
 				onClick={checkIsLastPage() ? onSubmit : onNextPage}
 				isRight
 				isHidden={false}
+				disabled={isNextButtonDisabled}
 			/>
 			<SubmitModal
 				title={'지원서를 제출할까요?'}

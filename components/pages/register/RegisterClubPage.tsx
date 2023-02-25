@@ -93,7 +93,7 @@ export default function RegisterClubPage() {
 				value={clubName}
 				onChange={onChangeClubName}
 				label={'동아리 이름'}
-				errorMessage={''}
+				errorMessage={'동아리 이름을 입력하세요.'}
 			/>
 			<S.PeriodOfUse>
 				<label>

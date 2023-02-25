@@ -4,11 +4,29 @@ import ReplyForms from './ReplyForms';
 import styled from 'styled-components';
 import { Devices } from '../../../styles/devices';
 
-export default function ReplyMain({ page }: PageProps) {
+export default function ReplyMain({
+	page,
+	onAddError,
+	onRemoveError,
+	onSetErrors,
+}: PageProps & ReplyErrorProps) {
 	return (
 		<S.Container>
-			{page === -1 && <ReplyEssentials />}
-			{page !== -1 && <ReplyForms formIdx={page} />}
+			{page === -1 && (
+				<ReplyEssentials
+					onAddError={onAddError}
+					onRemoveError={onRemoveError}
+					onSetErrors={onSetErrors}
+				/>
+			)}
+			{page !== -1 && (
+				<ReplyForms
+					formIdx={page}
+					onAddError={onAddError}
+					onRemoveError={onRemoveError}
+					onSetErrors={onSetErrors}
+				/>
+			)}
 		</S.Container>
 	);
 }
