@@ -15,12 +15,36 @@ import { DynamicStyles } from '../../../styles/styles';
 import { useState } from 'react';
 import { deleteApplication } from '../../../api/application';
 import useApplicationId from '../../../hooks/useApplicationId';
+import { ApplicationStatus } from '../../../constants/applicationStatus';
 
 export default function MainMeta() {
 	const { application } = useApplication();
 	const { applicationId } = useApplicationId();
 	const { isShowSnackBar, onTriggerSnackBar } = useSnackBar();
 	const [isShowStopRecruitDropDown, setIsShowStopRecruitDropDown] = useState(false);
+
+	const checkIfOpen = () => application.data.status === ApplicationStatus.open;
+	const checkIfClose = () => application.data.status === ApplicationStatus.close;
+	const checkIfPrepare = () => application.data.status === ApplicationStatus.prepare;
+
+	const getAppropriateLabel = () => {
+		if (checkIfOpen()) return '모집 중';
+		if (checkIfClose()) return '모집 마감';
+		if (checkIfPrepare()) return '지원서 작성 중';
+	};
+
+	const getAppropriateOption1 = () => {
+		if (checkIfOpen()) return '모집 마감하기';
+		if (checkIfClose()) return '모집 시작하기';
+		if (checkIfPrepare()) return '지원서 수정';
+	};
+
+	const getAppropriateOnClick1 = () => {
+		if (checkIfOpen()) return () => alert('모집 마감');
+		if (checkIfClose()) return () => alert('모집 시작');
+		if (checkIfPrepare()) return () => alert('지원서 수정');
+		else return () => alert('지원서의 상태값이 유효하지 않습니다.');
+	};
 
 	const onClickClipBoard = (url: string) => {
 		copyToClipBoard(url);
@@ -34,29 +58,44 @@ export default function MainMeta() {
 	};
 
 	return (
-		<S.BoardHeader>
+		<S.BoardHeader isWhite={!checkIfPrepare()}>
 			<h1>{application.data.title}</h1>
 			<div>
-				<S.BoardLinkLabel>{svgLink24}지원 링크</S.BoardLinkLabel>
-				<S.BoardClipBoard onClick={() => onClickClipBoard(createReplyUrl(application.data.urlId))}>
-					<div>{createReplyUrl(application.data.urlId)}</div>
-					<div>{svgCopy24}</div>
-				</S.BoardClipBoard>
+				{!checkIfPrepare() && (
+					<>
+						<S.BoardLinkLabel>{svgLink24}지원 링크</S.BoardLinkLabel>
+						<S.BoardClipBoard
+							onClick={() => onClickClipBoard(createReplyUrl(application.data.urlId))}>
+							<div>{createReplyUrl(application.data.urlId)}</div>
+							<div>{svgCopy24}</div>
+						</S.BoardClipBoard>
+					</>
+				)}
 				<CustomButton
-					label={'모집 중'}
+					label={getAppropriateLabel() + ''}
 					onClick={onToggleStopRecruit}
-					buttonType={ButtonTypes.primary}
+					buttonType={checkIfPrepare() ? ButtonTypes.line : ButtonTypes.primary}
 					buttonSize={ButtonSizes.medium}
 					svgIcon={svgDown16}
-					isSvgIconAtRight={true}
-					width={'10rem'}
-					justify={'space-between'}>
+					isSvgIconAtRight
+					width={'12.8rem'}
+					justify={'space-between'}
+					gap={'0.6rem'}
+					disabled={checkIfClose()}
+					isLoading={!getAppropriateLabel()}>
 					<DropDown
-						option1={'모집 마감하기'}
-						onClick1={() => alert('미구현')}
+						option1={getAppropriateOption1() + ''}
+						option2={checkIfPrepare() ? '모집 시작' : undefined}
+						onClick1={getAppropriateOnClick1()}
+						onClick2={() => alert('모집 시작')}
 						isHidden={!isShowStopRecruitDropDown}
 						customCSS={
-							DynamicStyles.dropDownNthOptionRed(1) + DynamicStyles.dropDownTranslateToCenter(115)
+							checkIfOpen()
+								? DynamicStyles.dropDownNthOptionRed(1) +
+								  DynamicStyles.dropDownTranslateToCenter(115)
+								: checkIfClose()
+								? DynamicStyles.dropDownTranslateToCenter(115)
+								: DynamicStyles.dropDownTranslateToCenter(108)
 						}
 					/>
 				</CustomButton>
@@ -68,7 +107,7 @@ export default function MainMeta() {
 }
 
 namespace S {
-	export const BoardHeader = styled.div`
+	export const BoardHeader = styled.div<IsWhiteType>`
 		padding: 1.6rem 0rem;
 		display: flex;
 		justify-content: space-between;
@@ -92,11 +131,16 @@ namespace S {
 				flex-shrink: 0;
 			}
 
-			> button {
+			> button:first-of-type {
 				height: 4rem;
+				white-space: nowrap;
 
 				path {
-					stroke: ${Colors.white};
+					stroke: ${(props) => (props.isWhite ? Colors.white : Colors.gray800)};
+				}
+
+				> div {
+					width: 12.8rem;
 				}
 			}
 		}
