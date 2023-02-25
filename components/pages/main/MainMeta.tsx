@@ -13,9 +13,12 @@ import createReplyUrl from '../../../utils/createReplyUrl';
 import DropDown from '../../dropdowns/DropDown';
 import { DynamicStyles } from '../../../styles/styles';
 import { useState } from 'react';
+import { deleteApplication } from '../../../api/application';
+import useApplicationId from '../../../hooks/useApplicationId';
 
 export default function MainMeta() {
 	const { application } = useApplication();
+	const { applicationId } = useApplicationId();
 	const { isShowSnackBar, onTriggerSnackBar } = useSnackBar();
 	const [isShowStopRecruitDropDown, setIsShowStopRecruitDropDown] = useState(false);
 
@@ -25,6 +28,10 @@ export default function MainMeta() {
 	};
 
 	const onToggleStopRecruit = () => setIsShowStopRecruitDropDown(!isShowStopRecruitDropDown);
+
+	const onDelete = async () => {
+		if (applicationId) await deleteApplication(applicationId);
+	};
 
 	return (
 		<S.BoardHeader>
@@ -53,12 +60,7 @@ export default function MainMeta() {
 						}
 					/>
 				</CustomButton>
-				<MoreButton
-					label1={'지원서 수정'}
-					label2={'지원서 삭제'}
-					onClick1={() => console.log('지원서 수정')}
-					onClick2={() => console.log('지원서 삭제')}
-				/>
+				<MoreButton label1={'지원서 삭제'} onClick1={onDelete} />
 			</div>
 			<SnackBar label={'링크를 복사했어요.'} isShown={isShowSnackBar} />
 		</S.BoardHeader>
