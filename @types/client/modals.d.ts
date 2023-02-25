@@ -1,8 +1,10 @@
 type CommonModalProps = {
+	icon?: string;
 	title: string;
 	description: string;
 	onCancel: () => void;
 	onConfirm: () => void;
+	onConfirmLabel?: string;
 	isHidden: boolean;
 };
 
