@@ -19,7 +19,7 @@ export const revokeClubData = createAction(REVOKE_CLUB_DATA)();
  */
 
 function* requestSetClubDataSaga() {
-	const get: ResponseClub.GetByMember = yield call(getClubByMember);
+	const get: ResponseClub.Get = yield call(getClubByMember);
 	const clubData = get.data;
 	yield put(setClubData(clubData));
 }

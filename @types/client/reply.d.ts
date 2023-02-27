@@ -3,7 +3,7 @@ type ReplyPageProps = {
 };
 
 type ReplyCompletePageProps = {
-	applicantId: number;
+	urlId: string;
 };
 
 type ReplyErrorProps = {
