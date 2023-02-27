@@ -7,11 +7,11 @@ import { Seo } from '../../../constants/seo';
 
 export default function complete() {
 	const router = useRouter();
-	const applicantId = router.query.applicantId;
+	const urlId = router.query.urlId;
 	return (
 		<>
 			<CustomHead title={Seo.Title.replyComplete} />
-			<ReplyCompletePage applicantId={Number(applicantId)} />
+			<ReplyCompletePage urlId={urlId ? urlId + '' : ''} />
 		</>
 	);
 }

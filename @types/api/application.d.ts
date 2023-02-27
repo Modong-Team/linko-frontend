@@ -23,6 +23,7 @@ declare namespace ResponseApplication {
 			id: number;
 			title: string;
 			urlId: string;
+			clubId: number;
 			status: 'BEFORE_OPENING' | 'OPEN' | 'CLOSE';
 			essentialQuestions: {
 				id: number;
