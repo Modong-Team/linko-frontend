@@ -84,6 +84,7 @@ export default function ReplyEssentials({
 								: onRequestUpdateEssentialAnswer(question.id, e.target.value)
 						}
 						key={i}
+						isSingleLine
 					/>
 				))}
 			</div>
@@ -113,6 +114,7 @@ export default function ReplyEssentials({
 							value={getEssentialAnswer(question.id) || ''}
 							onChange={(e) => onRequestUpdateEssentialAnswer(question.id, e.target.value)}
 							key={i}
+							isSingleLine
 						/>
 					))}
 				</div>
@@ -126,6 +128,7 @@ export default function ReplyEssentials({
 							value={getEssentialAnswer(question.id) || ''}
 							onChange={(e) => onRequestUpdateEssentialAnswer(question.id, e.target.value)}
 							key={i}
+							isSingleLine
 						/>
 					))}
 				</div>
