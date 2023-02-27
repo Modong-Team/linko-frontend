@@ -3,16 +3,26 @@ import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
 import useApplication from '../../../hooks/useApplication';
 import { Devices } from '../../../styles/devices';
+import { useState, useEffect } from 'react';
+import useGet from '../../../hooks/useGet';
+import { getClub } from '../../../api/club';
+import { getDownloadLinkFromS3 } from '../../../s3/index';
 
 export default function ReplyMeta() {
 	const { application } = useApplication();
+	const [club, setClub] = useState<ResponseClub.Get>();
+
+	useEffect(() => {
+		if (application) useGet(() => getClub(application.data.clubId), setClub);
+	}, [application]);
+
 	return (
 		<S.Container>
 			<div>
 				<S.Photo>
-					<img src='https://play-lh.googleusercontent.com/XVHP0sBKrRJYZq_dB1RalwSmx5TcYYRRfYMFO18jgNAnxHAIA1osxM55XHYTb3LpkV8' />
+					<img src={getDownloadLinkFromS3(club?.data.profileImgUrl + '')} />
 				</S.Photo>
-				<S.Club>개발동아리</S.Club>
+				<S.Club>{club?.data.name}</S.Club>
 			</div>
 			<S.Title>{application?.data.title}</S.Title>
 		</S.Container>
