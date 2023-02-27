@@ -22,6 +22,7 @@ const UPDATE_QUESTION_OPTION = 'forms/UPDATE_QUESTION_OPTION';
 const REMOVE_QUESTION_OPTION = 'forms/REMOVE_QUESTION_OPTION';
 const UPDATE_FORM_APPLICATION_ID = 'forms/UPDATE_FORM_APPLICATION_ID';
 const SAVE_FORM_DATA_ID = 'forms/SAVE_FORM_DATA_ID';
+const RESET_FORMS = 'forms/RESET_FORMS';
 
 const createForm = createAction(
 	CREATE_FORM,
@@ -76,6 +77,7 @@ export const saveFormDataId = createAction(
 	SAVE_FORM_DATA_ID, //
 	(formIdx: number, dataId: number) => ({ formIdx, dataId }),
 )();
+export const resetForms = createAction(RESET_FORMS)();
 
 /**
  * Saga
@@ -108,6 +110,7 @@ type FormsActionsType = ActionType<
 	| typeof removeQuestionOption
 	| typeof updateFormApplicationId
 	| typeof saveFormDataId
+	| typeof resetForms
 >;
 
 const initialState: FormsStateType = [];
@@ -165,6 +168,7 @@ const forms = createReducer<FormsStateType, FormsActionsType>(initialState, {
 		produce(state, (draft) => {
 			draft[payload.formIdx].dataId = payload.dataId;
 		}),
+	[RESET_FORMS]: (state) => [],
 });
 
 export default forms;
