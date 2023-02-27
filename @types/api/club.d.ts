@@ -8,7 +8,7 @@ declare namespace RequestClub {
 }
 
 declare namespace ResponseClub {
-	type GetByMember = {
+	type Get = {
 		status: number;
 		message: string;
 		code: string;
