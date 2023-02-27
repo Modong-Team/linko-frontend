@@ -20,6 +20,7 @@ import useApplicationId from '../../../hooks/useApplicationId';
 import useScrollExist from '../../../hooks/useScrollExist';
 import useClubData from '../../../hooks/useClubData';
 import { getDownloadLinkFromS3 } from '../../../s3/index';
+import useTriggers from '../../../hooks/useTriggers';
 
 export default function MainSidebar({ applicationId }: MainPageProps) {
 	const routeToNew = useRouteToPath(Paths.new);
@@ -30,6 +31,7 @@ export default function MainSidebar({ applicationId }: MainPageProps) {
 	const { applicationId: selectedApplicationId, onRequestSetApplicationId } = useApplicationId();
 	const scroller = useRef() as MutableRefObject<HTMLUListElement>;
 	const isScrollExist = useScrollExist(scroller, applications);
+	const { triggers } = useTriggers();
 
 	const onClickTitle = (id: number) => {
 		onRequestSetApplicationId(id);
@@ -48,7 +50,7 @@ export default function MainSidebar({ applicationId }: MainPageProps) {
 	useEffect(() => {
 		onStartLocalLoading();
 		if (clubData) useGet(() => getApplications(clubData.id), setApplications, onFinishLocalLoading);
-	}, [clubData]);
+	}, [clubData, triggers.main]);
 
 	return (
 		<S.SidebarContainer>

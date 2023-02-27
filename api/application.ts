@@ -22,6 +22,16 @@ export const putApplication = (applicationId: number, data: RequestApplication.P
 	return request.put<ResponseApplication.Put, RequestApplication.Put>(url, data);
 };
 
+export const patchApplicationOpen = (applicationId: number) => {
+	const url = `${baseUrl}/open/${applicationId}`;
+	return request.patch(url);
+};
+
+export const patchApplicationClose = (applicationId: number) => {
+	const url = `${baseUrl}/close/${applicationId}`;
+	return request.patch(url);
+};
+
 export const deleteApplication = (applicationId: number) => {
 	const url = `${baseUrl}/${applicationId}`;
 	return request.delete(url);

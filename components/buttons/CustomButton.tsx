@@ -11,6 +11,7 @@ import {
 } from '../../styles/buttons';
 import LoadingDots from '../shared/LoadingDots';
 import { LoadingWidths } from '../../constants/loadingWidths';
+import { css } from 'styled-components';
 
 export default function CustomButton({
 	label = '버튼',
@@ -26,6 +27,7 @@ export default function CustomButton({
 	disabled,
 	isHidden,
 	gap,
+	styleDisabled,
 }: CustomButtonProps & Partial<ChildrenType>) {
 	return (
 		<S.Button
@@ -37,6 +39,7 @@ export default function CustomButton({
 			justify={justify}
 			disabled={disabled}
 			isHidden={isHidden}
+			styleDisabled={styleDisabled}
 			gap={gap}>
 			<span>
 				{!isSvgIconAtRight && svgIcon}
@@ -113,5 +116,22 @@ namespace S {
 
 		visibility: ${(props) => props.isHidden && 'hidden'};
 		transition: ${(props) => props.isHidden && 'none'};
+
+		${(props) => props.styleDisabled && StyleDisabled}
+	`;
+
+	const StyleDisabled = css<CustomButtonType>`
+		&,
+		:active,
+		:hover {
+			${(props) => props.buttonType === ButtonTypes.primary && PrimaryButtonColors.disabled}
+			${(props) => props.buttonType === ButtonTypes.secondary && SecondaryButtonColors.disabled}
+      ${(props) => props.buttonType === ButtonTypes.red && RedButtonColors.disabled}
+      ${(props) => props.buttonType === ButtonTypes.line && LineButtonColors.disabled}
+			${(props) =>
+				props.buttonType === ButtonTypes.line &&
+				props.buttonSize === ButtonSizes.medium &&
+				MediumLineButtonColors.disabled}
+		}
 	`;
 }

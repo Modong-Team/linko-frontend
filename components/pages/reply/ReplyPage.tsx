@@ -9,6 +9,9 @@ import useApplication from '../../../hooks/useApplication';
 import ReplyPageButtons from './ReplyPageButtons';
 import { Devices } from '../../../styles/devices';
 import useLoadingStatus from '../../../hooks/useLoadingStatus';
+import useRouteToPath from '../../../hooks/useRouteToPath';
+import { Paths } from '../../../constants/paths';
+import { ApplicationStatus } from '../../../constants/applicationStatus';
 
 export default function ReplyPage({ urlId }: ReplyPageProps) {
 	const [application, setApplication] = useState<ResponseApplication.Get>();
@@ -17,6 +20,7 @@ export default function ReplyPage({ urlId }: ReplyPageProps) {
 	const [page, setPage] = useState(-1);
 	const { onStartGlobalLoading, onFinishGlobalLoading } = useLoadingStatus();
 	const [errors, setErrors] = useState<number[]>([]);
+	const onRouteToReplyClosed = useRouteToPath(Paths.replyClosed);
 
 	const onPrevPage = () => setPage(page - 1);
 	const onNextPage = () => setPage(page + 1);
@@ -30,10 +34,11 @@ export default function ReplyPage({ urlId }: ReplyPageProps) {
 	}, [urlId]);
 
 	useEffect(() => {
-		if (application) {
+		if (!application) return;
+		if (application.data.status !== ApplicationStatus.close) {
 			onRequestCreateAnswers(application);
 			onSetApplication(application);
-		}
+		} else onRouteToReplyClosed();
 	}, [application]);
 
 	useEffect(() => {

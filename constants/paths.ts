@@ -4,6 +4,7 @@ export const Paths = {
 	main: '/main',
 	reply: '/reply',
 	replyComplete: '/reply/complete',
+	replyClosed: '/reply/closed',
 	view: '/view',
 	register: '/register',
 	registerClub: '/register/club',

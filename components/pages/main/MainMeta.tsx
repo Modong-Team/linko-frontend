@@ -12,13 +12,20 @@ import useApplication from '../../../hooks/useApplication';
 import DropDown from '../../dropdowns/DropDown';
 import { DynamicStyles } from '../../../styles/styles';
 import { useState, useEffect } from 'react';
-import { deleteApplication } from '../../../api/application';
+import {
+	deleteApplication,
+	patchApplicationOpen,
+	patchApplicationClose,
+} from '../../../api/application';
 import useApplicationId from '../../../hooks/useApplicationId';
 import useActive from '../../../hooks/useActive';
 import SubmitModal from '../../modals/SubmitModal';
 import { Icons } from '../../../styles/icons';
 import { ApplicationStatus } from '../../../constants/applicationStatus';
 import ClipBoard from '../../shared/ClipBoard';
+import useTriggers from '../../../hooks/useTriggers';
+import useRouteToPath from '../../../hooks/useRouteToPath';
+import { Paths } from '../../../constants/paths';
 
 export default function MainMeta() {
 	const { application } = useApplication();
@@ -26,6 +33,8 @@ export default function MainMeta() {
 	const { isShowSnackBar, onTriggerSnackBar } = useSnackBar();
 	const [isShowStopRecruitDropDown, setIsShowStopRecruitDropDown] = useState(false);
 	const [isShowOpenModal, onShowOpenModal, onHideOpenModal] = useActive();
+	const { triggers, onTriggerRefreshMain } = useTriggers();
+	const onRouteToMain = useRouteToPath(Paths.main);
 
 	const checkIfOpen = () => application?.data.status === ApplicationStatus.open;
 	const checkIfClose = () => application?.data.status === ApplicationStatus.close;
@@ -44,26 +53,42 @@ export default function MainMeta() {
 	};
 
 	const getAppropriateOnClick1 = () => {
-		if (checkIfOpen()) return () => alert('모집 마감');
-		if (checkIfClose()) return () => alert('모집 시작');
+		if (checkIfOpen()) return patchClose;
+		if (checkIfClose()) return patchOpen;
 		if (checkIfPrepare()) return () => alert('지원서 수정');
 		else return () => alert('지원서의 상태값이 유효하지 않습니다.');
 	};
 
-	const onClickClipBoard = (url: string) => {
-		copyToClipBoard(url);
-		onTriggerSnackBar();
+	const patchOpen = async () => {
+		if (!applicationId) return;
+		await patchApplicationOpen(applicationId);
+		onTriggerRefreshMain();
+	};
+
+	const patchClose = async () => {
+		if (!applicationId) return;
+		await patchApplicationClose(applicationId);
+		onTriggerRefreshMain();
+	};
+
+	const onConfirmFirstOpen = async () => {
+		await patchOpen();
+		onHideOpenModal();
+		onTriggerRefreshMain();
 	};
 
 	const onToggleStopRecruit = () => setIsShowStopRecruitDropDown(!isShowStopRecruitDropDown);
 
 	const onDelete = async () => {
 		if (applicationId) await deleteApplication(applicationId);
+		onRouteToMain();
+		onTriggerRefreshMain();
 	};
 
 	useEffect(() => {
-		() => onHideOpenModal();
-	}, []);
+		setIsShowStopRecruitDropDown(false);
+		return () => onHideOpenModal();
+	}, [applicationId, triggers.main]);
 
 	return (
 		<S.BoardHeader isWhite={!checkIfPrepare()}>
@@ -85,7 +110,7 @@ export default function MainMeta() {
 					width={'12.8rem'}
 					justify={'space-between'}
 					gap={'0.6rem'}
-					disabled={checkIfClose()}
+					styleDisabled={checkIfClose()}
 					isLoading={!getAppropriateLabel()}>
 					<DropDown
 						option1={getAppropriateOption1() + ''}
@@ -111,7 +136,7 @@ export default function MainMeta() {
 				title={'지원서를 작성 완료하고 모집을 시작할까요?'}
 				description={'모집이 시작되면 지원서 수정이 불가능해요.'}
 				onCancel={onHideOpenModal}
-				onConfirm={() => alert('모집 시작')}
+				onConfirm={onConfirmFirstOpen}
 				onConfirmLabel={'모집 시작'}
 				isHidden={!isShowOpenModal}
 			/>
