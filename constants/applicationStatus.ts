@@ -1,5 +1,5 @@
 export const ApplicationStatus = {
 	open: 'OPEN',
 	close: 'CLOSE',
-	prepare: 'PREPARE',
+	prepare: 'BEFORE_OPENING',
 } as const;
