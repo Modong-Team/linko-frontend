@@ -7,6 +7,7 @@ import {
 	refreshApplicant,
 } from '../modules/main/triggers';
 import { requestResetStatus } from '../modules/main/selectedStatus';
+import { refreshMain } from '../modules/main/triggers';
 
 export default function useTriggers() {
 	const triggers = useSelector(({ triggers }: RootState) => triggers);
@@ -29,11 +30,16 @@ export default function useTriggers() {
 		dispatch(refreshApplicant(new Date()));
 	};
 
+	const onTriggerRefreshMain = () => {
+		dispatch(refreshMain(new Date()));
+	};
+
 	return {
 		triggers,
 		onTriggerRefreshApplicants,
 		onTriggerRefreshMemos,
 		onTriggerRefreshEvaluations,
 		onTriggerRefreshApplicant,
+		onTriggerRefreshMain,
 	};
 }
