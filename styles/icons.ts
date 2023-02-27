@@ -3,4 +3,5 @@ export const Icons = {
 	hands: '🙌',
 	pencil: '✏️',
 	dart: '🎯',
+	cry: '😥',
 } as const;
