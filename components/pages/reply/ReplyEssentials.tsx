@@ -160,7 +160,7 @@ namespace S {
 			margin-bottom: 4rem;
 		}
 
-		> div:last-of-type > div {
+		> div:last-of-type > div:last-of-type {
 			margin-bottom: 0 !important;
 		}
 	`;
