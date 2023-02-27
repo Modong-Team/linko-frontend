@@ -11,17 +11,24 @@ import useNewApplicationId from '../../hooks/useNewApplicationId';
 import CustomButton from '../buttons/CustomButton';
 import { ButtonTypes, ButtonSizes } from '../../constants/buttons';
 import ProfileDropDown from '../dropdowns/ProfileDropDown';
+import SubmitModal from '../modals/SubmitModal';
+import useActive from '../../hooks/useActive';
+import { Icons } from '../../styles/icons';
+import { patchApplicationOpen } from '../../api/application';
 
 export default function Header({ isNew, isMain }: HeaderProps) {
 	const dispatch = useDispatch();
-	const { newApplicationId } = useNewApplicationId();
+	const { newApplicationId, onResetNewApplicationId } = useNewApplicationId();
 	const { isLoading } = useSelector(({ newApi }: RootState) => newApi);
 	const [isWaitingForComplete, setIsWaitingForComplete] = useState(false);
+	const [isWaitingForSave, setIsWaitingForSave] = useState(false);
 	const onRouteToComplete = useRouteToPath(Paths.newComplete + '/' + newApplicationId);
+	const onRouteToMain = useRouteToPath(Paths.main + '/' + newApplicationId);
 	const onRouteToLanding = useRouteToPath(Paths.landing);
+	const [isShowSubmitModal, onOpenSubmitModal, onHideSubmitModal] = useActive();
 
 	const onSave = () => {
-		setIsWaitingForComplete(false);
+		setIsWaitingForSave(true);
 		dispatch(requestSave());
 	};
 
@@ -30,8 +37,23 @@ export default function Header({ isNew, isMain }: HeaderProps) {
 		dispatch(requestSave());
 	};
 
+	const patchOpen = async () => {
+		if (!newApplicationId) return;
+		await patchApplicationOpen(newApplicationId);
+		onResetNewApplicationId();
+		onRouteToComplete();
+	};
+
+	const cleanUpAfterSave = () => {
+		onResetNewApplicationId();
+		onRouteToMain();
+	};
+
 	useEffect(() => {
-		if (!isLoading && isWaitingForComplete) onRouteToComplete();
+		if (isLoading) return;
+		if (isWaitingForSave) cleanUpAfterSave();
+		if (isWaitingForComplete) patchOpen();
+		return () => onHideSubmitModal();
 	}, [isLoading]);
 
 	return (
@@ -40,14 +62,14 @@ export default function Header({ isNew, isMain }: HeaderProps) {
 			{isNew && (
 				<S.NewSubmitButtons>
 					<CustomButton
-						label={'저장하기'}
+						label={'저장'}
 						onClick={onSave}
 						buttonType={ButtonTypes.secondary}
 						buttonSize={ButtonSizes.large}
 					/>
 					<CustomButton
 						label={'작성완료'}
-						onClick={onComplete}
+						onClick={onOpenSubmitModal}
 						buttonType={ButtonTypes.primary}
 						buttonSize={ButtonSizes.large}
 						isLoading={isLoading}
@@ -55,6 +77,15 @@ export default function Header({ isNew, isMain }: HeaderProps) {
 				</S.NewSubmitButtons>
 			)}
 			{isMain && <ProfileDropDown />}
+			<SubmitModal
+				icon={Icons.dart}
+				title={'지원서를 작성 완료하고 모집을 시작할까요?'}
+				description={'모집이 시작되면 지원서 수정이 불가능해요.'}
+				onCancel={onHideSubmitModal}
+				onConfirm={onComplete}
+				onConfirmLabel={'모집 시작'}
+				isHidden={!isShowSubmitModal}
+			/>
 		</S.Container>
 	);
 }
@@ -68,5 +99,10 @@ namespace S {
 	export const NewSubmitButtons = styled.div`
 		display: flex;
 		gap: 1.2rem;
+
+		> button {
+			width: 8.9rem;
+			white-space: nowrap;
+		}
 	`;
 }
