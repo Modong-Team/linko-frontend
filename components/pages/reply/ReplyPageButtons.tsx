@@ -28,9 +28,8 @@ export default function ReplyPageButtons({
 	const onConfirm = async () => {
 		onStartGlobalLoading();
 		try {
-			const post = await postApplicant(answers);
-			const applicantId = post.data.id;
-			router.push(Paths.replyComplete + '/' + applicantId);
+			await postApplicant(answers);
+			router.push(Paths.replyComplete + '/' + application?.data.urlId);
 		} catch (e) {
 			console.log(e);
 		} finally {
