@@ -3,6 +3,7 @@ import { Fonts } from '../../../styles/fonts';
 import { SC } from '../../../styles/styled';
 import useApplication from '../../../hooks/useApplication';
 import useApplicant from '../../../hooks/useApplicant';
+import parseMultiOptionAnswers from '../../../utils/parseMultiOptionAnswers';
 
 export default function ViewForms({ page }: ViewFormsProps) {
 	const { applicant } = useApplicant();
@@ -21,7 +22,7 @@ export default function ViewForms({ page }: ViewFormsProps) {
 			{application?.data.forms[page - 1]?.questions.map((question, i) => (
 				<div key={i}>
 					<h3>{question.content}</h3>
-					<p>{getAnswerByQuestionId(question.id)}</p>
+					<p>{parseMultiOptionAnswers(getAnswerByQuestionId(question.id) + '')}</p>
 				</div>
 			))}
 		</S.Container>
