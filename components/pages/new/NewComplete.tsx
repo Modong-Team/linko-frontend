@@ -2,8 +2,6 @@ import { SC } from '../../../styles/styled';
 import { Icons } from '../../../styles/icons';
 import styled from 'styled-components';
 import { Fonts } from '../../../styles/fonts';
-import { Colors } from '../../../styles/colors';
-import { svgCopy } from '../../../styles/svgs';
 import useRouteToPath from '../../../hooks/useRouteToPath';
 import { Paths } from '../../../constants/paths';
 import { useEffect, useState } from 'react';
@@ -11,7 +9,6 @@ import useGet from '../../../hooks/useGet';
 import { getApplication } from '../../../api/application';
 import CustomButton from '../../buttons/CustomButton';
 import { ButtonTypes, ButtonSizes } from '../../../constants/buttons';
-import copyToClipBoard from '../../../utils/copyToClipBoard';
 import SnackBar from '../../shared/SnackBar';
 import useSnackBar from '../../../hooks/useSnackBar';
 import useLoadingStatus from '../../../hooks/useLoadingStatus';
@@ -45,12 +42,6 @@ export default function NewComplete({ applicationId }: NewCompletePageProps) {
 				width={'34rem'}
 			/>
 			<div>
-				<CustomButton
-					label='수정하기'
-					onClick={console.log}
-					buttonType={ButtonTypes.secondary}
-					buttonSize={ButtonSizes.medium}
-				/>
 				<CustomButton
 					label='홈으로 돌아가기'
 					onClick={onRouteToMain}

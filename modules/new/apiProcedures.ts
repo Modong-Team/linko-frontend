@@ -15,9 +15,11 @@ import {
 } from './postedFormDataId';
 import { setApplicationTitleInputError } from './applicationTitleInputError';
 import { postForm, putForm, deleteForm } from '../../api/form';
-import { updateFormApplicationId, FormsStateType, saveFormDataId } from './forms';
+import { updateFormApplicationId, FormsStateType, saveFormDataId, resetForms } from './forms';
 import { NewApplicationIdStateType, requestSetNewApplicationId } from './newApplicationId';
 import { ClubDataStateType } from '../auth/clubData';
+import { resetNewApplication } from './newApplication';
+import { resetPostedFormDataId } from './postedFormDataId';
 
 const REQUEST_SAVE = 'new/REQUEST_SAVE';
 const GO_THROUGH_PREPROCESS = 'new/START_PREPROCESS';
@@ -140,7 +142,11 @@ function* deleteRemoveFormsSaga() {
 		console.log(deleted);
 		yield put(removePostedFormDataId(dataId));
 	}
+
 	yield put(setIsLoading(false));
+	yield put(resetForms());
+	yield put(resetNewApplication());
+	yield put(resetPostedFormDataId());
 }
 
 export function* newSaga() {
