@@ -73,7 +73,7 @@ namespace S {
 	`;
 
 	export const DropDown = styled.div`
-		width: 22.4rem;
+		min-width: 22.4rem;
 		position: absolute;
 		right: 0;
 		bottom: 0;
@@ -115,5 +115,6 @@ namespace S {
 		width: 3.2rem;
 		height: 3.2rem;
 		font-size: 1.92rem;
+		flex-shrink: 0;
 	`;
 }
