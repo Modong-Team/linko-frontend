@@ -155,6 +155,7 @@ export const ResetCSS = css`
 	a {
 		color: inherit;
 		font-size: inherit;
+		font-weight: inherit;
 		text-decoration: none;
 	}
 

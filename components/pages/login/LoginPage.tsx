@@ -16,7 +16,6 @@ export default function LoginPage() {
 	const [memberId, onChangeMemberId] = useInput();
 	const [password, onChangePassword] = useInput();
 	const { onRequestSetAuthData } = useAuthData();
-	const onRouteToMain = useRouteToPath(Paths.main);
 	const onRouteToContact = useRouteToPath(Urls.kakaoChannel);
 
 	const onWelcome = () =>
@@ -62,6 +61,12 @@ export default function LoginPage() {
 				<a href={Paths.register}>회원 가입</a>
 				<a onClick={onRouteToContact}>이용 문의</a>
 			</div>
+			<S.PrivacyPolicy>
+				<p>© 2023. Linko all rights reserved.</p>
+				<p>
+					<a href={Urls.privacyPolicy}>개인정보처리방침</a>
+				</p>
+			</S.PrivacyPolicy>
 		</S.Container>
 	);
 }
@@ -99,7 +104,7 @@ namespace S {
 			}
 		}
 
-		> div:last-of-type {
+		> div:nth-of-type(2) {
 			display: grid;
 			grid-template-columns: 1fr 1fr;
 			position: relative;
@@ -129,6 +134,27 @@ namespace S {
 				left: 50%;
 				transform: translate(-50%, -50%);
 			}
+		}
+	`;
+
+	export const PrivacyPolicy = styled.div`
+		position: fixed;
+		left: 50%;
+		bottom: 4rem;
+		transform: translateX(-50%);
+		display: flex;
+		flex-direction: column;
+		gap: 0.8rem;
+		text-align: center;
+
+		> p:first-of-type {
+			${Fonts.body14regular}
+			color: ${Colors.gray700};
+			white-space: nowrap;
+		}
+
+		> p:last-of-type {
+			${Fonts.button13medium}
 		}
 	`;
 }
