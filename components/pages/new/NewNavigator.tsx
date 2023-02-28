@@ -16,7 +16,7 @@ export default function NewNavigator({ page, onChangePage }: NewNavigatorProps) 
 	};
 	const onBlur = () => setShowMoreFor(-1);
 
-	const onClickRemove = (e: React.MouseEvent, idx: number) => {
+	const onClickRemove = (idx: number) => {
 		setShowMoreFor(null);
 		onRouteToAppropriatePage(idx);
 		onRemoveForm(idx);
@@ -42,9 +42,7 @@ export default function NewNavigator({ page, onChangePage }: NewNavigatorProps) 
 					<span onClick={(e) => withoutPropagation(e, () => onClickMore(e, i))}>{svgMore}</span>
 					<DropDown
 						option1={'삭제하기'}
-						option2={'복제하기'}
-						onClick1={(e) => onClickRemove(e, i)}
-						onClick2={() => alert('미구현된 피쳐입니다.')}
+						onClick1={() => onClickRemove(i)}
 						customCSS={
 							DynamicStyles.dropDownNthOptionRed(1) + DynamicStyles.dropDownTranslate(26, 85)
 						}
