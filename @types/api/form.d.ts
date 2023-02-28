@@ -21,6 +21,13 @@ declare namespace RequestForm {
 }
 
 declare namespace ResponseForm {
+	type GetAll = {
+		status: number;
+		message: string;
+		code: string;
+		data: SavedFormType[];
+	};
+
 	type Post = {
 		status: number;
 		message: string;

@@ -2,6 +2,11 @@ import request from './core/index';
 
 const baseUrl = '/form';
 
+export const getForms = (applicationId: number) => {
+	const url = `${baseUrl}s/${applicationId}`;
+	return request.get<ResponseForm.GetAll>(url);
+};
+
 export const postForm = (data: RequestForm.Post) => {
 	const url = `${baseUrl}`;
 	return request.post<ResponseForm.Post, RequestForm.Post>(url, data);
