@@ -35,6 +35,7 @@ export default function MainMeta() {
 	const [isShowOpenModal, onShowOpenModal, onHideOpenModal] = useActive();
 	const { triggers, onTriggerRefreshMain } = useTriggers();
 	const onRouteToMain = useRouteToPath(Paths.main);
+	const onRouteToEdit = useRouteToPath(Paths.edit + '/' + applicationId);
 
 	const checkIfOpen = () => application?.data.status === ApplicationStatus.open;
 	const checkIfClose = () => application?.data.status === ApplicationStatus.close;
@@ -55,7 +56,7 @@ export default function MainMeta() {
 	const getAppropriateOnClick1 = () => {
 		if (checkIfOpen()) return patchClose;
 		if (checkIfClose()) return patchOpen;
-		if (checkIfPrepare()) return () => alert('지원서 수정');
+		if (checkIfPrepare()) return onRouteToEdit;
 		else return () => alert('지원서의 상태값이 유효하지 않습니다.');
 	};
 

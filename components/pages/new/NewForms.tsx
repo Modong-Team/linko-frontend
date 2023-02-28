@@ -19,7 +19,7 @@ export default function NewForms({ formIdx }: NewFormsProps) {
 			<h2>지원자에게 질문하고 싶은 내용을 입력하세요.</h2>
 			<div>
 				{forms.length &&
-					forms[formIdx].questionRequests.map((question, i) => (
+					forms[formIdx].questionRequests?.map((question, i) => (
 						<QuestionBox
 							formIdx={formIdx}
 							questionType={question.questionType}

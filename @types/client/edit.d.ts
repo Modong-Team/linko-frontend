@@ -1,0 +1,3 @@
+type EditPageProps = {
+	applicationId: number;
+};
