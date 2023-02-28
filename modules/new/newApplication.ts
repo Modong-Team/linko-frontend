@@ -11,6 +11,7 @@ const REMOVE_NEW_APPLICATION_ESSENTIAL = 'newApplication/REMOVE_NEW_APPLICATION_
 const SET_NEW_APPLICATION_TITLE = 'newApplication/SET_NEW_APPLICATION_TITLE';
 const SET_NEW_APPLICATION_URL_ID = 'newApplication/SET_NEW_APPLICATION_URL_ID';
 const RESET_NEW_APPLICATION = 'newApplication/RESET_NEW_APPLICATION';
+const SET_NEW_APPLICATION = 'newApplication/SET_NEW_APPLICATION';
 
 export const setNewApplicationClubId = createAction(
 	SET_NEW_APPLICATION_CLUB_ID, //
@@ -33,6 +34,12 @@ export const setNewApplicationUrlId = createAction(
 	(urlId: string) => ({ urlId }),
 )();
 export const resetNewApplication = createAction(RESET_NEW_APPLICATION)();
+export const setNewApplication = createAction(
+	SET_NEW_APPLICATION,
+	(application: NewApplicationStateType) => ({
+		application,
+	}),
+)();
 
 /**
  * Reducer
@@ -52,6 +59,7 @@ type NewApplicationActionsType = ActionType<
 	| typeof setNewApplicationTitle
 	| typeof setNewApplicationUrlId
 	| typeof resetNewApplication
+	| typeof setNewApplication
 >;
 
 const initialState: NewApplicationStateType = {
@@ -78,6 +86,7 @@ const newApplication = createReducer<NewApplicationStateType, NewApplicationActi
 		[SET_NEW_APPLICATION_TITLE]: (state, { payload }) => ({ ...state, title: payload.title }),
 		[SET_NEW_APPLICATION_URL_ID]: (state, { payload }) => ({ ...state, urlId: payload.urlId }),
 		[RESET_NEW_APPLICATION]: (state) => produce(initialState, (draft) => draft),
+		[SET_NEW_APPLICATION]: (state, { payload }) => produce(payload.application, (draft) => draft),
 	},
 );
 
