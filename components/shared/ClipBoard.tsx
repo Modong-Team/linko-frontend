@@ -20,6 +20,8 @@ export default function ClipBoard({ onTriggerSnackBar, urlId, width }: ClipBoard
 
 namespace S {
 	export const Container = styled.div<WidthType>`
+		width: ${(props) => props.width || '21.8rem'};
+		margin: 0 auto;
 		padding: 0.8rem 1.6rem;
 		border-radius: 0.8rem;
 		background-color: ${Colors.gray200};
@@ -31,7 +33,6 @@ namespace S {
 		> div:first-of-type {
 			${Fonts.body14regular}
 			color: ${Colors.gray800};
-			width: ${(props) => props.width || '16rem'};
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;

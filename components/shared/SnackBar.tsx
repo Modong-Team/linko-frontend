@@ -32,7 +32,7 @@ namespace S {
 		bottom: ${(props) => props.bottom ?? '4rem'};
 		left: 50%;
 		transform: translate(-50%, 150%);
-		z-index: 100;
+		z-index: 110;
 		animation-duration: 2s;
 		animation-timing-function: ease;
 		opacity: 0;

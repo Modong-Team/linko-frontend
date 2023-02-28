@@ -12,3 +12,8 @@ type AgreementModalProps = {
 	onClose: () => void;
 	isHidden: boolean;
 };
+
+type ClipBoardModalProps = ClipBoardProps & {
+	onConfirm: () => void;
+	isHidden: boolean;
+};

@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { Colors } from '../../../styles/colors';
 import { Fonts } from '../../../styles/fonts';
 import { svgLink24, svgDown16 } from '../../../styles/svgs';
-import copyToClipBoard from '../../../utils/copyToClipBoard';
 import useSnackBar from '../../../hooks/useSnackBar';
 import SnackBar from '../../shared/SnackBar';
 import MoreButton from '../../buttons/MoreButton';
@@ -26,6 +25,7 @@ import ClipBoard from '../../shared/ClipBoard';
 import useTriggers from '../../../hooks/useTriggers';
 import useRouteToPath from '../../../hooks/useRouteToPath';
 import { Paths } from '../../../constants/paths';
+import ClipBoardModal from '../../modals/ClipBoardModal';
 
 export default function MainMeta() {
 	const { application } = useApplication();
@@ -33,6 +33,7 @@ export default function MainMeta() {
 	const { isShowSnackBar, onTriggerSnackBar } = useSnackBar();
 	const [isShowStopRecruitDropDown, setIsShowStopRecruitDropDown] = useState(false);
 	const [isShowOpenModal, onShowOpenModal, onHideOpenModal] = useActive();
+	const [isShowClipBoardModal, onShowClipBoardModal, onHideClipBoardModal] = useActive();
 	const { triggers, onTriggerRefreshMain } = useTriggers();
 	const onRouteToMain = useRouteToPath(Paths.main);
 	const onRouteToEdit = useRouteToPath(Paths.edit + '/' + applicationId);
@@ -63,7 +64,6 @@ export default function MainMeta() {
 	const patchOpen = async () => {
 		if (!applicationId) return;
 		await patchApplicationOpen(applicationId);
-		onTriggerRefreshMain();
 	};
 
 	const patchClose = async () => {
@@ -72,9 +72,14 @@ export default function MainMeta() {
 		onTriggerRefreshMain();
 	};
 
-	const onConfirmFirstOpen = async () => {
+	const onConfirmOpenModal = async () => {
 		await patchOpen();
 		onHideOpenModal();
+		onShowClipBoardModal();
+	};
+
+	const onConfirmClipBoardModal = () => {
+		onHideClipBoardModal();
 		onTriggerRefreshMain();
 	};
 
@@ -88,7 +93,10 @@ export default function MainMeta() {
 
 	useEffect(() => {
 		setIsShowStopRecruitDropDown(false);
-		return () => onHideOpenModal();
+		return () => {
+			onHideOpenModal();
+			onHideClipBoardModal();
+		};
 	}, [applicationId, triggers.main]);
 
 	return (
@@ -137,9 +145,15 @@ export default function MainMeta() {
 				title={'지원서를 작성 완료하고 모집을 시작할까요?'}
 				description={'모집이 시작되면 지원서 수정이 불가능해요.'}
 				onCancel={onHideOpenModal}
-				onConfirm={onConfirmFirstOpen}
+				onConfirm={onConfirmOpenModal}
 				onConfirmLabel={'모집 시작'}
 				isHidden={!isShowOpenModal}
+			/>
+			<ClipBoardModal
+				onTriggerSnackBar={onTriggerSnackBar}
+				urlId={application?.data.urlId ?? ''}
+				onConfirm={onConfirmClipBoardModal}
+				isHidden={!isShowClipBoardModal}
 			/>
 		</S.BoardHeader>
 	);
