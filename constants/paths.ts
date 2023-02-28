@@ -16,4 +16,5 @@ export const Paths = {
 	landing: '/landing',
 } as const;
 
-export const PublicPathsRegex = /register|login|reply|landing/;
+export const OnlyPublicPathsRegex = /register|login/;
+export const OnlyPrivatePathsRegex = /new|edit|main|view/;

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { PublicPathsRegex, Paths } from '../../constants/paths';
+import { OnlyPrivatePathsRegex, OnlyPublicPathsRegex, Paths } from '../../constants/paths';
 import { StorageKeys } from '../../constants/keys';
 import useAuthData from '../../hooks/useAuthData';
 import { postToken } from '../../api/token';
@@ -13,7 +13,8 @@ export default function RouterGuard({ children }: ChildrenType) {
 
 	const onRouteToMain = () => router.push(Paths.main);
 	const onRouteToLogin = () => router.push(Paths.login);
-	const checkIsPublicPath = () => PublicPathsRegex.test(router.pathname);
+	const checkIsOnlyPublicPath = () => OnlyPublicPathsRegex.test(router.pathname);
+	const checkIsOnlyPrivatePath = () => OnlyPrivatePathsRegex.test(router.pathname);
 	const checkIsAuthed = () => !!authData;
 
 	const onTryRestoreAuthData = async () => {
@@ -29,13 +30,14 @@ export default function RouterGuard({ children }: ChildrenType) {
 	};
 
 	const onDecideWhetherToRender = () => {
-		if (checkIsPublicPath() !== checkIsAuthed()) setIsRenderPermitted(true);
+		if (checkIsOnlyPublicPath() === !checkIsAuthed()) setIsRenderPermitted(true);
+		if (checkIsOnlyPrivatePath() === checkIsAuthed()) setIsRenderPermitted(true);
 		else onRedirectToProperPath();
 	};
 
 	const onRedirectToProperPath = () => {
-		if (checkIsPublicPath() && checkIsAuthed()) onRouteToMain();
-		if (!checkIsPublicPath() && !checkIsAuthed()) onRouteToLogin();
+		if (checkIsOnlyPublicPath() && checkIsAuthed()) onRouteToMain();
+		if (checkIsOnlyPrivatePath() && !checkIsAuthed()) onRouteToLogin();
 	};
 
 	useEffect(() => {

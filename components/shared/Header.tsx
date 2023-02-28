@@ -15,6 +15,7 @@ import SubmitModal from '../modals/SubmitModal';
 import useActive from '../../hooks/useActive';
 import { Icons } from '../../styles/icons';
 import { patchApplicationOpen } from '../../api/application';
+import useTriggers from '../../hooks/useTriggers';
 
 export default function Header({ isNew, isMain }: HeaderProps) {
 	const dispatch = useDispatch();
@@ -23,9 +24,11 @@ export default function Header({ isNew, isMain }: HeaderProps) {
 	const [isWaitingForComplete, setIsWaitingForComplete] = useState(false);
 	const [isWaitingForSave, setIsWaitingForSave] = useState(false);
 	const onRouteToComplete = useRouteToPath(Paths.newComplete + '/' + newApplicationId);
-	const onRouteToMain = useRouteToPath(Paths.main + '/' + newApplicationId);
+	const onRouteToMain = useRouteToPath(Paths.main);
+	const onRouteToMainNewApplication = useRouteToPath(Paths.main + '/' + newApplicationId);
 	const onRouteToLanding = useRouteToPath(Paths.landing);
 	const [isShowSubmitModal, onOpenSubmitModal, onHideSubmitModal] = useActive();
+	const { onTriggerRefreshMain } = useTriggers();
 
 	const onSave = () => {
 		setIsWaitingForSave(true);
@@ -46,7 +49,14 @@ export default function Header({ isNew, isMain }: HeaderProps) {
 
 	const cleanUpAfterSave = () => {
 		onResetNewApplicationId();
-		onRouteToMain();
+		onRouteToMainNewApplication();
+	};
+
+	const onClickLogo = () => {
+		if (isNew || isMain) {
+			onRouteToMain();
+			onTriggerRefreshMain();
+		} else onRouteToLanding();
 	};
 
 	useEffect(() => {
@@ -60,7 +70,7 @@ export default function Header({ isNew, isMain }: HeaderProps) {
 
 	return (
 		<S.Container>
-			<SC.HeaderLogo onClick={onRouteToLanding}>{svgLogo}</SC.HeaderLogo>
+			<SC.HeaderLogo onClick={onClickLogo}>{svgLogo}</SC.HeaderLogo>
 			{isNew && (
 				<S.NewSubmitButtons>
 					<CustomButton
