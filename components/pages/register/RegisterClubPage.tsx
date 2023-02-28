@@ -94,6 +94,7 @@ export default function RegisterClubPage() {
 				onChange={onChangeClubName}
 				label={'동아리 이름'}
 				errorMessage={'동아리 이름을 입력하세요.'}
+				isSingleLine
 			/>
 			<S.PeriodOfUse>
 				<label>

@@ -23,6 +23,7 @@ export default function RegisterMemberCodePage() {
 				onChange={onChangeCode}
 				label={'동아리 코드'}
 				errorMessage={'동아리 코드를 입력하세요.'}
+				isSingleLine
 			/>
 			<CustomButton
 				label={'다음'}
