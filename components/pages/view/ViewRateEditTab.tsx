@@ -33,7 +33,7 @@ export default function ViewRateEditTab({
 	const [isShowDeleteModal, onShowDeleteModal, onHideDeleteModal] = useActive();
 
 	const onValidateScoreInteger = (e: ChangeEvent<HTMLInputElement>) => {
-		if (isNaN(+e.target.value)) return;
+		if (isNaN(+e.target.value) || /\./.test(e.target.value)) return;
 		if (+e.target.value >= 10) {
 			onManuallyChangeScoreInteger(10 + '');
 			onManuallyChangeScoreDecimal(0 + '');
