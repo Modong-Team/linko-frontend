@@ -6,4 +6,4 @@ export const ResponseCodes = {
 	notFound: 404,
 	methodNotAllowed: 405,
 	internalServerError: 500,
-};
+} as const;
