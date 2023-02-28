@@ -29,6 +29,10 @@ request.interceptors.response.use(
 		return response.data;
 	},
 	(error) => {
+		const code = error.response.data.code;
+		const message = error.response.data.message;
+		alert(`[${code}] ${message}`);
+		history.go();
 		return Promise.reject(error);
 	},
 );
