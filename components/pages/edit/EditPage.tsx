@@ -8,6 +8,7 @@ import usePostedFormDataId from '../../../hooks/usePostedFormDataId';
 import useNewApplication from '../../../hooks/useNewApplication';
 import useNewApplicationId from '../../../hooks/useNewApplicationId';
 import produce from 'immer';
+import { EssentialCategories } from '../../../constants/essentials';
 
 export default function EditPage({ applicationId }: EditPageProps) {
 	const {
@@ -45,7 +46,9 @@ export default function EditPage({ applicationId }: EditPageProps) {
 		onSetNewApplicationTitle(application.data.title);
 		onSetNewApplicationUrlId(application.data.urlId);
 		onSetNewApplicationClubId(application.data.clubId);
-		application.data.essentialQuestions.forEach(({ id }) => onAddNewApplicationEssentials(id));
+		application.data.essentialQuestions.forEach(({ id }) => {
+			if (!EssentialCategories.default.includes(id)) onAddNewApplicationEssentials(id);
+		});
 	};
 
 	useEffect(() => {
