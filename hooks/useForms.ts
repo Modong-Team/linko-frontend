@@ -13,6 +13,7 @@ import {
 } from '../modules/new/forms';
 import { RootState } from '../modules/index';
 import { requestSetNewApplicationId } from '../modules/new/newApplicationId';
+import { setForms } from '../modules/new/forms';
 
 export default function useForms() {
 	const forms = useSelector(({ forms }: RootState) => forms);
@@ -53,6 +54,8 @@ export default function useForms() {
 	const onSaveFormDataId = (formIdx: number, dataId: number) =>
 		dispatch(saveFormDataId(formIdx, dataId));
 
+	const onSetForms = (forms: FormType[]) => dispatch(setForms(forms));
+
 	return {
 		forms,
 		onSetNewApplicationId,
@@ -66,5 +69,6 @@ export default function useForms() {
 		onUpdateQuestionOption,
 		onRemoveQuestionOption,
 		onSaveFormDataId,
+		onSetForms,
 	};
 }
