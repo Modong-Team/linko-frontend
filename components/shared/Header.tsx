@@ -16,6 +16,7 @@ import useActive from '../../hooks/useActive';
 import { Icons } from '../../styles/icons';
 import { patchApplicationOpen } from '../../api/application';
 import useTriggers from '../../hooks/useTriggers';
+import { Devices } from '../../styles/devices';
 
 export default function Header({ isNew, isMain }: HeaderProps) {
 	const dispatch = useDispatch();
@@ -69,8 +70,10 @@ export default function Header({ isNew, isMain }: HeaderProps) {
 	}, [isLoading]);
 
 	return (
-		<S.Container>
-			<SC.HeaderLogo onClick={onClickLogo}>{svgLogo}</SC.HeaderLogo>
+		<S.Container isException={!(isNew || isMain)}>
+			<S.Logo onClick={onClickLogo} isException={!(isNew || isMain)}>
+				{svgLogo}
+			</S.Logo>
 			{isNew && (
 				<S.NewSubmitButtons>
 					<CustomButton
@@ -103,9 +106,23 @@ export default function Header({ isNew, isMain }: HeaderProps) {
 }
 
 namespace S {
-	export const Container = styled(SC.HeaderContainer)`
+	export const Container = styled(SC.HeaderContainer)<IsExceptionType>`
 		width: 100%;
 		z-index: 10;
+
+		@media ${Devices.mobile} {
+			height: ${(props) => props.isException && '6.9rem'};
+			justify-content: ${(props) => props.isException && 'center'};
+		}
+	`;
+
+	export const Logo = styled(SC.HeaderLogo)<IsExceptionType>`
+		@media ${Devices.mobile} {
+			> svg {
+				display: ${(props) => props.isException && 'flex'};
+				width: ${(props) => props.isException && '6.8rem'};
+			}
+		}
 	`;
 
 	export const NewSubmitButtons = styled.div`

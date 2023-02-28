@@ -13,11 +13,6 @@ export namespace SC {
 		align-items: center;
 		justify-content: space-between;
 		padding: 0 2.8rem;
-
-		@media ${Devices.mobile} {
-			height: 6.9rem;
-			justify-content: center;
-		}
 	`;
 
 	export const HeaderLogo = styled.h1`
@@ -25,11 +20,6 @@ export namespace SC {
 
 		> svg {
 			width: 8.1rem;
-
-			@media ${Devices.mobile} {
-				display: flex;
-				width: 6.8rem;
-			}
 		}
 	`;
 
