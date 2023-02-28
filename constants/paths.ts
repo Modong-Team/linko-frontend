@@ -1,6 +1,7 @@
 export const Paths = {
 	new: '/new',
 	newComplete: '/new/complete',
+	edit: '/edit',
 	main: '/main',
 	reply: '/reply',
 	replyComplete: '/reply/complete',
