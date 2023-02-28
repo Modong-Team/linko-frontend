@@ -27,8 +27,8 @@ export default function MainBoard() {
 					label2={'높은 평점 순'}
 					label3={'낮은 평점 순'}
 					onClick1={onSortNameAsc}
-					onClick2={onSortRateAsc}
-					onClick3={onSortRateDesc}
+					onClick2={onSortRateDesc}
+					onClick3={onSortRateAsc}
 					currentLabel={SortLabels[sort]}
 				/>
 			</S.FilterButtons>

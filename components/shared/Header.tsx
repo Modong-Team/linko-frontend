@@ -53,6 +53,8 @@ export default function Header({ isNew, isMain }: HeaderProps) {
 		if (isLoading) return;
 		if (isWaitingForSave) cleanUpAfterSave();
 		if (isWaitingForComplete) patchOpen();
+		setIsWaitingForSave(false);
+		setIsWaitingForComplete(false);
 		return () => onHideSubmitModal();
 	}, [isLoading]);
 
