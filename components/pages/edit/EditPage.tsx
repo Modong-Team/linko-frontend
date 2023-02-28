@@ -1,7 +1,6 @@
 import { NewPage } from '../new';
 import { useEffect } from 'react';
 import { getApplication } from '../../../api/application';
-import useApplicationId from '../../../hooks/useApplicationId';
 import useForms from '../../../hooks/useForms';
 import { getForms } from '../../../api/form';
 import usePostedFormDataId from '../../../hooks/usePostedFormDataId';
@@ -9,6 +8,9 @@ import useNewApplication from '../../../hooks/useNewApplication';
 import useNewApplicationId from '../../../hooks/useNewApplicationId';
 import produce from 'immer';
 import { EssentialCategories } from '../../../constants/essentials';
+import { ApplicationStatus } from '../../../constants/applicationStatus';
+import useRouteToPath from '../../../hooks/useRouteToPath';
+import { Paths } from '../../../constants/paths';
 
 export default function EditPage({ applicationId }: EditPageProps) {
 	const {
@@ -20,6 +22,7 @@ export default function EditPage({ applicationId }: EditPageProps) {
 	const { onRequestSetNewApplicationId } = useNewApplicationId();
 	const { onSetForms } = useForms();
 	const { onAddPostedFormDataId } = usePostedFormDataId();
+	const onRouteToMain = useRouteToPath(Paths.main);
 
 	const setPrevData = async () => {
 		if (!applicationId) return;
@@ -51,8 +54,15 @@ export default function EditPage({ applicationId }: EditPageProps) {
 		});
 	};
 
+	const decideWhetherToAllowAccess = async () => {
+		const application = await getApplication(applicationId);
+		if (application.data.status !== ApplicationStatus.prepare) onRouteToMain();
+		else setPrevData();
+	};
+
 	useEffect(() => {
-		if (applicationId) setPrevData();
+		if (!applicationId) return;
+		decideWhetherToAllowAccess();
 	}, [applicationId]);
 
 	return <NewPage />;
