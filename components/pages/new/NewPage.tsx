@@ -4,14 +4,20 @@ import NewIndicator from './NewIndicator';
 import NewMain from './NewMain';
 import NewNavigator from './NewNavigator';
 import NewPageButtons from './NewPageButtons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import useResetApplicationDraft from '../../../hooks/useResetApplicationDraft';
 
 export default function NewPage() {
 	const [page, setPage] = useState(-1);
+	const { onResetApplicationDraft } = useResetApplicationDraft();
 
 	const onChangePage = (page: number) => setPage(page);
 	const onPrevPage = () => setPage(page - 1);
 	const onNextPage = () => setPage(page + 1);
+
+	useEffect(() => {
+		return () => onResetApplicationDraft();
+	}, []);
 
 	return (
 		<S.Container>
