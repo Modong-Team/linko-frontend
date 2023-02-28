@@ -52,9 +52,23 @@ export default function ReplyEssentials({
 	};
 
 	const onRequestUpdateEssentialAnswer = (id: number, value: string) => {
+		if (!checkIfValid(id, value)) return;
 		if (value === '') onAddError(id);
 		else onRemoveError(id);
 		onUpdateEssentialAnswer(id, value);
+	};
+
+	const checkIfValid = (id: number, value: string) => {
+		if (id === Essentials.name) return validate(value.length <= 4);
+		if (id === Essentials.phoneNumber)
+			return validate(/^[0-9]*$/.test(value) && value.length <= 11);
+		if (id === Essentials.birth) return validate(/^[0-9]*$/.test(value) && value.length <= 6);
+		return true;
+	};
+
+	const validate = (validCondition: boolean) => {
+		if (validCondition) return true;
+		return false;
 	};
 
 	useEffect(() => {
@@ -75,7 +89,11 @@ export default function ReplyEssentials({
 				<h2>기본정보</h2>
 				{getDefault()?.map((question, i) => (
 					<ReplyTextInput
-						label={question.content}
+						label={
+							question.id === Essentials.phoneNumber
+								? question.content + ' (숫자만 입력)'
+								: question.content
+						}
 						value={getEssentialAnswer(question.id) || ''}
 						onChange={(e) =>
 							question.id === Essentials.name
@@ -110,7 +128,7 @@ export default function ReplyEssentials({
 					<h2>생년월일</h2>
 					{getBirth()?.map((question, i) => (
 						<ReplyTextInput
-							label={question.content}
+							label={question.content + ' (YYMMDD)'}
 							value={getEssentialAnswer(question.id) || ''}
 							onChange={(e) => onRequestUpdateEssentialAnswer(question.id, e.target.value)}
 							key={i}

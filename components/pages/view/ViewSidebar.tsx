@@ -15,6 +15,7 @@ import parsePhoneNumber from '../../../utils/parsePhoneNumber';
 import { patchApplicantCancelFail, patchApplicantStatus } from '../../../api/applicant';
 import useApplicantId from '../../../hooks/useApplicantId';
 import useTriggers from '../../../hooks/useTriggers';
+import parseBirthDate from '../../../utils/parseBirthDate';
 
 export default function ViewSidebar({ page, onChangePage }: ViewSidebarProps) {
 	const { applicant } = useApplicant();
@@ -119,7 +120,7 @@ export default function ViewSidebar({ page, onChangePage }: ViewSidebarProps) {
 					{getBirth() && (
 						<p>
 							{svgBirth}
-							{getBirth()?.essentialAnswer}
+							{parseBirthDate(getBirth()?.essentialAnswer + '')}
 						</p>
 					)}
 					{!!getAcademic()?.length && (
