@@ -28,6 +28,7 @@ import useChange from '../../../hooks/useChange';
 export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumnProps) {
 	const [page, onChangePage] = useChange(1);
 	const [totalPages, setTotalPages] = useState(0);
+	const [totalElements, setTotalElements] = useState(0);
 	const [applicants, setApplicants] = useState<ResponseApplicants.Data[]>();
 	const { selectedStatus, onSelectStatus, onRequestResetStatus } = useSelectedStatus();
 	const { selectedApplicants } = useSelectedApplicants();
@@ -90,6 +91,7 @@ export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumn
 			const get = await getApplicants(applicationId, applicationStatusCode, page, filter, sort);
 			setApplicants(get.data.result.content);
 			setTotalPages(get.data.result.totalPages);
+			setTotalElements(get.data.result.totalElements);
 		} catch {
 			setApplicants([]);
 			setTotalPages(0);
@@ -106,7 +108,7 @@ export default function MainBoardColumn({ applicantStatusCode }: MainBoardColumn
 		<S.Container isSelected={checkIsSelected()}>
 			<S.Meta>
 				<h2>{ApplicantStatusCodeLabel[applicantStatusCode]}</h2>
-				<div>{applicants?.length}</div>
+				<div>{totalElements}</div>
 				{checkShouldShowButton() && (
 					<CustomButton
 						label={!checkIsSelected() ? '상태 변경' : '선택 취소'}

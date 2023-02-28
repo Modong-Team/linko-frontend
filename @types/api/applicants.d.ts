@@ -7,6 +7,7 @@ declare namespace ResponseApplicants {
 			result: {
 				content: Data[];
 				totalPages: number;
+				totalElements: number;
 			};
 		};
 	};
