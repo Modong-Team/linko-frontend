@@ -55,7 +55,7 @@ export default function RegisterMemberPage({ clubId }: RegisterMemberPageProps) 
 			onStartGlobalLoading();
 			const post = await postRegister({ ...formik.values, clubCode: clubId });
 			onFinishGlobalLoading();
-			if (post) onRouteToPath(Paths.registerMemberComplete);
+			if (post) onRouteToPath(Paths.login);
 		},
 		validateOnChange: true,
 		validateOnMount: true,
