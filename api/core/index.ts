@@ -50,7 +50,7 @@ const silentRefresh = async (config: AxiosRequestConfig) => {
 const handleError = (error: ExtendedError) => {
 	switch (error.response.status) {
 		case ResponseCodes.unauthorized:
-			silentRefresh(error.config);
+			history.go();
 			break;
 		default:
 			alertErrorInfo(error);
