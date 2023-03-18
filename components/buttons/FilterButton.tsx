@@ -55,7 +55,8 @@ namespace S {
 		${Fonts.button14medium}
 		display: flex;
 		gap: 0.6rem;
-		min-width: 10rem;
+		width: 10.6rem;
+		white-space: nowrap;
 		justify-content: space-between;
 		padding: 0.6rem 1.4rem;
 		align-items: center;
@@ -65,5 +66,9 @@ namespace S {
 		position: relative;
 		transition: 0.3s ease;
 		cursor: pointer;
+
+		> svg {
+			flex-shrink: 0;
+		}
 	`;
 }
