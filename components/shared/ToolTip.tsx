@@ -9,7 +9,7 @@ export default function ToolTip({ onClose, isHidden }: ToolTipProps) {
 			<p>
 				링코의 서비스는 2023년 3월 1일부터
 				<br />
-				2023년 3월 31일까지 베타 서비스 기간
+				2023년 4월 30일까지 베타 서비스 기간
 				<br />
 				동안 이용할 수 있어요.
 			</p>
