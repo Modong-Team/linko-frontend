@@ -12,7 +12,7 @@ export default function BottomSheet({ onClose, isHidden }: BottomSheetProps) {
 		<S.Background isHidden={isHidden} height={window.innerHeight + 'px'}>
 			<S.SheetContainer isHidden={isHidden}>
 				<div>
-					링코의 서비스는 2023년 3월 1일부터 2023년 3월 31일까지 베타 서비스 기간 동안 이용할 수
+					링코의 서비스는 2023년 3월 1일부터 2023년 4월 30일까지 베타 서비스 기간 동안 이용할 수
 					있어요.
 				</div>
 				<CustomButton
