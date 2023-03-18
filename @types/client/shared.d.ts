@@ -17,6 +17,9 @@ type CalendarProps = {
 	onChangeEndDate: (value: number) => void;
 	onClose: () => void;
 	isHidden: boolean;
+	isApril: boolean;
+	onSelectApril: () => void;
+	onSelectMarch: () => void;
 };
 
 type ToolTipProps = {

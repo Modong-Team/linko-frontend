@@ -25,6 +25,8 @@ import useLoadingStatus from '../../../hooks/useLoadingStatus';
 import { Devices } from '../../../styles/devices';
 import BottomSheet from '../../shared/BottomSheet';
 import useMobile from '../../../hooks/useMobile';
+import { parseDateWithBase } from '../../../utils/parseDateWithBase';
+import useOutsideClick from '../../../hooks/useOutsideClick';
 
 export default function RegisterClubPage() {
 	const id = useUniqueId();
@@ -40,6 +42,8 @@ export default function RegisterClubPage() {
 	const [isCalendarOpened, onOpenCalendar, onCloseCalendar] = useActive();
 	const [isToolTipOpened, onOpenTooltip, onCloseTooltip] = useActive();
 	const { onStartGlobalLoading, onFinishGlobalLoading } = useLoadingStatus();
+	const [isApril, onSelectApril, onSelectMarch] = useActive();
+	const calendarRef = useRef() as MutableRefObject<HTMLDivElement>;
 
 	const onClickLabel = () => labelRef.current.click();
 
@@ -56,8 +60,8 @@ export default function RegisterClubPage() {
 			const post = await postClub({
 				name: clubName,
 				profileImgUrl: fileKey,
-				startDate: '2023. 3. ' + startDate,
-				endDate: '2023. 3. ' + endDate,
+				startDate: parseDateWithBase(startDate),
+				endDate: parseDateWithBase(endDate),
 			});
 			onHideModal();
 			onHideBottomSheet();
@@ -74,6 +78,8 @@ export default function RegisterClubPage() {
 			onHideBottomSheet();
 		};
 	}, []);
+
+	useOutsideClick(calendarRef, onCloseCalendar);
 
 	return (
 		<S.Container>
@@ -109,20 +115,23 @@ export default function RegisterClubPage() {
 						)}
 					</button>
 				</label>
-				<div onClick={onOpenCalendar}>
+				<div onClick={onOpenCalendar} ref={calendarRef}>
 					{svgCalendar}
 					<p>
-						{startDate ? '2023. 3. ' + startDate : <S.Gray>모집 시작</S.Gray>}
+						{startDate ? parseDateWithBase(startDate) : <S.Gray>모집 시작</S.Gray>}
 						{startDate && endDate ? ' – ' : <S.Gray> – </S.Gray>}
-						{endDate ? '2023. 3. ' + endDate : <S.Gray>모집 마감</S.Gray>}
+						{endDate ? parseDateWithBase(endDate) : <S.Gray>모집 마감</S.Gray>}
 					</p>
 					<Calendar
 						startDate={startDate}
 						endDate={endDate}
 						onChangeStartDate={onChangeStartDate}
 						onChangeEndDate={onChangeEndDate}
-						onClose={onCloseCalendar}
 						isHidden={!isCalendarOpened}
+						onClose={onCloseCalendar}
+						isApril={isApril}
+						onSelectApril={onSelectApril}
+						onSelectMarch={onSelectMarch}
 					/>
 				</div>
 			</S.PeriodOfUse>

@@ -1,14 +1,18 @@
 import styled from 'styled-components';
 import { Colors } from '../../styles/colors';
 import IconButton from '../buttons/IconButton';
-import { svgCancel12 } from '../../styles/svgs';
+import { svgChevronLeft24 } from '../../styles/svgs';
 import { Fonts } from '../../styles/fonts';
 import useChange from '../../hooks/useChange';
-import { useEffect } from 'react';
 import withoutPropagation from '../../utils/withoutPropagation';
+import { svgChevronRight24 } from '../../styles/svgs';
+import { useEffect } from 'react';
 
 const days = ['월', '화', '수', '목', '금', '토', '일'];
 const datesInMarch = Array(31)
+	.fill(0)
+	.map((_, i) => i + 1);
+const datesInApril = Array(30)
 	.fill(0)
 	.map((_, i) => i + 1);
 
@@ -17,10 +21,15 @@ export default function Calendar({
 	endDate,
 	onChangeStartDate,
 	onChangeEndDate,
-	onClose,
 	isHidden,
+	onClose,
+	isApril,
+	onSelectApril,
+	onSelectMarch,
 }: CalendarProps) {
 	const [hoveredDate, onChangeHoveredDate] = useChange(0);
+
+	const getDateWithBase = (date: number) => (isApril ? 400 + date : 300 + date);
 
 	const checkIfStartDateSet = () => !!startDate;
 	const checkIfEndDateSet = () => !!endDate;
@@ -65,28 +74,38 @@ export default function Calendar({
 	return (
 		<S.Container isHidden={isHidden}>
 			<h1>
-				2023. 3
-				<IconButton svgIcon={svgCancel12} onClick={(e) => withoutPropagation(e, onClose)} />
+				<IconButton
+					svgIcon={svgChevronLeft24}
+					onClick={(e) => withoutPropagation(e, onSelectMarch)}
+					disabled={!isApril}
+				/>
+				2023. {isApril ? 4 : 3}
+				<IconButton
+					svgIcon={svgChevronRight24}
+					onClick={(e) => withoutPropagation(e, onSelectApril)}
+					disabled={isApril}
+				/>
 			</h1>
 			<div>
 				{days.map((day, i) => (
 					<S.Day key={i}>{day}</S.Day>
 				))}
-				{datesInMarch.map((date) => (
+				{(isApril ? datesInApril : datesInMarch).map((date) => (
 					<S.DateBackground
-						isStartDate={startDate === date}
-						isEndDate={endDate === date}
-						isPeriod={checkIfPeriod(date)}
-						isPeriodPreview={checkIfPeriodPreview(date)}
-						isHoveredDate={hoveredDate === date}
-						onMouseOver={() => onHoverDate(date)}
+						isStartDate={startDate === getDateWithBase(date)}
+						isEndDate={endDate === getDateWithBase(date)}
+						isPeriod={checkIfPeriod(getDateWithBase(date))}
+						isPeriodPreview={checkIfPeriodPreview(getDateWithBase(date))}
+						isHoveredDate={hoveredDate === getDateWithBase(date)}
+						onMouseOver={() => onHoverDate(getDateWithBase(date))}
 						onMouseLeave={() => onChangeHoveredDate(0)}
+						isApril={isApril}
 						key={date}>
 						<S.Date
-							isStartDate={startDate === date}
-							isEndDate={endDate === date}
-							isHoveredDate={hoveredDate === date}
-							onClick={() => onClickDate(date)}
+							isStartDate={startDate === getDateWithBase(date)}
+							isEndDate={endDate === getDateWithBase(date)}
+							isHoveredDate={hoveredDate === getDateWithBase(date)}
+							onClick={() => onClickDate(getDateWithBase(date))}
 							key={date}>
 							{date}
 						</S.Date>
@@ -119,13 +138,9 @@ namespace S {
 			position: relative;
 			text-align: center;
 			margin-bottom: 1.4rem;
-
-			> button {
-				position: absolute;
-				top: 50%;
-				right: 0;
-				transform: translateY(-60%);
-			}
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
 		}
 
 		> div {
@@ -175,7 +190,7 @@ namespace S {
 			`linear-gradient(to left, white 50%, ${Colors.blue100} 50%)`};
 
 		:first-of-type {
-			grid-column: 3/4;
+			grid-column: ${(props) => (props.isApril ? '6/7' : '3/4')};
 		}
 	`;
 

@@ -83,6 +83,7 @@ type DateProps = {
 type DateBackgroundProps = DateProps & {
 	isPeriod: boolean;
 	isPeriodPreview: boolean;
+	isApril: boolean;
 };
 
 type IsMemberCompletePageType = {
